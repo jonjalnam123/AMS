@@ -115,7 +115,7 @@
         margin-top: 10px; 
     }
 
-    #registBtn, #delBtn, #logOutBtn{
+    #registBtn, #delBtn, #logOutBtn,#registScoreBtn {
         padding: 10px 15px;
         border: none;
         border-radius: 5px;
@@ -165,6 +165,31 @@
 	    padding: 0; /* 패딩 없음 */
 	    margin: 0; /* 마진 없음 */
 	}
+	
+    .details-table {
+        margin-top: 20px; /* 상단 여백 추가 */
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .details-table th, .details-table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    .details-table th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    .details-table .no-data {
+        text-align: center;
+        font-weight: bold;
+        color: #888;
+    }
+    
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -198,7 +223,7 @@
         $('#delBtn').on('click', function () {
         	
       	  // 선택된 행을 찾기
-            var selectedRow = $('tbody tr.selected');
+            var selectedRow = $('#studentInfoTbody tr.selected');
             
             // 선택된 행이 있을 때만 처리
             if (selectedRow.length > 0) {
@@ -264,13 +289,13 @@
                 var data = response.studentSerachList;
 
                 $('.count-info').text('총 ' + count + ' 건');
-                $('tbody').empty();   
+                $('#studentInfoTbody').empty();   
 
                 if (data === "E") {
                     $('#studenNmSearch').val('');
                     $('#studenNmSearch').focus();
                     var rows = '<tr><td colspan="9" class="no-data">조회된 데이터가 없습니다.</td></tr>';
-                    $('tbody').append(rows);
+                    $('#studentInfoTbody').append(rows);
                     return;
                 } else {
                     var rows = '';
@@ -288,7 +313,7 @@
                         rows += '<td>' + student.studentTierStatusNm + '</td>';
                         rows += '</tr>';
                     }
-                    $('tbody').append(rows);
+                    $('#studentInfoTbody').append(rows);
                 }
             },
             error: function(xhr, status, error) {
@@ -304,7 +329,7 @@
         <input type="text" id="studenNmSearch" placeholder="이름">
         <button type="button" id="searchBtn">검색</button>
         <div class="count-info">총 ${count} 건</div>
-        <span class="admin-message">${adminId} 주인님 반갑습니다.</span>
+        <span class="admin-message">${adminId} 님 반갑습니다.</span>
         <button type="button" id="logOutBtn">로그아웃</button>
     </div>
  <div class="table-container">
@@ -321,7 +346,7 @@
                 <th>성적상태</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="studentInfoTbody">
             <c:choose>
                 <c:when test="${not empty studentList}">
                     <c:forEach var="student" items="${studentList}">
@@ -356,9 +381,48 @@
 </div> 
     
     <div class="button-container">
-        <button type="button" id="registBtn">등록</button>
+        <button type="button" id="registBtn">학생등록</button>
         <button type="button" id="delBtn">삭제</button>
     </div>
+    
+   <!-- 아래쪽에 세부정보 테이블 추가 -->
+    <%-- <div class="table-container">
+        <h3>선택한 학생의 성적</h3>
+        <table class="details-table">
+            <thead>
+                <tr>
+                    <th>년도</th>
+                    <th>학기</th>
+                    <th>국어</th>
+                    <th>수학</th>
+                    <th>영어</th>
+                    <th>사회</th>
+                    <th>역사</th>
+                    <th>과학</th>
+                </tr>
+            </thead>
+            <tbody id="studentScoreTbody">
+                <tr>
+                    <td>
+                    	<label for="yearSelect"></label>
+						<select id="yearSelect" name="year">
+						    <c:forEach var="year" begin="2024" end="2030"> 
+						        <option value="${year}">${year}</option>
+						    </c:forEach>
+						</select>
+					</td>
+                    <td><input id="" type="text" placeholder="" style="width: 50px;"></td>   
+                    <td><input id="" type="text" placeholder=""></td>
+                    <td><input id="" type="text" placeholder=""></td>
+                    <td><input id="" type="text" placeholder=""></td>
+                    <td><input id="" type="text" placeholder=""></td>
+                    <td><input id="" type="text" placeholder=""></td>
+                    <td><input id="" type="text" placeholder=""></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>     --%>
+    
 </div>
 </body>
 </html>

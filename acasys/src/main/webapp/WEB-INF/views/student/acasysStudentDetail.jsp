@@ -277,7 +277,6 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-
     <div class="form-container">
         <table>
             <thead>

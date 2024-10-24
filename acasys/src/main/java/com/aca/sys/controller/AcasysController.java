@@ -116,9 +116,14 @@ public class AcasysController {
 	@GetMapping("/student/acasysStudetnList.do")
 	public String acasysStudetnList( Model model, HttpServletRequest request) throws Exception{
 		
-		 //로그인 아이디
-		String adminId = ((AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
+	    // 로그인 여부 체크
+	    AcasysAdminLoginVO loginUser = (AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER");
+	    if (loginUser == null) {
+	        return "redirect:/login/acasysMain.do"; // 로그인 페이지로 리디렉션
+	    }
 		
+	    String adminId = loginUser.getAdminId();
+	    
 		// 학생 리스트
 		List<AcasysStudentInfoVO> studentList = acasysService.selectAcasysStudentList();
 		
@@ -295,7 +300,7 @@ public class AcasysController {
 
 		 //로그인 아이디
 		String adminId = ((AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
-		
+
 		acasysStudentInfoVO.setUpdUserId(adminId);  
 		
 		String result = acasysService.acasysStudentDetailUpdateProc(acasysStudentInfoVO);

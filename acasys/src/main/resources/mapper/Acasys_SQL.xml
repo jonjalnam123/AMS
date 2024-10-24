@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aca.sys.service.impl.AcasysMapper">
+	
+	<select id="acasysLogin" parameterType="AcasysStudentInfoVO" resultType="java.util.HashMap">      
+		SELECT /* adminLogin.acasysLogin */     
+				   ADMIN_NO 
+				 , ADMIN_ID    
+				 , ADMIN_PW     
+		  FROM TB_LOGIN_ADMIN    
+		WHERE ADMIN_ID = #{adminId}    
+		    AND ADMIN_PW = #{adminPw}
+	</select>	
+	
+	<select id="studentCount" resultType="String">     
+		SELECT /* acasysStudentList.studentCount */
+				   COUNT(*) 
+		   FROM TB_STUDENT_INFO
+		 WHERE STUDENT_DEL_YN = 'N'
+	</select>
+
+	<select id="selectAcasysStudentList" resultType="AcasysStudentInfoVO">  
+		SELECT /* acasysStudentList.selectAcasysStudentList */    
+				   CAST(a.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
+				 , a.STUDENT_NAME
+				 , a.STUDENT_AGE
+				 , a.STUDENT_MIDDLE_SCHOOL
+				 , a.STUDENT_HIGH_SCHOOL 
+				 , a.STUDENT_SCHOOL_GUBUN_CD
+				 , b.CD_NM AS STUDENT_SCHOOL_GUBUN_NM
+				 , a.STUDENT_SCHOOL_MAJOR_CD
+				 , c.CD_NM AS STUDENT_SCHOOL_MAJOR_NM
+				 , a.STUDENT_TIER_STATUS_CD
+				 , d.CD_NM AS STUDENT_TIER_STATUS_NM
+				 , a.STUDENT_POST_CD
+				 , a.STUDENT_ADD
+				 , a.STUDENT_ADD_DETAIL  
+				 , a.STUDENT_PHONE
+				 , a.STUDENT_NOTE
+				 , a.STUDENT_DEL_YN
+	  	   FROM TB_STUDENT_INFO a
+	  	    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) b
+	  	      ON a.STUDENT_SCHOOL_GUBUN_CD = b.CD
+	  	    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) c
+	  	      ON a.STUDENT_SCHOOL_MAJOR_CD = c.CD
+  		    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) d
+	  	      ON a.STUDENT_TIER_STATUS_CD = d.CD
+	  	 WHERE a.STUDENT_DEL_YN = 'N'
+	  	 ORDER BY STUDENT_NO DESC 
+	</select>	
+	
+	<select id="studentSearchCount" parameterType="AcasysStudentInfoSearchVO" resultType="String">     
+		SELECT /* acasysStudentList.studentSearchCount */
+				   COUNT(*) FROM TB_STUDENT_INFO
+		WHERE STUDENT_NAME LIKE CONCAT('%', #{studenNmSearch}, '%') 
+		    AND STUDENT_DEL_YN = 'N'
+	</select>  
+	
+	<select id="acasysStudetnListSearch" parameterType="AcasysStudentInfoSearchVO" resultType="AcasysStudentInfoVO">       
+		SELECT /* acasysStudentList.acasysStudetnListSearch */    
+				   CAST(a.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
+				 , a.STUDENT_NAME
+				 , a.STUDENT_AGE
+				 , a.STUDENT_MIDDLE_SCHOOL
+				 , a.STUDENT_HIGH_SCHOOL 
+				 , a.STUDENT_SCHOOL_GUBUN_CD
+				 , b.CD_NM AS STUDENT_SCHOOL_GUBUN_NM
+				 , a.STUDENT_SCHOOL_MAJOR_CD
+				 , c.CD_NM AS STUDENT_SCHOOL_MAJOR_NM
+				 , a.STUDENT_TIER_STATUS_CD 
+				 , d.CD_NM AS STUDENT_TIER_STATUS_NM 
+				 , a.STUDENT_POST_CD
+				 , a.STUDENT_ADD
+				 , a.STUDENT_ADD_DETAIL  
+				 , a.STUDENT_PHONE
+				 , a.STUDENT_NOTE
+				 , a.STUDENT_DEL_YN
+	  	   FROM TB_STUDENT_INFO a
+	  	    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) b
+	  	      ON a.STUDENT_SCHOOL_GUBUN_CD = b.CD
+	  	    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) c
+	  	      ON a.STUDENT_SCHOOL_MAJOR_CD = c.CD
+  		    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) d
+	  	      ON a.STUDENT_TIER_STATUS_CD = d.CD  
+	  	 WHERE a.STUDENT_NAME LIKE CONCAT('%', #{studenNmSearch}, '%')
+	  	     AND a.STUDENT_DEL_YN = 'N'
+	  	 ORDER BY STUDENT_NO DESC 
+	</select>
+	
+	<update id="acasysStudentDelProc" parameterType="AcasysStudentInfoVO">
+		UPDATE /* acasysStudentList.acasysStudentDelProc */
+		     	   TB_STUDENT_INFO
+		     SET STUDENT_DEL_YN = 'Y'  
+		 WHERE STUDENT_NO = #{studentNo}
+	</update>
+	
+	<select id="schoolGubunCd" parameterType="String" resultType="AcasysCommCdVo">
+		SELECT /* acasysStudentRegist.schoolGubunCd */       
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD
+		  WHERE BASS_CD_VAL = #{schoolGubunVal}  
+	</select>
+	
+	<select id="schoolMajorCd" parameterType="String" resultType="AcasysCommCdVo">  
+		SELECT /* acasysStudentRegist.schoolMajorCd */       
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD
+		  WHERE BASS_CD_VAL = #{schoolMajorVal}  
+	</select>
+	
+	<select id="tierCd" parameterType="String" resultType="AcasysCommCdVo">  
+		SELECT /* acasysStudentRegist.schoolMajorCd */       
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD  
+		  WHERE BASS_CD_VAL = #{tierVal}    
+	</select>
+	
+	<insert id="acasysStudentRegistProc" parameterType="AcasysStudentInfoVO">
+		INSERT /* acasysStudentRegist.acasysStudentRegistProc */ 
+		   INTO TB_STUDENT_INFO 
+		   (
+		     STUDENT_NO
+		   , STUDENT_NAME
+		   , STUDENT_AGE
+		   , STUDENT_MIDDLE_SCHOOL
+		   , STUDENT_HIGH_SCHOOL
+		   , STUDENT_SCHOOL_GUBUN_CD
+		   , STUDENT_SCHOOL_MAJOR_CD
+		   , STUDENT_TIER_STATUS_CD
+		   , STUDENT_POST_CD
+		   , STUDENT_ADD
+		   , STUDENT_ADD_DETAIL
+		   , STUDENT_PHONE
+		   , STUDENT_NOTE
+		   , STUDENT_DEL_YN
+		   , REG_USER_ID
+		   , REG_DTTM
+		   , UPD_USER_ID
+		   , UPD_DTTM
+		) VALUES (
+	         (SELECT IFNULL(MAX(CAST(STUDENT_NO AS UNSIGNED)), 0) + 1 AS STUDENT_NO FROM (SELECT STUDENT_NO FROM TB_STUDENT_INFO) AS TEMP)
+		   , #{studentName}	  
+		   , #{studentAge}	
+		   , #{studentMiddleSchool}	
+		   , #{studentHighSchool}	  
+		   , #{studentSchoolGubunCd}	
+		   , #{studentSchoolMajorCd}	
+		   , #{studentTierStatusCd}	
+		   , #{studentPostCd}	
+		   , #{studentAdd}	
+		   , #{studentAddDetail}	
+		   , #{studentPhone}	
+		   , #{studentNote}	
+		   , 'N'
+		   , #{regUserId}	
+		   , NOW()  
+		   , #{updUserId}
+		   , NOW()
+		);
+	</insert>
+	
+	<select id="acasysStudentDetail" parameterType="String" resultType="AcasysStudentInfoVO">   
+		SELECT /* acasysStudentDetail.acasysStudentDetail */      
+				   CAST(a.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
+				 , a.STUDENT_NAME
+				 , a.STUDENT_AGE
+				 , a.STUDENT_MIDDLE_SCHOOL
+				 , a.STUDENT_HIGH_SCHOOL 
+				 , a.STUDENT_SCHOOL_GUBUN_CD
+				 , b.CD_NM AS STUDENT_SCHOOL_GUBUN_NM
+				 , a.STUDENT_SCHOOL_MAJOR_CD
+				 , c.CD_NM AS STUDENT_SCHOOL_MAJOR_NM
+				 , a.STUDENT_TIER_STATUS_CD
+				 , d.CD_NM AS STUDENT_TIER_STATUS_NM
+				 , a.STUDENT_POST_CD
+				 , a.STUDENT_ADD
+				 , a.STUDENT_ADD_DETAIL  
+				 , a.STUDENT_PHONE
+				 , a.STUDENT_NOTE
+				 , a.STUDENT_DEL_YN
+	  	   FROM TB_STUDENT_INFO a
+	  	    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) b
+	  	      ON a.STUDENT_SCHOOL_GUBUN_CD = b.CD
+	  	    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) c
+	  	      ON a.STUDENT_SCHOOL_MAJOR_CD = c.CD
+  		    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) d
+	  	      ON a.STUDENT_TIER_STATUS_CD = d.CD
+	  	 WHERE a.STUDENT_DEL_YN = 'N'
+	  	    AND a.STUDENT_NO = #{studentNo}
+	  	 ORDER BY STUDENT_NO DESC 
+	</select>
+	
+	<update id="acasysStudentDetailUpdateProc" parameterType="AcasysStudentInfoVO">
+		UPDATE /* acasysStudentDetail.acasysStudentDetailUpdateProc */
+		     	   TB_STUDENT_INFO
+		     SET STUDENT_NAME = #{studentName}
+			     , STUDENT_AGE = #{studentAge}
+			     , STUDENT_MIDDLE_SCHOOL = #{studentMiddleSchool}
+			     , STUDENT_HIGH_SCHOOL = #{studentHighSchool}
+			     , STUDENT_SCHOOL_GUBUN_CD = #{studentSchoolGubunCd}
+			     , STUDENT_SCHOOL_MAJOR_CD = #{studentSchoolMajorCd}
+			     , STUDENT_TIER_STATUS_CD = #{studentTierStatusCd}
+			     , STUDENT_POST_CD = #{studentPostCd}
+			     , STUDENT_ADD = #{studentAdd}
+			     , STUDENT_ADD_DETAIL = #{studentAddDetail}
+			     , STUDENT_PHONE = #{studentPhone}
+			     , STUDENT_NOTE = #{studentNote}
+			     , STUDENT_DEL_YN = 'N'
+			     , UPD_USER_ID = #{updUserId}
+			     , UPD_DTTM = NOW()
+		 WHERE STUDENT_NO = #{studentNo}  
+	</update>
+	
+</mapper>

@@ -89,6 +89,25 @@
 	  	 ORDER BY STUDENT_NO DESC 
 	</select>
 	
+	<select id="acasysStudentScoreSearch" parameterType="AcasysStudentScoreVO" resultType="AcasysStudentScoreVO">
+		SELECT /* acasysStudentList.acasysStudentScoreSearch */       
+				   CAST(A.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
+				 , (SELECT b.STUDENT_NAME FROM TB_STUDENT_INFO b WHERE b.STUDENT_NO = #{studentNo}) AS STUDENT_NAME
+				 , A.SCORE_NO
+				 , A.START_DATE
+				 , A.END_DATE
+				 , A.TERM_CD
+				 , A.KOREAN
+				 , A.MATH
+				 , A.ENGLISH
+				 , A.SOCIETY
+				 , A.SCIENCE 
+				 , A.HISTORY
+		    FROM TB_STUDENT_SCORE A
+		  WHERE A.STUDENT_NO = #{studentNo}
+		  ORDER BY START_DATE 
+	</select>
+	
 	<update id="acasysStudentDelProc" parameterType="AcasysStudentInfoVO">
 		UPDATE /* acasysStudentList.acasysStudentDelProc */
 		     	   TB_STUDENT_INFO
@@ -153,6 +172,25 @@
 		  WHERE BASS_CD_VAL = #{tierVal}    
 	</select>
 	
+	<select id="termCd" parameterType="String" resultType="AcasysCommCdVo">
+		SELECT /* acasysStudentRegist.schoolGubunCd */       
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD
+		  WHERE BASS_CD_VAL = #{termCd}    
+	</select>
+	
 	<insert id="acasysStudentRegistProc" parameterType="AcasysStudentInfoVO">
 		INSERT /* acasysStudentRegist.acasysStudentRegistProc */ 
 		   INTO TB_STUDENT_INFO 
@@ -196,6 +234,65 @@
 		   , NOW()
 		);
 	</insert>
+	
+	<insert id="acasysStudentScoreRegistProc" parameterType="AcasysStudentScoreVO">
+		INSERT /* acasysStudentList.acasysStudentScoreRegistProc */ 
+		   INTO TB_STUDENT_SCORE 
+		   (
+			 STUDENT_NO
+		   , STUDENT_NAME
+		   , SCORE_NO
+		   , START_DATE
+		   , END_DATE
+		   , TERM_CD
+		   , KOREAN
+		   , MATH
+		   , ENGLISH
+		   , SOCIETY
+		   , SCIENCE
+		   , HISTORY
+		   , REG_USER_ID
+		   , REG_DTTM
+		   , UPD_USER_ID
+		   , UPD_DTTM
+		) VALUES (
+	         #{studentNo}
+		   , #{studentName}	  
+		   , (SELECT IFNULL(MAX(CAST(SCORE_NO AS UNSIGNED)), 0) + 1 AS SCORE_NO FROM (SELECT SCORE_NO FROM TB_STUDENT_SCORE) AS TEMP)
+		   , #{startDate}	
+		   , #{endDate}	
+		   , #{termCd}	  
+		   , #{korean}	
+		   , #{math}	
+		   , #{english}	
+		   , #{society}	
+		   , #{science}	
+		   , #{history}	
+		   , #{regUserId}	
+		   , NOW()  
+		   , #{updUserId}
+		   , NOW()
+		);
+	</insert>
+	
+	<update id="acasysStudentScoreUpdateProc" parameterType="AcasysStudentScoreVO">
+		UPDATE /* acasysStudentDetail.acasysStudentDetailUpdateProc */
+		     	   TB_STUDENT_SCORE
+		     SET START_DATE = #{startDate}
+			     , END_DATE = #{endDate}
+			     , TERM_CD = #{termCd}
+			     , KOREAN = #{korean}
+			     , MATH = #{math}
+			     , ENGLISH = #{english}
+			     , SOCIETY = #{society}
+			     , SCIENCE = #{science}
+			     , HISTORY = #{history}
+			     , UPD_USER_ID = #{updUserId}
+			     , UPD_DTTM = NOW()
+		 WHERE STUDENT_NO = #{studentNo}
+		 	 AND STUDENT_NAME = #{studentName} 
+		 	 AND SCORE_NO = #{scoreNo}
+	</update>
 	
 	<select id="acasysStudentDetail" parameterType="String" resultType="AcasysStudentInfoVO">   
 		SELECT /* acasysStudentDetail.acasysStudentDetail */      

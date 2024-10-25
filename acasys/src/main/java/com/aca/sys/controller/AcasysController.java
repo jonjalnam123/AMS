@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,6 +19,7 @@ import com.aca.sys.vo.AcasysAdminLoginVO;
 import com.aca.sys.vo.AcasysCommCdVo;
 import com.aca.sys.vo.AcasysStudentInfoSearchVO;
 import com.aca.sys.vo.AcasysStudentInfoVO;
+import com.aca.sys.vo.AcasysStudentScoreVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -167,6 +169,77 @@ public class AcasysController {
 	}
 	
 	/**
+	 * @Method Name : acasysStudentScoreSearch
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 조회
+	 * @return
+	 */
+	@PostMapping("/student/acasysStudentScoreSearch.do")
+	@ResponseBody
+	public HashMap<String, Object> acasysStudentScoreSearch(@ModelAttribute AcasysStudentScoreVO acasysStudentScoreVO, HttpServletRequest request) {
+
+		List<AcasysStudentScoreVO> studentScore = acasysService.acasysStudentScoreSearch(acasysStudentScoreVO);
+		
+		String termVal = "term";
+		List<AcasysCommCdVo> termCd = acasysService.termCd(termVal);
+		
+	    // 결과 객체 생성
+		HashMap<String, Object> response = new HashMap<>();
+		
+	    if (studentScore.isEmpty()) {
+		   response.put("studentScore", 'E');
+		   response.put("termCd", termCd);
+	    } else {    
+	    	response.put("studentScore", studentScore);
+	    	response.put("termCd", termCd);
+	    }
+	    
+	    return response;  
+	}
+	
+	/**
+	 * @Method Name : acasysStudentScoreRegistProc
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 등록 진행
+	 * @return
+	 */
+	@PostMapping("/student/acasysStudentScoreRegistProc.do")
+	@ResponseBody
+	public HashMap<String, String>  acasysStudentScoreRegistProc (@RequestBody HashMap<String, List<AcasysStudentScoreVO>> acasysStudentScoreVO, HttpServletRequest request) {
+
+	    List<AcasysStudentScoreVO> scoresList = acasysStudentScoreVO.get("scoresList");
+
+	    String adminId = ((AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
+
+	    HashMap<String, String> response = new HashMap<>();
+	    String overallResult = "SUCCESS";
+
+	    for (AcasysStudentScoreVO score : scoresList) {
+	        score.setUpdUserId(adminId); // 업데이트 시에도 adminId 설정
+
+	        if ("insert".equals(score.getGubunVal())) { 
+	            score.setRegUserId(adminId);
+	            String result = acasysService.acasysStudentScoreRegistProc(score);
+	            if (!"SUCCESS".equals(result)) {
+	                overallResult = "ERROR";
+	            }
+	        } else if ("update".equals(score.getGubunVal())) {
+	            String result = acasysService.acasysStudentScoreUpdateProc(score);
+	            if (!"SUCCESS".equals(result)) {
+	                overallResult = "ERROR";  
+	            }
+	        }
+	    }
+
+	    response.put("status", "SUCCESS".equals(overallResult) ? "success" : "error");
+	    return response;
+	}
+	
+	/**
 	 * @Method Name : acasysMain
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
@@ -287,11 +360,11 @@ public class AcasysController {
 	}
 	
 	/**
-	 * @Method Name : acasysStudentDelProc
+	 * @Method Name : acasysStudentDetailUpdateProc
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
 	 * @변경이력 :
-	 * @Method 설명 : 학생 등록 삭제
+	 * @Method 설명 : 학생 상세 수정
 	 * @return
 	 */
 	@PostMapping("/student/acasysStudentDetailUpdateProc.do")

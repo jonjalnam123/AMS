@@ -10,6 +10,7 @@ import com.aca.sys.vo.AcasysAdminLoginVO;
 import com.aca.sys.vo.AcasysCommCdVo;
 import com.aca.sys.vo.AcasysStudentInfoSearchVO;
 import com.aca.sys.vo.AcasysStudentInfoVO;
+import com.aca.sys.vo.AcasysStudentScoreVO;
 
 @Service("acasysService")
 public class AcasysServiceImpl implements AcasysService {
@@ -122,6 +123,19 @@ public class AcasysServiceImpl implements AcasysService {
 	}
 	
 	/**
+	 * @Method Name : tierCd
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학기 코드
+	 * @return
+	 */
+	@Override
+	public List<AcasysCommCdVo> termCd(String termVal) {
+		return acasysMapper.termCd(termVal);
+	}
+	
+	/**
 	 * @Method Name : acasysStudentRegistProc
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
@@ -130,10 +144,38 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public String acasysStudentRegistProc(AcasysStudentInfoVO acasysStudentInfoVO) {
+	public String acasysStudentRegistProc(AcasysStudentInfoVO score) {
 		
-		int result = acasysMapper.acasysStudentRegistProc(acasysStudentInfoVO);
+		int result = acasysMapper.acasysStudentRegistProc(score);
 		
+		return result > 0 ? "SUCCESS" : "FAIL";
+	}
+	
+	/**
+	 * @Method Name : acasysStudentScoreUpdateProc
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 수정 진행
+	 * @return
+	 */
+	@Override
+	public String acasysStudentScoreUpdateProc(AcasysStudentScoreVO score) {
+		int result = acasysMapper.acasysStudentScoreUpdateProc(score);
+		return result > 0 ? "SUCCESS" : "FAIL";
+	}
+	
+	/**
+	 * @Method Name : acasysStudentScoreRegistProc
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 등록 진행
+	 * @return
+	 */
+	@Override
+	public String acasysStudentScoreRegistProc(AcasysStudentScoreVO acasysStudentScoreVO) {
+		int result = acasysMapper.acasysStudentScoreRegistProc(acasysStudentScoreVO);
 		return result > 0 ? "SUCCESS" : "FAIL";
 	}
 	
@@ -166,9 +208,31 @@ public class AcasysServiceImpl implements AcasysService {
 		return acasysMapper.acasysStudentDetail(studentNo);
 	}
 	
+	/**
+	 * @Method Name : acasysStudentDetailUpdateProc
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 상세 수정
+	 * @return
+	 */
 	@Override
 	public String acasysStudentDetailUpdateProc(AcasysStudentInfoVO acasysStudentInfoVO) {
 		int result = acasysMapper.acasysStudentDetailUpdateProc(acasysStudentInfoVO);
 		return result > 0 ? "SUCCESS" : "FAIL";
 	}
+	
+	/**
+	 * @Method Name : acasysStudentScoreSearch
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 조회
+	 * @return
+	 */
+	@Override
+	public List<AcasysStudentScoreVO> acasysStudentScoreSearch(AcasysStudentScoreVO acasysStudentScoreVO) {
+		return acasysMapper.acasysStudentScoreSearch(acasysStudentScoreVO);
+	}
+	
 }

@@ -20,6 +20,7 @@ import com.aca.sys.vo.AcasysCommCdVo;
 import com.aca.sys.vo.AcasysStudentInfoSearchVO;
 import com.aca.sys.vo.AcasysStudentInfoVO;
 import com.aca.sys.vo.AcasysStudentScoreVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -129,9 +130,17 @@ public class AcasysController {
 		// 학생 리스트
 		List<AcasysStudentInfoVO> studentList = acasysService.selectAcasysStudentList();
 		
+		String termVal = "term";
+		List<AcasysCommCdVo> termCd = acasysService.termCd(termVal);
+		
+		/** json 변환 **/
+		ObjectMapper ObjectMapper = new ObjectMapper();
+		String termCdVal = ObjectMapper.writeValueAsString(termCd);
+		
 		// 학생 전체 건 수
 		String count = acasysService.studentCount(); 
 
+		model.addAttribute("termCd", termCdVal);
 		model.addAttribute("adminId", adminId);
 		model.addAttribute("studentList", studentList);
 		model.addAttribute("count", count);

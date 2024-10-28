@@ -249,6 +249,36 @@ public class AcasysController {
 	}
 	
 	/**
+	 * @Method Name : acasysStudentScoreDelProc
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 삭제 진행
+	 * @return
+	 */
+	@PostMapping("/student/acasysStudentScoreDelProc.do")
+	@ResponseBody
+	public HashMap<String, String>  acasysStudentScoreDelProc (@RequestBody HashMap<String, List<AcasysStudentScoreVO>> acasysStudentScoreVO, HttpServletRequest request) {
+
+	    List<AcasysStudentScoreVO> studentsToDelete = acasysStudentScoreVO.get("studentsToDelete");
+
+	    HashMap<String, String> response = new HashMap<>();
+	    String overallResult = "SUCCESS";
+
+	    for (AcasysStudentScoreVO delScore : studentsToDelete) {
+
+        	String result = acasysService.acasysStudentScoreDelProc(delScore);
+            if (!"SUCCESS".equals(result)) {
+                overallResult = "ERROR";
+            } 
+
+	    }
+
+	    response.put("status", "SUCCESS".equals(overallResult) ? "success" : "error");
+	    return response;
+	}
+	
+	/**
 	 * @Method Name : acasysMain
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석

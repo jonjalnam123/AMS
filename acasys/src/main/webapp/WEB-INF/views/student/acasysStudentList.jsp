@@ -128,7 +128,7 @@
         margin-top: 10px; 
     }
 
-    #registBtn, #delBtn, #logOutBtn,#registScoreBtn {
+    #registBtn, #delBtn, #logOutBtn,#registScoreBtn,#delScoreBtn {
         padding: 10px 15px;
         border: none;
         border-radius: 5px;
@@ -147,21 +147,32 @@
         background-color: #868e96; 
     }
 
-    #registBtn {
+    #registBtn, #registScoreBtn {
         background-color: #007bff; 
         color: white;
     }
+    
+    #addRowBtn {
+    	height: 30px;  
+   	 	padding: 5px 10px;
+    	border: none;
+    	cursor: pointer;
+    	margin-right: 5px;
+     	border-radius: 5px;
+        background-color: #28a745; 
+        color: white;
+    }
 
-    #registBtn:hover {
+    #registBtn:hover, #registScoreBtn:hover {
         background-color: #0056b3; 
     }
 
-    #delBtn {
+    #delBtn, #delScoreBtn {
         background-color: #dc3545; 
         color: white;
     }
 
-    #delBtn:hover {
+    #delBtn:hover, #delScoreBtn:hover {
         background-color: #c82333; 
     }
 
@@ -279,31 +290,155 @@
         });
         
         $('#studentInfoTbody tr').on('click', function (event) {
-        	
             const clickedRow = $(this);
             var studentNo = clickedRow.find('td:first').text();
-			
-            fn_searchScore(studentNo)
             
+            fn_searchScore(studentNo);
+
+            // 전체 선택 체크박스 해제
+            $('#selectAll').prop('checked', false);
         });
         
         $('#registScoreBtn').on('click' , function()  {
-        	fn_regiScore();
-        });
-        
-        $('#delRowBtn').on('click' , function()  {      
-        	        	
         	
-        	//$('#studentScoreTbody tr:last').remove();
-        	
-        });
-        
+            var trCnt = $("#studentScoreTbody tr").length;
+            var test = $("#studentScoreTbody tr td").attr('class');
+            var hasError = false;
+            
+			if ( check === 0 ) {
+				alert('학생을(를) 선택 후 등록 해주세요.');
+				return;
+			} 
+			
+            if (trCnt <= 1 && test === 'no-data') {
+            	alert('등록할 성적이 없습니다.');
+            	return;
+            }
+            
+            // 각 행에 대해 시작 날짜와 종료 날짜 체크
+            $("#studentScoreTbody tr").each(function() {
+                var startDateInput = $(this).find("input[type='date'][id='startDate']");
+                var endDateInput = $(this).find("input[type='date'][id='endDate']");
+                var startDateVal = startDateInput.val();
+                var endDateVal = endDateInput.val();
 
+                // 날짜 입력 체크
+                if (!startDateVal) {
+                    alert('시작날짜 (을)를 입력해주세요.');
+                    startDateInput.focus(); // 포커스 주기
+                    hasError = true;
+                    return false; // each 루프 종료
+                }
+
+                if (!endDateVal) {
+                    alert('종료날짜 (을)를 입력해주세요.');
+                    endDateInput.focus(); // 포커스 주기
+                    hasError = true;
+                    return false; // each 루프 종료
+                }
+
+                // 날짜 비교
+                if (startDateVal > endDateVal) {
+                    alert('종료날짜가 시작날짜 보다 빠를 수 없습니다.');
+                    endDateInput.focus(); // 종료 날짜 입력에 포커스 주기
+                    hasError = true;
+                    return false; // each 루프 종료
+                }
+                
+                // 날짜 비교
+                if (startDateVal > endDateVal) {
+                    alert('시작날짜가 종료날짜 보다 늦을 수 없습니다.');
+                    startDateVal.focus(); // 종료 날짜 입력에 포커스 주기
+                    hasError = true;
+                    return false; // each 루프 종료
+                }
+            });
+            
+            // 에러가 발생한 경우 추가 작업을 하지 않음
+            if (hasError) return;
+
+        	fn_regiScore();
+        	
+        });
+
+        $('#delScoreBtn').on('click', function() {
+        	
+            var trCnt = $("#studentScoreTbody tr").length;
+            var test = $("#studentScoreTbody tr td").attr('class');
+			
+            if (trCnt <= 1 && test === 'no-data') {
+            	alert('삭제할 성적이 없습니다.');
+            	return;
+            }
+        	
+            
+            var result = confirm("정말 삭제하시겠습니까?");
+            
+            if(result) {
+            
+	            // 체크된 체크박스 가져오기
+            	var checkedRows = $('#studentScoreTbody input.student-checkbox:checked');
+	            
+	            // 체크된 체크박스가 없으면 알림
+	            if (checkedRows.length === 0) {
+	                alert("삭제할 성적 을(를) 체크해주세요.");
+	                return;
+	            }
+	            
+	            // 삭제할 학생 정보 저장할 배열
+	            var studentsToDelete = [];
+	
+	            // 체크된 각 행에 대해 반복
+	            checkedRows.each(function() {
+	                var row = $(this).closest('tr'); // 체크박스의 부모 행 찾기
+	                var scoreNo = row.find('input#scoreNo').val(); // scoreNo 가져오기
+	                var studentNo = row.find('input#stuentNo').val(); // studentNo 가져오기
+	                var studentName = row.find('input#stuentName').val(); // studentName 가져오기
+	
+	                // 학생 정보를 배열에 추가
+	                studentsToDelete.push({
+	                    scoreNo: scoreNo,
+	                    studentNo: studentNo,
+	                    studentName: studentName
+	                });
+	            });
+	
+	            // 화면에서 체크된 행 삭제
+	            checkedRows.each(function() {
+	                $(this).closest('tr').remove();
+	            });
+	
+	            var param = {
+	            		studentsToDelete : studentsToDelete
+	    	        }; 
+	
+	    		$.ajax({
+	    					url : '/student/acasysStudentScoreDelProc.do',
+	    					type : 'POST',
+	    				    contentType: 'application/json', // JSON 형식으로 전송
+	    				    data: JSON.stringify(param), // 데이터를 JSON 문자열로 변환 
+	    					success : function(response) {
+	    						if ( response.status === 'success') {
+	    							alert('성적 삭제 을(를) 성공하였습니다.');
+	    							location.reload();
+	    						} else {
+	    							alert('성적 삭제 을(를) 실패하였습니다.');
+	    						}
+	    					},
+	    					error : function(xhr, status, error) {
+	    						alert('서버 오류가 발생했습니다.');
+	    						return;
+	    					}
+	    		});
+            }
+        });
+        
+		
 
         $('#addRowBtn').on('click' , function()  {
         	
 			if ( check === 0 ) {
-				alert('학생을(를) 선택후 행 추가를 해주세요.');
+				alert('학생을(를) 선택 후 행 추가를 해주세요.');
 				return;
 			} 
 			
@@ -401,7 +536,7 @@
                  
                 if (data === "E") {
 					
-                    var rows = '<tr><td colspan="9" class="no-data">조회된 데이터가 없습니다.</td></tr>';
+                    var rows = '<tr><td colspan="11" class="no-data">조회된 데이터가 없습니다.</td></tr>';
                     $('#studentScoreTbody').append(rows);
                     return;
                     
@@ -569,7 +704,7 @@
 	        </thead>
 	        <tbody id="studentInfoTbody">
 	            <c:choose>
-	                <c:when test="${not empty studentList}">
+	                <c:when test="${not empty studentList}">  
 	                    <c:forEach var="student" items="${studentList}">
 	                        <tr>
 	                            <td hidden>${student.studentNo}</td>
@@ -602,12 +737,11 @@
 	</div> 
 	<div class="button-container">
 	    <button type="button" id="registBtn">학생등록</button>
-	    <button type="button" id="delBtn">삭제</button>
+	    <button type="button" id="delBtn">학생삭제</button>
 	</div>
     
 	<div class="button-container">
 	 	<button type="button" id="addRowBtn">+</button>
-		<button type="button" id="delRowBtn">-</button>
 	</div>
    <!-- 아래쪽에 세부정보 테이블 추가 -->
    <div class="table-container-sub">
@@ -615,8 +749,8 @@
             <thead>
                 <tr>
                 	<th style="text-align: center; width: 36px;"><input type="checkbox" id="selectAll" onclick="toggleCheckboxes(this)"></th>
-                    <th style="width: 68px;">시작날짜</th> 
-                    <th style="width: 68px;">종료날짜</th> 
+                    <th style="width: 68px;">시작날짜<span style="color: red;"> *</span></th> 
+                    <th style="width: 68px;">종료날짜<span style="color: red;"> *</span></th> 
                     <th style="width: 50px;">학기</th>  
                     <th style="width: 50px;">국어</th> 
                     <th style="width: 50px;">수학</th> 
@@ -633,6 +767,7 @@
     </div>
     <div class="button-container">
     	<button type="button" id="registScoreBtn">성적등록</button>
+    	<button type="button" id="delScoreBtn">성적삭제</button>
     </div>
 </div>
 </body>

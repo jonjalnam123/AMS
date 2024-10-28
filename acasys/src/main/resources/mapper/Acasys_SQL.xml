@@ -294,6 +294,14 @@
 		 	 AND SCORE_NO = #{scoreNo}
 	</update>
 	
+	<delete id="acasysStudentScoreDelProc" parameterType="AcasysStudentScoreVO">
+		DELETE 
+		  FROM TB_STUDENT_SCORE
+		WHERE STUDENT_NO = #{studentNo} 
+			AND SCORE_NO = #{scoreNo}
+			AND STUDENT_NAME = #{studentName}
+	</delete>
+	
 	<select id="acasysStudentDetail" parameterType="String" resultType="AcasysStudentInfoVO">   
 		SELECT /* acasysStudentDetail.acasysStudentDetail */      
 				   CAST(a.STUDENT_NO AS UNSIGNED) AS STUDENT_NO

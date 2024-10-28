@@ -152,6 +152,20 @@ public class AcasysServiceImpl implements AcasysService {
 	}
 	
 	/**
+	 * @Method Name : acasysStudentScoreRegistProc
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 등록 진행
+	 * @return
+	 */
+	@Override
+	public String acasysStudentScoreRegistProc(AcasysStudentScoreVO score) {
+		int result = acasysMapper.acasysStudentScoreRegistProc(score);
+		return result > 0 ? "SUCCESS" : "FAIL";
+	}
+	
+	/**
 	 * @Method Name : acasysStudentScoreUpdateProc
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
@@ -166,16 +180,16 @@ public class AcasysServiceImpl implements AcasysService {
 	}
 	
 	/**
-	 * @Method Name : acasysStudentScoreRegistProc
+	 * @Method Name : acasysStudentScoreDelProc
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
 	 * @변경이력 :
-	 * @Method 설명 : 학생 성적 등록 진행
+	 * @Method 설명 : 학생 성적 삭제 진행
 	 * @return
 	 */
 	@Override
-	public String acasysStudentScoreRegistProc(AcasysStudentScoreVO acasysStudentScoreVO) {
-		int result = acasysMapper.acasysStudentScoreRegistProc(acasysStudentScoreVO);
+	public String acasysStudentScoreDelProc(AcasysStudentScoreVO delScore) {
+		int result = acasysMapper.acasysStudentScoreDelProc(delScore);
 		return result > 0 ? "SUCCESS" : "FAIL";
 	}
 	

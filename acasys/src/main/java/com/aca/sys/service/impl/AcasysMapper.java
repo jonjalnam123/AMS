@@ -135,6 +135,16 @@ public interface AcasysMapper {
 	int acasysStudentScoreUpdateProc(AcasysStudentScoreVO score);
 	
 	/**
+	 * @Method Name : acasysStudentScoreDelProc
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 삭제 진행
+	 * @return
+	 */
+	int acasysStudentScoreDelProc(AcasysStudentScoreVO delScore);
+	
+	/**
 	 * @Method Name : acasysStudentDelProc
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
@@ -173,5 +183,6 @@ public interface AcasysMapper {
 	 * @return
 	 */
 	List<AcasysStudentScoreVO> acasysStudentScoreSearch(AcasysStudentScoreVO acasysStudentScoreVO);
+
 
 }

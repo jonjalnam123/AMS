@@ -181,4 +181,6 @@ public interface AcasysService {
 	 */
 	List<AcasysStudentScoreVO> acasysStudentScoreSearch(AcasysStudentScoreVO acasysStudentScoreVO);
 
+	List<AcasysStudentScoreVO> acasysStudentScoreExcel(String studentNo);
+
 }

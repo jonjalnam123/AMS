@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>빵승의 국어 여행</title>
+<title>AMS Academy Mangement System</title>
 </head>
 <style>
     body {
@@ -123,7 +123,7 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>빵승의 국어 여행</h2>
+        <h2>AMS</h2>
         <input id="adminId" name="adminId" type="text" placeholder="아이디" value="">
         <input id="adminPw" name="adminPw" type="password" placeholder="비밀번호" value=""> 
         <button type="button" id="loginBtn">로그인</button>

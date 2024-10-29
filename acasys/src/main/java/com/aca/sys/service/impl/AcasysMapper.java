@@ -184,5 +184,7 @@ public interface AcasysMapper {
 	 */
 	List<AcasysStudentScoreVO> acasysStudentScoreSearch(AcasysStudentScoreVO acasysStudentScoreVO);
 
+	List<AcasysStudentScoreVO> acasysStudentScoreExcel(String studentNo);
+
 
 }

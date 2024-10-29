@@ -21,10 +21,12 @@ public class AcasysStudentScoreVO {
 	private String updDttm;
 	private String avgKorean;
 	private String avgMath;
-	private String avgEnglish; 
+	private String avgEnglish;
 	private String avgSociety;
 	private String avgScience;
 	private String avgHistory;
+	private String averageScore;
+	private String termNm;
 
 	public String getStudentNo() {
 		return studentNo;
@@ -210,6 +212,22 @@ public class AcasysStudentScoreVO {
 		this.avgHistory = avgHistory;
 	}
 
+	public String getAverageScore() {
+		return averageScore;
+	}
+
+	public void setAverageScore(String averageScore) {
+		this.averageScore = averageScore;
+	}
+
+	public String getTermNm() {
+		return termNm;
+	}
+
+	public void setTermNm(String termNm) {
+		this.termNm = termNm;
+	}
+
 	@Override
 	public String toString() {
 		return "AcasysStudentScoreVO [studentNo=" + studentNo + ", studentName=" + studentName + ", scoreNo=" + scoreNo
@@ -218,7 +236,8 @@ public class AcasysStudentScoreVO {
 				+ ", history=" + history + ", gubunVal=" + gubunVal + ", regUserId=" + regUserId + ", regDttm="
 				+ regDttm + ", updUserId=" + updUserId + ", updDttm=" + updDttm + ", avgKorean=" + avgKorean
 				+ ", avgMath=" + avgMath + ", avgEnglish=" + avgEnglish + ", avgSociety=" + avgSociety + ", avgScience="
-				+ avgScience + ", avgHistory=" + avgHistory + "]";
+				+ avgScience + ", avgHistory=" + avgHistory + ", averageScore=" + averageScore + ", termNm=" + termNm
+				+ "]";
 	}
 
 }

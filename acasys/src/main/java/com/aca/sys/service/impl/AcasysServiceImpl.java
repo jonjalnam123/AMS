@@ -249,4 +249,10 @@ public class AcasysServiceImpl implements AcasysService {
 		return acasysMapper.acasysStudentScoreSearch(acasysStudentScoreVO);
 	}
 	
+	@Override
+	public List<AcasysStudentScoreVO> acasysStudentScoreExcel(String studentNo) {
+		// TODO Auto-generated method stub
+		return acasysMapper.acasysStudentScoreExcel(studentNo);
+	}
+	
 }

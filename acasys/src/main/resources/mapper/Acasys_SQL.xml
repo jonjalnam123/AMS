@@ -102,7 +102,7 @@
 				 , A.ENGLISH
 				 , A.SOCIETY
 				 , A.SCIENCE 
-				 , A.HISTORY
+				 , A.HISTORY  
 		    FROM TB_STUDENT_SCORE A
 		  WHERE A.STUDENT_NO = #{studentNo}
 		  ORDER BY START_DATE 

@@ -19,6 +19,12 @@ public class AcasysStudentScoreVO {
 	private String regDttm;
 	private String updUserId;
 	private String updDttm;
+	private String avgKorean;
+	private String avgMath;
+	private String avgEnglish; 
+	private String avgSociety;
+	private String avgScience;
+	private String avgHistory;
 
 	public String getStudentNo() {
 		return studentNo;
@@ -156,13 +162,63 @@ public class AcasysStudentScoreVO {
 		this.updDttm = updDttm;
 	}
 
+	public String getAvgKorean() {
+		return avgKorean;
+	}
+
+	public void setAvgKorean(String avgKorean) {
+		this.avgKorean = avgKorean;
+	}
+
+	public String getAvgMath() {
+		return avgMath;
+	}
+
+	public void setAvgMath(String avgMath) {
+		this.avgMath = avgMath;
+	}
+
+	public String getAvgEnglish() {
+		return avgEnglish;
+	}
+
+	public void setAvgEnglish(String avgEnglish) {
+		this.avgEnglish = avgEnglish;
+	}
+
+	public String getAvgSociety() {
+		return avgSociety;
+	}
+
+	public void setAvgSociety(String avgSociety) {
+		this.avgSociety = avgSociety;
+	}
+
+	public String getAvgScience() {
+		return avgScience;
+	}
+
+	public void setAvgScience(String avgScience) {
+		this.avgScience = avgScience;
+	}
+
+	public String getAvgHistory() {
+		return avgHistory;
+	}
+
+	public void setAvgHistory(String avgHistory) {
+		this.avgHistory = avgHistory;
+	}
+
 	@Override
 	public String toString() {
 		return "AcasysStudentScoreVO [studentNo=" + studentNo + ", studentName=" + studentName + ", scoreNo=" + scoreNo
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", termCd=" + termCd + ", korean=" + korean
 				+ ", math=" + math + ", english=" + english + ", society=" + society + ", science=" + science
 				+ ", history=" + history + ", gubunVal=" + gubunVal + ", regUserId=" + regUserId + ", regDttm="
-				+ regDttm + ", updUserId=" + updUserId + ", updDttm=" + updDttm + "]";
+				+ regDttm + ", updUserId=" + updUserId + ", updDttm=" + updDttm + ", avgKorean=" + avgKorean
+				+ ", avgMath=" + avgMath + ", avgEnglish=" + avgEnglish + ", avgSociety=" + avgSociety + ", avgScience="
+				+ avgScience + ", avgHistory=" + avgHistory + "]";
 	}
 
 }

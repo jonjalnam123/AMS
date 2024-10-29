@@ -107,9 +107,23 @@
 		text-align: center;
 	}
 
-	tr:hover {
+	#studentInfoTbody tr:hover {
 	    background-color: #f1f1f1;
 	}	
+	
+	#studentScoreTbody input[type="text"], #studentScoreTfoot input[type="text"] {
+	    background-color: transparent; /* 배경색 투명 */
+	    border: none; /* 테두리 없음 */
+	    outline: none; /* 포커스 시 테두리 없음 */
+	    width: auto; /* 필요에 따라 너비 조정 */
+	}
+	
+	tfoot {
+	    position: sticky;
+	    bottom: 0;
+	    background-color: #f2f2f2;
+	    z-index: 1; /* 다른 요소 위에 표시 */
+	}
 
 	.no-data {
 	    text-align: center;
@@ -302,7 +316,7 @@
         $('#registScoreBtn').on('click' , function()  {
         	
             var trCnt = $("#studentScoreTbody tr").length;
-            var test = $("#studentScoreTbody tr td").attr('class');
+            var noDataVal = $("#studentScoreTbody tr td").attr('class');
             var hasError = false;
             
 			if ( check === 0 ) {
@@ -310,48 +324,67 @@
 				return;
 			} 
 			
-            if (trCnt <= 1 && test === 'no-data') {
+            if (trCnt <= 1 && noDataVal === 'no-data') {
             	alert('등록할 성적이 없습니다.');
             	return;
             }
             
-            // 각 행에 대해 시작 날짜와 종료 날짜 체크
             $("#studentScoreTbody tr").each(function() {
                 var startDateInput = $(this).find("input[type='date'][id='startDate']");
                 var endDateInput = $(this).find("input[type='date'][id='endDate']");
+                var startDate = $('#startDate').val()
+                var endDate = $('#endDate').val() 
                 var startDateVal = startDateInput.val();
                 var endDateVal = endDateInput.val();
 
-                // 날짜 입력 체크
-                if (!startDateVal) {
-                    alert('시작날짜 (을)를 입력해주세요.');
-                    startDateInput.focus(); // 포커스 주기
-                    hasError = true;
-                    return false; // each 루프 종료
-                }
+				if ( startDateVal !== undefined ) {
+	                if (!startDateVal) {
+	                    alert('시작날짜 (을)를 입력해주세요.');
+	                    startDateInput.focus();
+	                    hasError = true;
+	                    return false;
+	                }
+				} else {
+	                if ( startDate === '' ) {
+	                    alert('시작날짜 (을)를 입력해주세요.');
+	                    $('#startDate').focus();
+	                    hasError = true;
+	                    return false;
+	                }
+				}
 
-                if (!endDateVal) {
-                    alert('종료날짜 (을)를 입력해주세요.');
-                    endDateInput.focus(); // 포커스 주기
-                    hasError = true;
-                    return false; // each 루프 종료
-                }
+				
+				if ( endDateVal !== undefined ) {
+	                if (!endDateVal) {
+	                    alert('종료날짜 (을)를 입력해주세요.');
+	                    endDateInput.focus();
+	                    hasError = true;
+	                    return false;
+	                }
+				}else {
+	                if ( endDate === '' ) {
+	                    alert('종료날짜 (을)를 입력해주세요.');
+	                    $('#endDate').focus();
+	                    hasError = true;
+	                    return false;
+	                }
+				}
 
-                // 날짜 비교
-                if (startDateVal > endDateVal) {
-                    alert('종료날짜가 시작날짜 보다 빠를 수 없습니다.');
-                    endDateInput.focus(); // 종료 날짜 입력에 포커스 주기
-                    hasError = true;
-                    return false; // each 루프 종료
-                }
-                
-                // 날짜 비교
-                if (startDateVal > endDateVal) {
-                    alert('시작날짜가 종료날짜 보다 늦을 수 없습니다.');
-                    startDateVal.focus(); // 종료 날짜 입력에 포커스 주기
-                    hasError = true;
-                    return false; // each 루프 종료
-                }
+				if ( startDateVal !== undefined && endDateVal !== undefined ) {
+	                if (startDateVal > endDateVal) {
+	                    alert('종료날짜는 시작날짜보다 늦어야 합니다.');
+	                    startDateInput.focus();
+	                    hasError = true;
+	                    return false;
+	                }
+				}else{
+	                if (startDate > endDate) {
+	                    alert('종료날짜는 시작날짜보다 늦어야 합니다.');
+	                    $('#endDate').focus();
+	                    hasError = true;
+	                    return false;
+	                }
+				}
             });
             
             // 에러가 발생한 경우 추가 작업을 하지 않음
@@ -394,7 +427,12 @@
 	                var scoreNo = row.find('input#scoreNo').val(); // scoreNo 가져오기
 	                var studentNo = row.find('input#stuentNo').val(); // studentNo 가져오기
 	                var studentName = row.find('input#stuentName').val(); // studentName 가져오기
-	
+	                
+					if ( scoreNo === undefined ) {
+						$(this).closest('tr').remove();
+						return;
+					}
+	                
 	                // 학생 정보를 배열에 추가
 	                studentsToDelete.push({
 	                    scoreNo: scoreNo,
@@ -407,7 +445,7 @@
 	            checkedRows.each(function() {
 	                $(this).closest('tr').remove();
 	            });
-	
+
 	            var param = {
 	            		studentsToDelete : studentsToDelete
 	    	        }; 
@@ -447,7 +485,7 @@
         });
         
         // 행 클릭 이벤트 추가
-        $('tbody').on('click', 'tr', function() {
+        $('#studentInfoTbody').on('click', 'tr', function() {
             $(this).toggleClass('selected').siblings().removeClass('selected');
         });
         
@@ -470,6 +508,11 @@
 
                 $('.count-info').text('총 ' + count + ' 건');
                 $('#studentInfoTbody').empty();   
+                $('#studentScoreTbody').empty();   
+                $('#studentScoreTfoot').empty();   
+                
+                var rows = '<tr><td colspan="11" class="no-data">조회된 데이터가 없습니다.</td></tr>';
+                $('#studentScoreTbody').append(rows);
 
                 if (data === "E") {
                     $('#studenNmSearch').val('');
@@ -499,6 +542,17 @@
                         rows += '</tr>';
                     }
                     $('#studentInfoTbody').append(rows);
+                    
+                    $('#studentInfoTbody tr').on('click', function (event) {
+                        const clickedRow = $(this);
+                        var studentNo = clickedRow.find('td:first').text();
+                        
+                        fn_searchScore(studentNo);
+
+                        // 전체 선택 체크박스 해제
+                        $('#selectAll').prop('checked', false);
+                    });
+
                 }
             },
             error: function(xhr, status, error) {
@@ -516,36 +570,41 @@
     }
     
     function fn_searchScore(studentNo) {
-
         var param = {
-        		studentNo: studentNo
+            studentNo: studentNo
         };
 
         $.ajax({
-            url: '/student/acasysStudentScoreSearch.do', 
+            url: '/student/acasysStudentScoreSearch.do',
             type: 'POST',
             data: param,
             dataType: "json",
             success: function(response) {
-            	
                 var data = response.studentScore; 
                 var termData = response.termCd;    
-            	check = 1;
+                check = 1;
                 
-           	 	$('#studentScoreTbody').empty();
-                 
+                $('#studentScoreTbody').empty();
+                $('#studentScoreTfoot').empty(); // tfoot 초기화
+                
                 if (data === "E") {
-					
                     var rows = '<tr><td colspan="11" class="no-data">조회된 데이터가 없습니다.</td></tr>';
                     $('#studentScoreTbody').append(rows);
                     return;
-                    
                 } else {
                     var rows = '';
+                    var totalKorean = 0;
+                    var totalMath = 0;
+                    var totalEnglish = 0;
+                    var totalSociety = 0;
+                    var totalHistory = 0;
+                    var totalScience = 0;
+                    var studentCount = data.length; // 학생 수
+
                     for (var i = 0; i < data.length; i++) {
                         var studentScore = data[i];
                         rows += '<tr>';
-                        rows += '<td style="text-align: center; width: 60px;"><input type="checkbox" class="student-checkbox"></td>'; // 체크박스 추가
+                        rows += '<td style="text-align: center; width: 60px;"><input type="checkbox" class="student-checkbox"></td>';
                         rows += '<td hidden><input id="stuentNo" type="text" value=' + studentScore.studentNo + '></td>';
                         rows += '<td hidden><input id="stuentName" type="text" value=' + studentScore.studentName + '></td>';
                         rows += '<td hidden><input id="scoreNo" type="text" value=' + studentScore.scoreNo + '></td>';
@@ -558,18 +617,46 @@
                             rows += '<option value="' + term.cd + '" ' + selected + '>' + term.cdNm + '</option>';
                         }
                         rows += '</select></td>';
-                        rows += '<td><input id="korean" type="text" style="width: 50px;" value=' + studentScore.korean + '></td>';
-                        rows += '<td><input id="math" type="text" style="width: 50px;" value=' + studentScore.math + '></td>';
-                        rows += '<td><input id="english" type="text" style="width: 50px;" value=' + studentScore.english + '></td>';
-                        rows += '<td><input id="society" type="text" style="width: 50px;" value=' + studentScore.society + '></td>';
-                        rows += '<td><input id="history" type="text" style="width: 50px;" value=' + studentScore.history + '></td>';
-                        rows += '<td><input id="science" type="text" style="width: 50px;" value=' + studentScore.science + '></td>';
-                        rows += '<td hidden><input id="gubunVal" type="text" value="update"></td>'; 
+                        rows += '<td><input id="korean" type="text" style="width: 100%;" value=' + studentScore.korean + '></td>';
+                        rows += '<td><input id="math" type="text" style="width: 100%;" value=' + studentScore.math + '></td>';
+                        rows += '<td><input id="english" type="text" style="width: 100%;" value=' + studentScore.english + '></td>';
+                        rows += '<td><input id="society" type="text" style="width: 100%;" value=' + studentScore.society + '></td>';
+                        rows += '<td><input id="history" type="text" style="width: 100%;" value=' + studentScore.history + '></td>';
+                        rows += '<td><input id="science" type="text" style="width: 100%;" value=' + studentScore.science + '></td>';
+                        rows += '<td hidden><input id="gubunVal" type="text" value="update"></td>';
                         rows += '</tr>';
+
+                        // 점수 합계 계산
+                        totalKorean += parseFloat(studentScore.korean) || 0;
+                        totalMath += parseFloat(studentScore.math) || 0;
+                        totalEnglish += parseFloat(studentScore.english) || 0;
+                        totalSociety += parseFloat(studentScore.society) || 0;
+                        totalHistory += parseFloat(studentScore.history) || 0;
+                        totalScience += parseFloat(studentScore.science) || 0;
                     }
-                    
+
                     $('#studentScoreTbody').append(rows);
-                    
+
+                    // 평균 계산
+                    var avgKorean = (studentCount > 0) ? (totalKorean / studentCount).toFixed(2) : 0;
+                    var avgMath = (studentCount > 0) ? (totalMath / studentCount).toFixed(2) : 0;
+                    var avgEnglish = (studentCount > 0) ? (totalEnglish / studentCount).toFixed(2) : 0;
+                    var avgSociety = (studentCount > 0) ? (totalSociety / studentCount).toFixed(2) : 0;
+                    var avgHistory = (studentCount > 0) ? (totalHistory / studentCount).toFixed(2) : 0;
+                    var avgScience = (studentCount > 0) ? (totalScience / studentCount).toFixed(2) : 0;
+
+                    // tfoot에 평균 추가
+                    var tfootRows = '<tr>';
+                    tfootRows += '<td colspan="4" style="text-align: center;">평균</td>'; // 평균 셀, colspan 4로 설정
+                    tfootRows += '<td><input type="text" style="width: 50px;" value="' + avgKorean + '" readonly></td>';
+                    tfootRows += '<td><input type="text" style="width: 50px;" value="' + avgMath + '" readonly></td>';
+                    tfootRows += '<td><input type="text" style="width: 50px;" value="' + avgEnglish + '" readonly></td>';
+                    tfootRows += '<td><input type="text" style="width: 50px;" value="' + avgSociety + '" readonly></td>';
+                    tfootRows += '<td><input type="text" style="width: 50px;" value="' + avgHistory + '" readonly></td>';
+                    tfootRows += '<td><input type="text" style="width: 50px;" value="' + avgScience + '" readonly></td>';
+                    tfootRows += '</tr>';
+
+                    $('#studentScoreTfoot').append(tfootRows);
                 }
             },
             error: function(xhr, status, error) {  
@@ -628,6 +715,7 @@
 					success : function(response) {
 						if ( response.status === 'success') {
 							alert('성적 등록 을(를) 성공하였습니다.');
+							location.reload();
 						} else {
 							alert('성적 등록 을(를) 실패하였습니다.');
 						}
@@ -664,12 +752,12 @@
             newRow += '<option value="' + term.cd + '">' + term.cdNm + '</option>';
         }
         newRow += '</select></td>';
-        newRow += '<td><input id="korean" type="text" style="width:50px;"></td>'; // 국어 점수 입력란
-        newRow += '<td><input id="math" type="text" style="width:50px;"></td>'; // 수학 점수 입력란
-        newRow += '<td><input id="english" type="text" style="width:50px;"></td>'; // 영어 점수 입력란
-        newRow += '<td><input id="society" type="text" style="width:50px;"></td>'; // 사회 점수 입력란
-        newRow += '<td><input id="history" type="text" style="width:50px;"></td>'; // 역사 점수 입력란
-        newRow += '<td><input id="science" type="text" style="width:50px;"></td>'; // 과학 점수 입력란 
+        newRow += '<td><input id="korean" type="text" style="width:100%;"></td>'; // 국어 점수 입력란
+        newRow += '<td><input id="math" type="text" style="width:100%;"></td>'; // 수학 점수 입력란
+        newRow += '<td><input id="english" type="text" style="width:100%;"></td>'; // 영어 점수 입력란
+        newRow += '<td><input id="society" type="text" style="width:100%;"></td>'; // 사회 점수 입력란
+        newRow += '<td><input id="history" type="text" style="width:100%;"></td>'; // 역사 점수 입력란
+        newRow += '<td><input id="science" type="text" style="width:100%;"></td>'; // 과학 점수 입력란 
         newRow += '<td hidden><input id="gubunVal" type="text" value="insert"></td>'; // 과학 점수 입력란
         newRow += '</tr>';
 
@@ -744,27 +832,31 @@
 	 	<button type="button" id="addRowBtn">+</button>
 	</div>
    <!-- 아래쪽에 세부정보 테이블 추가 -->
-   <div class="table-container-sub">
-        <table class="details-table">
-            <thead>
-                <tr>
-                	<th style="text-align: center; width: 36px;"><input type="checkbox" id="selectAll" onclick="toggleCheckboxes(this)"></th>
-                    <th style="width: 68px;">시작날짜<span style="color: red;"> *</span></th> 
-                    <th style="width: 68px;">종료날짜<span style="color: red;"> *</span></th> 
-                    <th style="width: 50px;">학기</th>  
-                    <th style="width: 50px;">국어</th> 
-                    <th style="width: 50px;">수학</th> 
-                    <th style="width: 50px;">영어</th>
-                    <th style="width: 50px;">사회</th>
-                    <th style="width: 50px;">역사</th>
-                    <th style="width: 50px;">과학</th>
-                </tr>
-            </thead>
-            <tbody id="studentScoreTbody">
-				<tr><td colspan="11" class="no-data">조회된 데이터가 없습니다.</td></tr>
-            </tbody>
-        </table>
-    </div>
+	<div class="table-container-sub">
+	    <table class="details-table">
+	        <thead>
+	            <tr>
+	                <th style="text-align: center; width: 36px;">
+	                    <input type="checkbox" id="selectAll" onclick="toggleCheckboxes(this)">
+	                </th>
+	                <th style="width: 68px;">시작날짜<span style="color: red;"> *</span></th> 
+	                <th style="width: 68px;">종료날짜<span style="color: red;"> *</span></th> 
+	                <th style="width: 50px;">학기</th>  
+	                <th style="width: 50px;">국어</th> 
+	                <th style="width: 50px;">수학</th> 
+	                <th style="width: 50px;">영어</th>
+	                <th style="width: 50px;">사회</th>
+	                <th style="width: 50px;">역사</th>
+	                <th style="width: 50px;">과학</th>
+	            </tr>
+	        </thead>
+	        <tbody id="studentScoreTbody">
+	            <tr><td colspan="11" class="no-data">조회된 데이터가 없습니다.</td></tr>
+	        </tbody>
+	        <tfoot id="studentScoreTfoot">
+	        </tfoot>
+	    </table>
+	</div>
     <div class="button-container">
     	<button type="button" id="registScoreBtn">성적등록</button>
     	<button type="button" id="delScoreBtn">성적삭제</button>

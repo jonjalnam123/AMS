@@ -124,8 +124,8 @@
 <body>
     <div class="login-container">
         <h2>빵승의 국어 여행</h2>
-        <input id="adminId" name="adminId" type="text" placeholder="아이디" value="황승희">
-        <input id="adminPw" name="adminPw" type="password" placeholder="비밀번호" value="ghkdtmdgml123"> 
+        <input id="adminId" name="adminId" type="text" placeholder="아이디" value="">
+        <input id="adminPw" name="adminPw" type="password" placeholder="비밀번호" value=""> 
         <button type="button" id="loginBtn">로그인</button>
     </div>    
 </body>

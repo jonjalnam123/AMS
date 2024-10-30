@@ -5,8 +5,8 @@ public class AcasysStudentInfoVO {
 	private String studentNo;
 	private String studentName;
 	private String studentAge;
-	private String studentMiddleSchool;
-	private String studentHighSchool;
+	private String studentSchool;
+	private String studentWantedSchool;
 	private String studentSchoolGubunCd;
 	private String studentSchoolGubunNm;
 	private String studentSchoolMajorCd;
@@ -48,20 +48,20 @@ public class AcasysStudentInfoVO {
 		this.studentAge = studentAge;
 	}
 
-	public String getStudentMiddleSchool() {
-		return studentMiddleSchool;
+	public String getStudentSchool() {
+		return studentSchool;
 	}
 
-	public void setStudentMiddleSchool(String studentMiddleSchool) {
-		this.studentMiddleSchool = studentMiddleSchool;
+	public void setStudentSchool(String studentSchool) {
+		this.studentSchool = studentSchool;
 	}
 
-	public String getStudentHighSchool() {
-		return studentHighSchool;
+	public String getStudentWantedSchool() {
+		return studentWantedSchool;
 	}
 
-	public void setStudentHighSchool(String studentHighSchool) {
-		this.studentHighSchool = studentHighSchool;
+	public void setStudentWantedSchool(String studentWantedSchool) {
+		this.studentWantedSchool = studentWantedSchool;
 	}
 
 	public String getStudentSchoolGubunCd() {
@@ -152,6 +152,14 @@ public class AcasysStudentInfoVO {
 		this.studentNote = studentNote;
 	}
 
+	public String getStudentDelYn() {
+		return studentDelYn;
+	}
+
+	public void setStudentDelYn(String studentDelYn) {
+		this.studentDelYn = studentDelYn;
+	}
+
 	public String getRegUserId() {
 		return regUserId;
 	}
@@ -184,24 +192,16 @@ public class AcasysStudentInfoVO {
 		this.updDttm = updDttm;
 	}
 
-	public String getStudentDelYn() {
-		return studentDelYn;
-	}
-
-	public void setStudentDelYn(String studentDelYn) {
-		this.studentDelYn = studentDelYn;
-	}
-
 	@Override
 	public String toString() {
 		return "AcasysStudentInfoVO [studentNo=" + studentNo + ", studentName=" + studentName + ", studentAge="
-				+ studentAge + ", studentMiddleSchool=" + studentMiddleSchool + ", studentHighSchool="
-				+ studentHighSchool + ", studentSchoolGubunCd=" + studentSchoolGubunCd + ", studentSchoolGubunNm="
-				+ studentSchoolGubunNm + ", studentSchoolMajorCd=" + studentSchoolMajorCd + ", studentSchoolMajorNm="
-				+ studentSchoolMajorNm + ", studentTierStatusCd=" + studentTierStatusCd + ", studentTierStatusNm="
-				+ studentTierStatusNm + ", studentPostCd=" + studentPostCd + ", studentAdd=" + studentAdd
-				+ ", studentAddDetail=" + studentAddDetail + ", studentPhone=" + studentPhone + ", studentNote="
-				+ studentNote + ", studentDelYn=" + studentDelYn + ", regUserId=" + regUserId + ", regDttm=" + regDttm
+				+ studentAge + ", studentSchool=" + studentSchool + ", studentWantedSchool=" + studentWantedSchool
+				+ ", studentSchoolGubunCd=" + studentSchoolGubunCd + ", studentSchoolGubunNm=" + studentSchoolGubunNm
+				+ ", studentSchoolMajorCd=" + studentSchoolMajorCd + ", studentSchoolMajorNm=" + studentSchoolMajorNm
+				+ ", studentTierStatusCd=" + studentTierStatusCd + ", studentTierStatusNm=" + studentTierStatusNm
+				+ ", studentPostCd=" + studentPostCd + ", studentAdd=" + studentAdd + ", studentAddDetail="
+				+ studentAddDetail + ", studentPhone=" + studentPhone + ", studentNote=" + studentNote
+				+ ", studentDelYn=" + studentDelYn + ", regUserId=" + regUserId + ", regDttm=" + regDttm
 				+ ", updUserId=" + updUserId + ", updDttm=" + updDttm + "]";
 	}
 

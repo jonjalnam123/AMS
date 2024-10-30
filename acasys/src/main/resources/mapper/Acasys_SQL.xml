@@ -26,14 +26,14 @@
 				   CAST(a.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
 				 , a.STUDENT_NAME
 				 , a.STUDENT_AGE
-				 , a.STUDENT_MIDDLE_SCHOOL
-				 , a.STUDENT_HIGH_SCHOOL 
+				 , a.STUDENT_SCHOOL
+				 , a.STUDENT_WANTED_SCHOOL 
 				 , a.STUDENT_SCHOOL_GUBUN_CD
-				 , b.CD_NM AS STUDENT_SCHOOL_GUBUN_NM
+				 , ( CASE WHEN b.CD_NM = '선택' THEN '' ELSE b.CD_NM END ) AS STUDENT_SCHOOL_GUBUN_NM
 				 , a.STUDENT_SCHOOL_MAJOR_CD
-				 , c.CD_NM AS STUDENT_SCHOOL_MAJOR_NM
+				 , ( CASE WHEN c.CD_NM = '선택' THEN '' ELSE c.CD_NM END ) AS STUDENT_SCHOOL_MAJOR_NM
 				 , a.STUDENT_TIER_STATUS_CD
-				 , d.CD_NM AS STUDENT_TIER_STATUS_NM
+				 , ( CASE WHEN d.CD_NM = '선택' THEN '' ELSE d.CD_NM END ) AS STUDENT_TIER_STATUS_NM
 				 , a.STUDENT_POST_CD  
 				 , a.STUDENT_ADD
 				 , a.STUDENT_ADD_DETAIL  
@@ -63,14 +63,14 @@
 				   CAST(a.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
 				 , a.STUDENT_NAME
 				 , a.STUDENT_AGE
-				 , a.STUDENT_MIDDLE_SCHOOL
-				 , a.STUDENT_HIGH_SCHOOL 
+				 , a.STUDENT_SCHOOL
+				 , a.STUDENT_WANTED_SCHOOL 
 				 , a.STUDENT_SCHOOL_GUBUN_CD
-				 , b.CD_NM AS STUDENT_SCHOOL_GUBUN_NM
+				 , ( CASE WHEN b.CD_NM = '선택' THEN '' ELSE b.CD_NM END ) AS STUDENT_SCHOOL_GUBUN_NM
 				 , a.STUDENT_SCHOOL_MAJOR_CD
-				 , c.CD_NM AS STUDENT_SCHOOL_MAJOR_NM
-				 , a.STUDENT_TIER_STATUS_CD 
-				 , d.CD_NM AS STUDENT_TIER_STATUS_NM 
+				 , ( CASE WHEN c.CD_NM = '선택' THEN '' ELSE c.CD_NM END ) AS STUDENT_SCHOOL_MAJOR_NM
+				 , a.STUDENT_TIER_STATUS_CD
+				 , ( CASE WHEN d.CD_NM = '선택' THEN '' ELSE d.CD_NM END ) AS STUDENT_TIER_STATUS_NM
 				 , a.STUDENT_POST_CD
 				 , a.STUDENT_ADD
 				 , a.STUDENT_ADD_DETAIL  
@@ -80,11 +80,15 @@
 	  	   FROM TB_STUDENT_INFO a
 	  	    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) b
 	  	      ON a.STUDENT_SCHOOL_GUBUN_CD = b.CD
-	  	    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) c
+	  	    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) c  
 	  	      ON a.STUDENT_SCHOOL_MAJOR_CD = c.CD
   		    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) d
-	  	      ON a.STUDENT_TIER_STATUS_CD = d.CD  
-	  	 WHERE a.STUDENT_NAME LIKE CONCAT('%', #{studenNmSearch}, '%')
+	  	      ON a.STUDENT_TIER_STATUS_CD = d.CD    
+	  	 WHERE 1=1
+	  	 	 AND (a.STUDENT_NAME LIKE CONCAT('%', #{studenNmSearch}, '%')
+	  	 	 		OR a.STUDENT_SCHOOL LIKE CONCAT('%', #{studenNmSearch}, '%')
+	  	 	 		OR a.STUDENT_WANTED_SCHOOL LIKE CONCAT('%', #{studenNmSearch}, '%')
+	  	 	 		OR a.STUDENT_AGE LIKE CONCAT('%', #{studenNmSearch}, '%') ) 
 	  	     AND a.STUDENT_DEL_YN = 'N'
 	  	 ORDER BY STUDENT_NO DESC 
 	</select>
@@ -231,8 +235,8 @@
 		     STUDENT_NO
 		   , STUDENT_NAME
 		   , STUDENT_AGE
-		   , STUDENT_MIDDLE_SCHOOL
-		   , STUDENT_HIGH_SCHOOL
+		   , STUDENT_SCHOOL
+		   , STUDENT_WANTED_SCHOOL
 		   , STUDENT_SCHOOL_GUBUN_CD
 		   , STUDENT_SCHOOL_MAJOR_CD
 		   , STUDENT_TIER_STATUS_CD
@@ -250,8 +254,8 @@
 	         (SELECT IFNULL(MAX(CAST(STUDENT_NO AS UNSIGNED)), 0) + 1 AS STUDENT_NO FROM (SELECT STUDENT_NO FROM TB_STUDENT_INFO) AS TEMP)
 		   , #{studentName}	  
 		   , #{studentAge}	
-		   , #{studentMiddleSchool}	
-		   , #{studentHighSchool}	  
+		   , #{studentSchool}	
+		   , #{studentWantedSchool}	  
 		   , #{studentSchoolGubunCd}	
 		   , #{studentSchoolMajorCd}	
 		   , #{studentTierStatusCd}	
@@ -340,8 +344,8 @@
 				   CAST(a.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
 				 , a.STUDENT_NAME
 				 , a.STUDENT_AGE
-				 , a.STUDENT_MIDDLE_SCHOOL
-				 , a.STUDENT_HIGH_SCHOOL 
+				 , a.STUDENT_SCHOOL
+				 , a.STUDENT_WANTED_SCHOOL 
 				 , a.STUDENT_SCHOOL_GUBUN_CD
 				 , b.CD_NM AS STUDENT_SCHOOL_GUBUN_NM
 				 , a.STUDENT_SCHOOL_MAJOR_CD
@@ -371,8 +375,8 @@
 		     	   TB_STUDENT_INFO
 		     SET STUDENT_NAME = #{studentName}
 			     , STUDENT_AGE = #{studentAge}
-			     , STUDENT_MIDDLE_SCHOOL = #{studentMiddleSchool}
-			     , STUDENT_HIGH_SCHOOL = #{studentHighSchool}
+			     , STUDENT_SCHOOL = #{studentSchool}
+			     , STUDENT_WANTED_SCHOOL = #{studentWantedSchool}
 			     , STUDENT_SCHOOL_GUBUN_CD = #{studentSchoolGubunCd}
 			     , STUDENT_SCHOOL_MAJOR_CD = #{studentSchoolMajorCd}
 			     , STUDENT_TIER_STATUS_CD = #{studentTierStatusCd}

@@ -84,7 +84,7 @@
     .button-container {
         display: flex; 
         justify-content: flex-end; 
-        margin-top: 20px; 
+        margin-top: 10px; 
     }
 
     button {
@@ -173,14 +173,14 @@ $(document).ready(function() {
 	            studentName : $('#studentName').val(),
 	            studentAge : $('#studentAge').val(),
 	            studentPhone : $('#studentPhone').val(),
-	            studentMiddleSchool : $('#studentMiddleSchool').val(),
-	            studentHighSchool : $('#studentHighSchool').val(),
+	            studentSchool : $('#studentSchool').val(),
+	            studentWantedSchool : $('#studentWantedSchool').val(),
 	            studentSchoolGubunCd : $('#studentSchoolGubunCd').val(),
 	            studentSchoolMajorCd : studentSchoolMajorCd,
 	            studentTierStatusCd : $('#studentTierStatusCd').val(),
 	            studentPostCd : $('#studentPostCd').val(),
 	            studentAdd : $('#studentAdd').val(),
-	            studentAddDetail : $('#studentAddDetail').val(),
+	            studentAddDetail : $('#studentAddDetail').val(),  
 	            studentNote : $('#studentNote').val()
 	        };
 	
@@ -206,17 +206,6 @@ $(document).ready(function() {
     		}
 		
 		});
-    
-	    $('#studentName, #studentMiddleSchool, #studentHighSchool').on('keypress', function(event) {
-	        // 입력된 키가 한글이 아닌 경우
-	        var char = String.fromCharCode(event.which);
-	        var koreanRegex = /^[가-힣]$/;
-	
-	        // 한글이 아닌 경우 입력을 막음
-	        if (!koreanRegex.test(char)) {
-	            event.preventDefault();
-	        }
-	    });
 	    
 	    $('#studentSchoolGubunCd').on('change', function(){
 				
@@ -351,12 +340,16 @@ $(document).ready(function() {
                     <td><input id="studentPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력"></td>
                 </tr>
                 <tr>
-                    <td>중학교</td>
-                    <td><input id="studentMiddleSchool" type="text" placeholder="중학교 입력" maxlength="10"></td>
+                    <td>비상연락처<span class="required">*</span></td>
+                    <td><input id="studentEmergencyPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력"></td>
                 </tr>
                 <tr>
-                    <td>고등학교</td>
-                    <td><input id="studentHighSchool" type="text" placeholder="고등학교 입력" maxlength="10"></td>
+                    <td>소속학교</td>
+                    <td><input id="studentSchool" type="text" placeholder="소속학교 입력" maxlength="10"></td>
+                </tr>
+                <tr>
+                    <td>지망학교</td>
+                    <td><input id="studentWantedSchool" type="text" placeholder="지망학교 입력" maxlength="10"></td>
                 </tr>
                 <tr>
                     <td>계열</td>

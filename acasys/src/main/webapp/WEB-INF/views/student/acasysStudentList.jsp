@@ -541,8 +541,16 @@
                     return;
                 } else {
                     var rows = '';
-                    for (var i = 0; i < data.length; i++) {
+                    var majorVal
+                    for (var i = 0; i < data.length; i++) {          	
+                    	
                         var student = data[i];
+                    	if ( student.studentSchoolMajorNm === null ) {
+                    		schoolMajorVal = '';
+                    	} else if ( student.studentSchoolMajorNm !== null ) {
+                    		schoolMajorVal = student.studentSchoolMajorNm
+                    	}
+                        
                         rows += '<tr>';
                         rows += '<td hidden>' + student.studentNo + '</td>';
                         rows += '<td class="tbBtn">';
@@ -551,12 +559,12 @@
                         rows += '<button type="submit" id="detailBtn">' + student.studentName + '</button>';  
                         rows +=	'</form>';
                         rows +=	'</td>';
-                        rows += '<td style="text-align: center;">' + student.studentAge + '</td>';
+                        rows += '<td style="text-align: center;">' + student.studentAge + ".Lv" + '</td>';
                         rows += '<td style="text-align: center;">' + student.studentPhone + '</td>';
-                        rows += '<td>' + student.studentMiddleSchool + '</td>';
-                        rows += '<td>' + student.studentHighSchool + '</td>';
+                        rows += '<td>' + student.studentSchool + '</td>';
+                        rows += '<td>' + student.studentWantedSchool + '</td>';
                         rows += '<td style="text-align: center;">' + student.studentSchoolGubunNm + '</td>';
-                        rows += '<td style="text-align: center;">' + student.studentSchoolMajorNm + '</td>';
+                        rows += '<td style="text-align: center;">' + schoolMajorVal + '</td>';
                         rows += '<td style="text-align: center;">' + student.studentTierStatusNm + '</td>';
                         rows += '</tr>';
                     }
@@ -881,7 +889,7 @@
 <body>
 <div class="wrapper">
     <div class="search-container">
-        <input type="text" id="studenNmSearch" placeholder="이름">
+        <input type="text" id="studenNmSearch" placeholder="이름/ 나이/ 소속학교 / 지망학교">
         <button type="button" id="searchBtn">검색</button>
         <div class="count-info">총 ${count} 건</div>
         <span class="admin-message">${adminId} 님 반갑습니다.</span>
@@ -894,8 +902,8 @@
 			        <th style="width: 100px;">이름</th>
 			        <th style="width: 50px;">나이</th>
 			        <th style="width: 100px;">휴대폰</th>
-			        <th style="width: 150px;">중학교</th>
-			        <th style="width: 150px;">고등학교</th>
+			        <th style="width: 150px;">소속학교</th>
+			        <th style="width: 150px;">지망학교</th>
 			        <th style="width: 50px;">계열</th>
 			        <th style="width: 50px;">전공</th>
 			        <th style="width: 50px;">성적상태</th>
@@ -917,8 +925,8 @@
 						        </td>
 	                            <td style="text-align: center;">${student.studentAge}.Lv</td> 
 	                            <td style="text-align: center;">${student.studentPhone}</td>
-	                            <td>${student.studentMiddleSchool}</td>
-	                            <td>${student.studentHighSchool}</td>
+	                            <td>${student.studentSchool}</td>
+	                            <td>${student.studentWantedSchool}</td>
 	                            <td style="text-align: center;">${student.studentSchoolGubunNm}</td>
 	                            <td style="text-align: center;">${student.studentSchoolMajorNm}</td>
 	                            <td style="text-align: center;">${student.studentTierStatusNm}</td> 

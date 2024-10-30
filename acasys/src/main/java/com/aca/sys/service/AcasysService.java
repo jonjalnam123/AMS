@@ -183,4 +183,6 @@ public interface AcasysService {
 
 	List<AcasysStudentScoreVO> acasysStudentScoreExcel(String studentNo);
 
+	List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal);
+
 }

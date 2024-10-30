@@ -167,6 +167,25 @@
 		  WHERE BASS_CD_VAL = #{schoolMajorVal}  
 	</select>
 	
+	<select id="schoolVocatiMajorCd" parameterType="String" resultType="AcasysCommCdVo">
+		SELECT /* acasysStudentRegist.schoolGubunCd */       
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD
+		  WHERE BASS_CD_VAL = #{schoolVocatiMajorVal}  
+	</select>
+	
 	<select id="tierCd" parameterType="String" resultType="AcasysCommCdVo">  
 		SELECT /* acasysStudentRegist.schoolMajorCd */       
 					CD

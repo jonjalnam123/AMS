@@ -186,5 +186,7 @@ public interface AcasysMapper {
 
 	List<AcasysStudentScoreVO> acasysStudentScoreExcel(String studentNo);
 
+	List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal);
+
 
 }

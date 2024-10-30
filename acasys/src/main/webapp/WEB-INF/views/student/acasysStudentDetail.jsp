@@ -150,6 +150,22 @@ $(document).ready(function() {
     });
 	
     $('#updateBtn').on('click', function() {
+    	
+    	var studentSchoolGubunCd = $("#studentSchoolGubunCd").val()
+    	var studentSchoolMajorCd  = ""
+    	
+    	if ( studentSchoolGubunCd === "schoolgubun.academic" ) {
+    		
+			 studentSchoolMajorCd = $('#studentSchoolMajorCd').val();
+			 
+    	} else if ( studentSchoolGubunCd === "schoolgubun.vocational" ) {
+    		
+    		 studentSchoolMajorCd = $('#schoolVocatiMajorCd').val();
+    		 alert(studentSchoolMajorCd);
+    		 
+    	} else {
+    		studentSchoolMajorCd = "";
+    	}
 		
 		if ( fn_valiCheck() ) {
 			
@@ -161,7 +177,7 @@ $(document).ready(function() {
 	            studentMiddleSchool : $('#studentMiddleSchool').val(),
 	            studentHighSchool : $('#studentHighSchool').val(),
 	            studentSchoolGubunCd : $('#studentSchoolGubunCd').val(),
-	            studentSchoolMajorCd : $('#studentSchoolMajorCd').val(),
+	            studentSchoolMajorCd : studentSchoolMajorCd,
 	            studentTierStatusCd : $('#studentTierStatusCd').val(),
 	            studentPostCd : $('#studentPostCd').val(),
 	            studentAdd : $('#studentAdd').val(),
@@ -192,6 +208,35 @@ $(document).ready(function() {
 		
 		});
     
+	    $('#studentName, #studentMiddleSchool, #studentHighSchool').on('keypress', function(event) {
+	        // 입력된 키가 한글이 아닌 경우
+	        var char = String.fromCharCode(event.which);
+	        var koreanRegex = /^[가-힣]$/;
+	
+	        // 한글이 아닌 경우 입력을 막음
+	        if (!koreanRegex.test(char)) {
+	            event.preventDefault();
+	        }
+	    });
+	    
+	    $('#studentSchoolGubunCd').on('change', function(){
+			
+	    	var studentSchoolGubunCd = $("#studentSchoolGubunCd").val()
+	    	$('#studentSchoolMajorCdSelect').attr('hidden', true);
+	    	$('#schoolVocatiMajorCdSelect').attr('hidden', true);
+	    	
+	    	if ( studentSchoolGubunCd === "schoolgubun.academic" ) {
+	    		$('#studentSchoolMajorCd').removeAttr('hidden');
+	    		$('#schoolVocatiMajorCd').attr('hidden', true);
+	    	} else if ( studentSchoolGubunCd === "schoolgubun.vocational" ) {
+	    		$('#schoolVocatiMajorCd').removeAttr('hidden');
+	    		$('#studentSchoolMajorCd').attr('hidden', true);
+	    	} else {
+	    		$('#studentSchoolMajorCd').attr('hidden', true);
+	    		$('#schoolVocatiMajorCd').attr('hidden', true);
+	    	}
+	    })
+
 	});
 
 	//다음 우편번호API
@@ -230,20 +275,29 @@ $(document).ready(function() {
 				}).open();
 	}
 
-	//입력길이제한
+	// 입력길이제한 및 특수문자 제한
 	function fn_validateInput(input, inputId) {
-		
-		if ( inputId === 'studentAge') {
-			if (input.value.length > 2) {
-				input.value = input.value.slice(0, 2);
-			}
-		}
-		
-		if ( inputId === 'studentPhone') {
-			if (input.value.length > 11) {
-				input.value = input.value.slice(0, 11);
-			}
-		}
+	    // 특수문자를 허용하지 않는 정규 표현식
+	    const specialCharRegex = /[^0-9]/g;
+	   	    
+	    if (inputId === 'studentAge') {
+	        // 길이 제한
+	        if (input.value.length > 2) {
+	            input.value = input.value.slice(0, 2);
+	        }
+	        // 특수문자 제거
+	        input.value = input.value.replace(specialCharRegex, '');
+	    }
+
+	    if (inputId === 'studentPhone') {
+	        // 길이 제한
+	        if (input.value.length > 11) {
+	            input.value = input.value.slice(0, 11);
+	        }
+	        // 특수문자 제거
+	        input.value = input.value.replace(specialCharRegex, '');
+	    }
+	    
 	}
 	
 	//입력체크
@@ -297,7 +351,7 @@ $(document).ready(function() {
                 </tr>
                 <tr>
                     <td>휴대폰<span class="required">*</span></td>
-                    <td><input id="studentPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="휴대폰 입력" value="${studentDetailList.studentPhone}"></td>
+                    <td><input id="studentPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력" value="${studentDetailList.studentPhone}"></td>
                 </tr>
                 <tr>
                     <td>중학교</td>
@@ -321,14 +375,35 @@ $(document).ready(function() {
                 </tr>
                 <tr>
                     <td>전공</td>
-                    <td>
-            	    	<select id="studentSchoolMajorCd">
-						    <c:forEach var="schoolMajor" items="${schoolMajorCd}">
-						        <option value="${schoolMajor.cd}" ${schoolMajor.cd == studentDetailList.studentSchoolMajorCd ? 'selected' : ''}>
-						            ${schoolMajor.cdNm}
+                    <td style="height: 44px;"> 
+	                    <c:if test="${studentDetailList.studentSchoolGubunCd == 'schoolgubun.academic'}">
+	            	    	<select id="studentSchoolMajorCdSelect">
+							    <c:forEach var="schoolMajor" items="${schoolMajorCd}">
+							        <option value="${schoolMajor.cd}" ${schoolMajor.cd == studentDetailList.studentSchoolMajorCd ? 'selected' : ''}>
+							            ${schoolMajor.cdNm}
+							        </option>
+							    </c:forEach>
+							</select>
+	                    </c:if>
+                        <c:if test="${studentDetailList.studentSchoolGubunCd == 'schoolgubun.vocational'}">
+               	    	<select id="schoolVocatiMajorCdSelect">
+						    <c:forEach var="schoolVocatiMajor" items="${schoolVocatiMajorCd}">
+						        <option value="${schoolVocatiMajor.cd}" ${schoolVocatiMajor.cd == studentDetailList.studentSchoolMajorCd ? 'selected' : ''}>
+						            ${schoolVocatiMajor.cdNm}
 						        </option>
 						    </c:forEach>
 						</select>
+						</c:if>
+                        <select id="studentSchoolMajorCd" hidden>
+                            <c:forEach var="schoolMajor" items="${schoolMajorCd}">
+                                <option value="${schoolMajor.cd}">${schoolMajor.cdNm}</option>
+                            </c:forEach>
+                        </select>
+                        <select id="schoolVocatiMajorCd" hidden>
+                            <c:forEach var="schoolVocatiMajor" items="${schoolVocatiMajorCd}">
+                                <option value="${schoolVocatiMajor.cd}">${schoolVocatiMajor.cdNm}</option>
+                            </c:forEach>
+                        </select>
                     </td>
                 </tr>
                 <tr>

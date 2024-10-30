@@ -305,9 +305,13 @@ public class AcasysController {
 		
 		String tierVal = "tier";
 		List<AcasysCommCdVo> tierCd = acasysService.tierCd(tierVal);
+		
+		String schoolVocatiMajorVal = "schoolvocatimajor";
+		List<AcasysCommCdVo> schoolVocatiMajorCd = acasysService.schoolVocatiMajorCd(schoolVocatiMajorVal);
 
 		model.addAttribute("schoolGubunCd", schoolGubunCd);
 		model.addAttribute("schoolMajorCd", schoolMajorCd);
+		model.addAttribute("schoolVocatiMajorCd", schoolVocatiMajorCd);
 		model.addAttribute("tierCd", tierCd);
 		
 		return "student/acasysStudentRegist";  
@@ -398,10 +402,15 @@ public class AcasysController {
 		String tierVal = "tier";
 		List<AcasysCommCdVo> tierCd = acasysService.tierCd(tierVal);
 		
+		
+		String schoolVocatiMajorVal = "schoolvocatimajor";
+		List<AcasysCommCdVo> schoolVocatiMajorCd = acasysService.schoolVocatiMajorCd(schoolVocatiMajorVal);
+		
 		model.addAttribute("schoolGubunCd", schoolGubunCd);
 		model.addAttribute("schoolMajorCd", schoolMajorCd);
 		model.addAttribute("tierCd", tierCd);
 		model.addAttribute("studentDetailList", studentDetailList);  
+		model.addAttribute("schoolVocatiMajorCd", schoolVocatiMajorCd);
 		
 		return "student/acasysStudentDetail";  
 	}
@@ -514,8 +523,30 @@ public class AcasysController {
           cell = row.createCell(8);
           cell.setCellValue(score.getScience());
           cell = row.createCell(9);
-          cell.setCellValue(score.getAverageScore());  
+          cell.setCellValue(score.getAverageScore()); 
       }
+      
+      //마지막 값 확인
+      int lastRowNum = rowNum;     
+      row = sheet.createRow(lastRowNum);
+      cell = row.createCell(0);
+      cell.setCellValue("");
+      cell = row.createCell(1);
+      cell.setCellValue("");
+      cell = row.createCell(2);
+      cell.setCellValue("과목평균"); 
+      cell = row.createCell(3);
+      cell.setCellValue(acasysStudentScoreVO.getAvgKorean());
+      cell = row.createCell(4);
+      cell.setCellValue(acasysStudentScoreVO.getAvgMath());
+      cell = row.createCell(5);
+      cell.setCellValue(acasysStudentScoreVO.getAvgEnglish());
+      cell = row.createCell(6);
+      cell.setCellValue(acasysStudentScoreVO.getAvgSociety());
+      cell = row.createCell(7);
+      cell.setCellValue(acasysStudentScoreVO.getAvgHistory());
+      cell = row.createCell(8);
+      cell.setCellValue(acasysStudentScoreVO.getAvgScience());
 
       Date today = new Date();
       SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
@@ -523,7 +554,7 @@ public class AcasysController {
       
       // 컨텐츠 타입과 파일명 지정
       response.setContentType("ms-vnd/excel"); 
-      response.setHeader("Content-Disposition", "attachment;filename=" + formattedDate + "score.xlsx");
+      response.setHeader("Content-Disposition", "attachment;filename=" + formattedDate + "_studentScore.xlsx");
 
       // Excel File Output
       wb.write(response.getOutputStream());    

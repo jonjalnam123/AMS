@@ -111,11 +111,25 @@
 	    background-color: #f1f1f1;
 	}	
 	
+	#studentScoreTbody input[type="number"], #studentScoreTfoot input[type="number"] {
+	    background-color: transparent; /* 배경색 투명 */
+	    border: none; /* 테두리 없음 */
+	    outline: none; /* 포커스 시 테두리 없음 */
+	    width: auto; /* 필요에 따라 너비 조정 */
+	}
+	
 	#studentScoreTbody input[type="text"], #studentScoreTfoot input[type="text"] {
 	    background-color: transparent; /* 배경색 투명 */
 	    border: none; /* 테두리 없음 */
 	    outline: none; /* 포커스 시 테두리 없음 */
 	    width: auto; /* 필요에 따라 너비 조정 */
+	}
+		
+		/* 스피너 숨기기 */
+	#studentScoreTbody input[type="number"]::-webkit-inner-spin-button,
+	#studentScoreTbody input[type="number"]::-webkit-outer-spin-button {
+	    -webkit-appearance: none; /* Chrome, Safari, Edge */
+	    margin: 0; /* 여백 없애기 */
 	}
 	
 	tfoot {
@@ -493,7 +507,7 @@
         $('#studentInfoTbody').on('click', 'tr', function() {
             $(this).toggleClass('selected').siblings().removeClass('selected');
         });
-        
+
     });
 
     function fn_searchNm() {
@@ -633,12 +647,12 @@
                             rows += '<option value="' + term.cd + '" ' + selected + '>' + term.cdNm + '</option>';
                         }
                         rows += '</select></td>';
-                        rows += '<td><input id="korean" type="text" style="width: 100%;" value=' + studentScore.korean + '></td>';
-                        rows += '<td><input id="math" type="text" style="width: 100%;" value=' + studentScore.math + '></td>';
-                        rows += '<td><input id="english" type="text" style="width: 100%;" value=' + studentScore.english + '></td>';
-                        rows += '<td><input id="society" type="text" style="width: 100%;" value=' + studentScore.society + '></td>';
-                        rows += '<td><input id="history" type="text" style="width: 100%;" value=' + studentScore.history + '></td>';
-                        rows += '<td><input id="science" type="text" style="width: 100%;" value=' + studentScore.science + '></td>';
+                        rows += '<td><input id="korean" class="number-input" type="number" min="0" max="100" style="width: 100%;" value=' + studentScore.korean + '></td>';
+                        rows += '<td><input id="math" class="number-input" type="number" min="0" max="100" style="width: 100%;" value=' + studentScore.math + '></td>';
+                        rows += '<td><input id="english" class="number-input" type="number" min="0" max="100" style="width: 100%;" value=' + studentScore.english + '></td>';
+                        rows += '<td><input id="society" class="number-input" type="number" min="0" max="100" style="width: 100%;" value=' + studentScore.society + '></td>';
+                        rows += '<td><input id="history" class="number-input" type="number" min="0" max="100" style="width: 100%;" value=' + studentScore.history + '></td>';
+                        rows += '<td><input id="science" class="number-input" type="number" min="0" max="100" style="width: 100%;" value=' + studentScore.science + '></td>';
                         rows += '<td style="background-color: #f2f2f2;"><input id="averageScore" type="text" style="width: 100%;" value=' + studentScore.averageScore + '></td>';
                         rows += '<td hidden><input id="gubunVal" type="text" value="update"></td>';
                         rows += '</tr>';
@@ -719,6 +733,21 @@
                         $("#excelForm").submit();  
                     });
                     
+                    // 최대 자리수와 값 범위 제한
+                    $('.number-input').on('input', function() {
+                        // 최대 3자리로 제한
+                        if ($(this).val().length > 3) {
+                            $(this).val($(this).val().slice(0, 3));
+                        }
+                        
+                        // 입력값이 최소 0 최대 100을 초과하지 않도록 설정
+                        let value = parseInt($(this).val(), 10);
+                        if (value < 0) {
+                            $(this).val(0); // 최소값 0
+                        } else if (value > 100) {
+                            $(this).val(100); // 최대값 100
+                        }
+                    });
                 }
             },
             error: function(xhr, status, error) {  
@@ -814,12 +843,12 @@
             newRow += '<option value="' + term.cd + '">' + term.cdNm + '</option>';
         }
         newRow += '</select></td>';
-        newRow += '<td><input id="korean" type="text" style="width:100%;"></td>'; // 국어 점수 입력란
-        newRow += '<td><input id="math" type="text" style="width:100%;"></td>'; // 수학 점수 입력란
-        newRow += '<td><input id="english" type="text" style="width:100%;"></td>'; // 영어 점수 입력란
-        newRow += '<td><input id="society" type="text" style="width:100%;"></td>'; // 사회 점수 입력란
-        newRow += '<td><input id="history" type="text" style="width:100%;"></td>'; // 역사 점수 입력란
-        newRow += '<td><input id="science" type="text" style="width:100%;"></td>'; // 과학 점수 입력란 
+        newRow += '<td><input id="korean" class="number-input" type="number" min="0" max="100" style="width:100%;"></td>'; // 국어 점수 입력란
+        newRow += '<td><input id="math" class="number-input" type="number" min="0" max="100" style="width:100%;"></td>'; // 수학 점수 입력란
+        newRow += '<td><input id="english" class="number-input" type="number" min="0" max="100" style="width:100%;"></td>'; // 영어 점수 입력란
+        newRow += '<td><input id="society" class="number-input" type="number" min="0" max="100" style="width:100%;"></td>'; // 사회 점수 입력란
+        newRow += '<td><input id="history" class="number-input" type="number" min="0" max="100" style="width:100%;"></td>'; // 역사 점수 입력란
+        newRow += '<td><input id="science" class="number-input" type="number" min="0" max="100" style="width:100%;"></td>'; // 과학 점수 입력란 
         newRow += '<td style="background-color: #f2f2f2;"><input id="" type="text" style="width:100%;" readonly></td>';
         newRow += '<td hidden><input id="gubunVal" type="text" value="insert"></td>'; // 과학 점수 입력란
         newRow += '</tr>';
@@ -830,6 +859,22 @@
         // 추가된 행의 첫 번째 입력 필드에 포커스 설정
         var lastRowInput = $('#studentScoreTbody tr:last-child input[type="date"]').first();
         lastRowInput.focus();
+        
+        // 최대 자리수와 값 범위 제한
+        $('.number-input').on('input', function() {
+            // 최대 3자리로 제한
+            if ($(this).val().length > 3) {
+                $(this).val($(this).val().slice(0, 3));
+            }
+            
+            // 입력값이 최소 0 최대 100을 초과하지 않도록 설정
+            let value = parseInt($(this).val(), 10);
+            if (value < 0) {
+                $(this).val(0); // 최소값 0
+            } else if (value > 100) {
+                $(this).val(100); // 최대값 100
+            }
+        });
     }
 </script>
 </head>

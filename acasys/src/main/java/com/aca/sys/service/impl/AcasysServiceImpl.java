@@ -255,4 +255,10 @@ public class AcasysServiceImpl implements AcasysService {
 		return acasysMapper.acasysStudentScoreExcel(studentNo);
 	}
 	
+	@Override
+	public List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal) {
+		// TODO Auto-generated method stub
+		return acasysMapper.schoolVocatiMajorCd(schoolVocatiMajorVal);
+	}
+	
 }

@@ -38,6 +38,7 @@
 				 , a.STUDENT_ADD
 				 , a.STUDENT_ADD_DETAIL  
 				 , CONCAT(SUBSTRING(a.STUDENT_PHONE, 1, 3), '-', SUBSTRING(a.STUDENT_PHONE, 4, 4), '-', SUBSTRING(a.STUDENT_PHONE, 5, 4)) AS STUDENT_PHONE 
+				 , CONCAT(SUBSTRING(a.STUDENT_PARENTS_PHONE, 1, 3), '-', SUBSTRING(a.STUDENT_PARENTS_PHONE, 4, 4), '-', SUBSTRING(a.STUDENT_PARENTS_PHONE, 5, 4)) AS STUDENT_PARENTS_PHONE 
 				 , a.STUDENT_NOTE
 				 , a.STUDENT_DEL_YN
 	  	   FROM TB_STUDENT_INFO a
@@ -75,6 +76,7 @@
 				 , a.STUDENT_ADD
 				 , a.STUDENT_ADD_DETAIL  
 				 , CONCAT(SUBSTRING(a.STUDENT_PHONE, 1, 3), '-', SUBSTRING(a.STUDENT_PHONE, 4, 4), '-', SUBSTRING(a.STUDENT_PHONE, 5, 4)) AS STUDENT_PHONE
+				 , CONCAT(SUBSTRING(a.STUDENT_PARENTS_PHONE, 1, 3), '-', SUBSTRING(a.STUDENT_PARENTS_PHONE, 4, 4), '-', SUBSTRING(a.STUDENT_PARENTS_PHONE, 5, 4)) AS STUDENT_PARENTS_PHONE
 				 , a.STUDENT_NOTE
 				 , a.STUDENT_DEL_YN
 	  	   FROM TB_STUDENT_INFO a
@@ -244,6 +246,7 @@
 		   , STUDENT_ADD
 		   , STUDENT_ADD_DETAIL
 		   , STUDENT_PHONE
+		   , STUDENT_PARENTS_PHONE
 		   , STUDENT_NOTE
 		   , STUDENT_DEL_YN
 		   , REG_USER_ID
@@ -263,6 +266,7 @@
 		   , #{studentAdd}	
 		   , #{studentAddDetail}	
 		   , #{studentPhone}	
+		   , #{studentParentsPhone}	
 		   , #{studentNote}	
 		   , 'N'
 		   , #{regUserId}	
@@ -356,6 +360,7 @@
 				 , a.STUDENT_ADD
 				 , a.STUDENT_ADD_DETAIL  
 				 , a.STUDENT_PHONE
+				 , a.STUDENT_PARENTS_PHONE
 				 , a.STUDENT_NOTE
 				 , a.STUDENT_DEL_YN
 	  	   FROM TB_STUDENT_INFO a
@@ -384,6 +389,7 @@
 			     , STUDENT_ADD = #{studentAdd}
 			     , STUDENT_ADD_DETAIL = #{studentAddDetail}
 			     , STUDENT_PHONE = #{studentPhone}
+			     , STUDENT_PARENTS_PHONE = #{studentParentsPhone}
 			     , STUDENT_NOTE = #{studentNote}
 			     , STUDENT_DEL_YN = 'N'
 			     , UPD_USER_ID = #{updUserId}

@@ -17,6 +17,7 @@ public class AcasysStudentInfoVO {
 	private String studentAdd;
 	private String studentAddDetail;
 	private String studentPhone;
+	private String studentParentsPhone;
 	private String studentNote;
 	private String studentDelYn;
 	private String regUserId;
@@ -144,6 +145,14 @@ public class AcasysStudentInfoVO {
 		this.studentPhone = studentPhone;
 	}
 
+	public String getStudentParentsPhone() {
+		return studentParentsPhone;
+	}
+
+	public void setStudentParentsPhone(String studentParentsPhone) {
+		this.studentParentsPhone = studentParentsPhone;
+	}
+
 	public String getStudentNote() {
 		return studentNote;
 	}
@@ -200,9 +209,9 @@ public class AcasysStudentInfoVO {
 				+ ", studentSchoolMajorCd=" + studentSchoolMajorCd + ", studentSchoolMajorNm=" + studentSchoolMajorNm
 				+ ", studentTierStatusCd=" + studentTierStatusCd + ", studentTierStatusNm=" + studentTierStatusNm
 				+ ", studentPostCd=" + studentPostCd + ", studentAdd=" + studentAdd + ", studentAddDetail="
-				+ studentAddDetail + ", studentPhone=" + studentPhone + ", studentNote=" + studentNote
-				+ ", studentDelYn=" + studentDelYn + ", regUserId=" + regUserId + ", regDttm=" + regDttm
-				+ ", updUserId=" + updUserId + ", updDttm=" + updDttm + "]";
+				+ studentAddDetail + ", studentPhone=" + studentPhone + ", studentParentsPhone=" + studentParentsPhone
+				+ ", studentNote=" + studentNote + ", studentDelYn=" + studentDelYn + ", regUserId=" + regUserId
+				+ ", regDttm=" + regDttm + ", updUserId=" + updUserId + ", updDttm=" + updDttm + "]";
 	}
 
 }

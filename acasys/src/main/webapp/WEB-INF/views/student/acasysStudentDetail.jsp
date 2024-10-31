@@ -84,7 +84,7 @@
     .button-container {
         display: flex; 
         justify-content: flex-end; 
-        margin-top: 20px; 
+        margin-top: 10px; 
     }
 
     button {
@@ -155,15 +155,29 @@ $(document).ready(function() {
     	var studentSchoolMajorCd  = ""
     	
     	if ( studentSchoolGubunCd === "schoolgubun.academic" ) {
-    		
-			 studentSchoolMajorCd = $('#studentSchoolMajorCd').val();
+
+			 if ($('#studentSchoolMajorCdSelect').is(':visible')) {
+
+					studentSchoolMajorCd = $('#studentSchoolMajorCdSelect').val();
+
+			 } else {
+
+				 	studentSchoolMajorCd = $('#studentSchoolMajorCd').val();
+
+			 }
 			 
     	} else if ( studentSchoolGubunCd === "schoolgubun.vocational" ) {
-    		
-    		 studentSchoolMajorCd = $('#schoolVocatiMajorCd').val();
 
-    	} else {
-    		studentSchoolMajorCd = "";
+			 if ($('#schoolVocatiMajorCdSelect').is(':visible')) {
+
+				 studentSchoolMajorCd = $('#schoolVocatiMajorCdSelect').val();
+				 
+			 } else {
+				 
+				 studentSchoolMajorCd = $('#schoolVocatiMajorCd').val();
+	
+			 }
+
     	}
 		
 		if ( fn_valiCheck() ) {
@@ -173,6 +187,7 @@ $(document).ready(function() {
 	            studentName : $('#studentName').val(),
 	            studentAge : $('#studentAge').val(),
 	            studentPhone : $('#studentPhone').val(),
+	            studentParentsPhone : $('#studentParentsPhone').val(),
 	            studentSchool : $('#studentSchool').val(),
 	            studentWantedSchool : $('#studentWantedSchool').val(),
 	            studentSchoolGubunCd : $('#studentSchoolGubunCd').val(),
@@ -286,6 +301,15 @@ $(document).ready(function() {
 	        input.value = input.value.replace(specialCharRegex, '');
 	    }
 	    
+	    if (inputId === 'studentParentsPhone') {
+	        // 길이 제한
+	        if (input.value.length > 11) {
+	            input.value = input.value.slice(0, 11);
+	        }
+	        // 특수문자 제거
+	        input.value = input.value.replace(specialCharRegex, '');
+	    }
+	    
 	}
 	
 	//입력체크
@@ -340,6 +364,10 @@ $(document).ready(function() {
                 <tr>
                     <td>휴대폰<span class="required">*</span></td>
                     <td><input id="studentPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력" value="${studentDetailList.studentPhone}"></td>
+                </tr>
+                <tr>
+                    <td>부모연락처</td>
+                    <td><input id="studentParentsPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력" value="${studentDetailList.studentParentsPhone}"></td>
                 </tr>
                 <tr>
                     <td>소속학교</td>

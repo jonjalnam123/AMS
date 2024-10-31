@@ -173,6 +173,7 @@ $(document).ready(function() {
 	            studentName : $('#studentName').val(),
 	            studentAge : $('#studentAge').val(),
 	            studentPhone : $('#studentPhone').val(),
+	            studentParentsPhone : $('#studentParentsPhone').val(),
 	            studentSchool : $('#studentSchool').val(),
 	            studentWantedSchool : $('#studentWantedSchool').val(),
 	            studentSchoolGubunCd : $('#studentSchoolGubunCd').val(),
@@ -284,6 +285,15 @@ $(document).ready(function() {
 	        input.value = input.value.replace(specialCharRegex, '');
 	    }
 	    
+	    if (inputId === 'studentParentsPhone') {
+	        // 길이 제한
+	        if (input.value.length > 11) {
+	            input.value = input.value.slice(0, 11);
+	        }
+	        // 특수문자 제거
+	        input.value = input.value.replace(specialCharRegex, '');
+	    }
+	    
 	}
 	
 	//입력체크
@@ -340,8 +350,8 @@ $(document).ready(function() {
                     <td><input id="studentPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력"></td>
                 </tr>
                 <tr>
-                    <td>비상연락처<span class="required">*</span></td>
-                    <td><input id="studentEmergencyPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력"></td>
+                    <td>부모연락처</td>
+                    <td><input id="studentParentsPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력"></td>
                 </tr>
                 <tr>
                     <td>소속학교</td>

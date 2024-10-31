@@ -259,6 +259,8 @@
 <script type="text/javascript">
 
 	var check = 0; // 행 추가시 체크사항
+    var studentNo; // 전역 변수
+    var avgKorean, avgMath, avgEnglish, avgSociety, avgHistory, avgScience;
 
     $(document).ready(function() {
 
@@ -418,9 +420,9 @@
         $('#delScoreBtn').on('click', function() {
         	
             var trCnt = $("#studentScoreTbody tr").length;
-            var test = $("#studentScoreTbody tr td").attr('class');
+            var noDataClass = $("#studentScoreTbody tr td").attr('class');
 			
-            if (trCnt <= 1 && test === 'no-data') {
+            if (trCnt <= 1 && noDataClass === 'no-data') {
             	alert('삭제할 성적이 없습니다.');
             	return;
             }
@@ -506,6 +508,33 @@
         // 행 클릭 이벤트 추가
         $('#studentInfoTbody').on('click', 'tr', function() {
             $(this).toggleClass('selected').siblings().removeClass('selected');
+        });
+		
+        //엑셀다운로드
+        $("#excelBtn").on("click", function() {
+        	
+            var excelParam = {
+                    studentNo: studentNo,
+                    avgKorean: avgKorean,
+                    avgMath: avgMath,
+                    avgEnglish: avgEnglish,
+                    avgSociety: avgSociety,
+                    avgHistory: avgHistory,
+                    avgScience: avgScience
+                };
+
+                // 입력 필드에 값 설정
+                $("#studentNo").val(excelParam.studentNo);
+                $("#avgKorean").val(excelParam.avgKorean);
+                $("#avgMath").val(excelParam.avgMath);
+                $("#avgEnglish").val(excelParam.avgEnglish);
+                $("#avgSociety").val(excelParam.avgSociety);
+                $("#avgHistory").val(excelParam.avgHistory);
+                $("#avgScience").val(excelParam.avgScience);
+
+                // 폼 제출
+                $("#excelForm").submit();  
+            
         });
 
     });
@@ -596,7 +625,10 @@
         $('input[type="checkbox"].student-checkbox').prop('checked', isChecked);
     }
     
-    function fn_searchScore(studentNo) {
+    function fn_searchScore(studentNoParam) {
+
+    	studentNo = studentNoParam;
+    	
         var param = {
             studentNo: studentNo
         };
@@ -611,13 +643,20 @@
                 var termData = response.termCd;    
                 check = 1;
                 
+                avgKorean = '';
+                avgMath = '';
+                avgEnglish = ''; 
+                avgSociety = '';
+                avgHistory = '';
+                avgScience = '';
+
                 $('#studentScoreTbody').empty();
                 $('#studentScoreTfoot').empty(); // tfoot 초기화
                 
                 if (data === "E") {
                     var rows = '<tr><td colspan="11" class="no-data">조회된 데이터가 없습니다.</td></tr>';
                     $('#studentScoreTbody').append(rows);
-                    return;
+					return;
                 } else {
                     var rows = '';
                     var totalKorean = 0;
@@ -693,14 +732,14 @@
                     }
 
                     $('#studentScoreTbody').append(rows);
-
+                    
                     // 평균 계산
-                    var avgKorean = (countKorean > 0) ? (totalKorean / countKorean).toFixed(2) : 0;
-                    var avgMath = (countMath > 0) ? (totalMath / countMath).toFixed(2) : 0;
-                    var avgEnglish = (countEnglish > 0) ? (totalEnglish / countEnglish).toFixed(2) : 0;
-                    var avgSociety = (countSociety > 0) ? (totalSociety / countSociety).toFixed(2) : 0;
-                    var avgHistory = (countHistory > 0) ? (totalHistory / countHistory).toFixed(2) : 0;
-                    var avgScience = (countScience > 0) ? (totalScience / countScience).toFixed(2) : 0;
+                    avgKorean = (countKorean > 0) ? (totalKorean / countKorean).toFixed(2) : 0;
+                    avgMath = (countMath > 0) ? (totalMath / countMath).toFixed(2) : 0;
+                    avgEnglish = (countEnglish > 0) ? (totalEnglish / countEnglish).toFixed(2) : 0;
+                    avgSociety = (countSociety > 0) ? (totalSociety / countSociety).toFixed(2) : 0;
+                    avgHistory = (countHistory > 0) ? (totalHistory / countHistory).toFixed(2) : 0;
+                    avgScience = (countScience > 0) ? (totalScience / countScience).toFixed(2) : 0;
 
                     // tfoot에 평균 추가
                     var tfootRows = '<tr>';
@@ -715,32 +754,7 @@
                     tfootRows += '</tr>';
 
                     $('#studentScoreTfoot').append(tfootRows);
-                    
-                    $("#excelBtn").on("click", function() {
-                    	
-                        var excelParam = {
-                            studentNo: studentNo,
-                            avgKorean: avgKorean,
-                            avgMath: avgMath,
-                            avgEnglish: avgEnglish,
-                            avgSociety: avgSociety,
-                            avgHistory: avgHistory,
-                            avgScience: avgScience
-                        };
 
-                        // 입력 필드에 값 설정
-                        $("#studentNo").val(excelParam.studentNo);
-                        $("#avgKorean").val(excelParam.avgKorean);
-                        $("#avgMath").val(excelParam.avgMath);
-                        $("#avgEnglish").val(excelParam.avgEnglish);
-                        $("#avgSociety").val(excelParam.avgSociety);
-                        $("#avgHistory").val(excelParam.avgHistory);
-                        $("#avgScience").val(excelParam.avgScience);
-
-                        // 폼 제출
-                        $("#excelForm").submit();  
-                    });
-                    
                     // 최대 자리수와 값 범위 제한
                     $('.number-input').on('input', function() {
                         // 최대 3자리로 제한
@@ -755,14 +769,16 @@
                         } else if (value > 100) {
                             $(this).val(100); // 최대값 100
                         }
-                    });
-                }
+                    });    
+                } 
+
             },
             error: function(xhr, status, error) {  
                 alert('서버 오류가 발생했습니다.');
             }
         });
     }
+    
     
     function fn_regiScore() {
     	

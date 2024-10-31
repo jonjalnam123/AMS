@@ -302,6 +302,7 @@ $(document).ready(function() {
 		var studentName = $('#studentName').val()
 		var studentAge = $('#studentAge').val()
 		var studentPhone = $('#studentPhone').val()
+		var studentSchool = $('#studentSchool').val()
 		
 		if ( studentName === '' ) {
 			alert('학생 이름 을(를) 입력해주세요.');
@@ -314,10 +315,10 @@ $(document).ready(function() {
 			$('#studentAge').focus();
 			return false;
 		}
-		
-		if ( studentAge === '' ) {
-			alert('학생 핸드폰 을(를) 입력해주세요.');
-			$('#studentPhone').focus();
+
+		if ( studentSchool === '' ) {
+			alert('학생 소속학교 을(를) 입력해주세요.');
+			$('#studentSchool').focus();
 			return false;
 		}
 		
@@ -339,14 +340,14 @@ $(document).ready(function() {
             <tbody>
                 <tr>
                     <td>이름<span class="required">*</span></td>
-                    <td><input id="studentName" type="text" placeholder="이름 입력" maxlength="7"></td>
+                    <td><input id="studentName" type="text" oninput="fn_validateInput(this, this.id)" placeholder="이름 입력" maxlength="7"></td>
                 </tr>
                 <tr>
                     <td>나이<span class="required">*</span></td>
                     <td><input id="studentAge" type="number" oninput="fn_validateInput(this, this.id)" placeholder="나이 입력"></td>
                 </tr>
                 <tr>
-                    <td>휴대폰<span class="required">*</span></td>
+                    <td>휴대폰</td>
                     <td><input id="studentPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력"></td>
                 </tr>
                 <tr>
@@ -354,7 +355,7 @@ $(document).ready(function() {
                     <td><input id="studentParentsPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력"></td>
                 </tr>
                 <tr>
-                    <td>소속학교</td>
+                    <td>소속학교<span class="required">*</span></td>
                     <td><input id="studentSchool" type="text" placeholder="소속학교 입력" maxlength="10"></td>
                 </tr>
                 <tr>

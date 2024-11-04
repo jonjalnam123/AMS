@@ -254,6 +254,7 @@
         font-weight: bold;
         color: #888;
     }
+    
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -902,6 +903,7 @@
     }
 </script>
 <body>
+<%@ include file="../inc/header.jsp"%>
 <div class="wrapper">
     <div class="search-container">
         <input type="text" id="studenNmSearch" placeholder="이름/ 나이/ 소속학교 / 지망학교">
@@ -1010,5 +1012,6 @@
     	<button type="button" id="delScoreBtn">성적삭제</button>
     </div>
 </div>
+<%@ include file="../inc/footer.jsp"%>
 </body>
 </html>

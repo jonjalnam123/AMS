@@ -56,10 +56,24 @@
     #loginBtn:hover {
         background-color: #218838;
     }
+    
+    .checkbox-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 10px;
+        width: 100%;   
+    }
+    
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+    	
+    	
+    	if ( $("#adminId").val() !== '' ) {
+    		$("#adminPw").focus();
+    	}
     	
         $('#loginBtn').click(function() {
         	fn_lognProc()
@@ -77,7 +91,14 @@
     	
     	 var idVal = $("#adminId").val();
          var pwVal = $("#adminPw").val();
-
+         var idSaveCheck = "";
+         
+         if ($('#loginSave').is(':checked') === true) {  
+        	 idSaveCheck = "on";
+         } else {
+        	 idSaveCheck = "off";
+         }
+        	 
          if (idVal === '') {
              alert('아이디를 입력하세요.');
              $("#adminId").focus();
@@ -92,7 +113,8 @@
 
          var param = {
 				                adminId: idVal,
-				                adminPw: pwVal
+				                adminPw: pwVal,
+				                idSaveCheck : idSaveCheck
 				              };
 
          $.ajax({
@@ -120,12 +142,15 @@
     }
     
 </script>
-</head>
 <body>
     <div class="login-container">
         <h2>AMS</h2>
-        <input id="adminId" name="adminId" type="text" placeholder="아이디" value="">
+        <input id="adminId" name="adminId" type="text" placeholder="아이디" value="${idSaveCheck}">
         <input id="adminPw" name="adminPw" type="password" placeholder="비밀번호" value=""> 
+        <div class="checkbox-container">
+            <input id="loginSave" type="checkbox" name="idSaveCheck" ${idSaveCheck != "" ? 'checked' : ''}>
+            <label for="loginSave">아이디 저장</label>
+        </div>
         <button type="button" id="loginBtn">로그인</button>
     </div>    
 </body>

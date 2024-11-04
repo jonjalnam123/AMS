@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AMS Academy Mangement System</title>
+</head>
 <style>
 	body {
 	    font-family: Arial, sans-serif;
@@ -265,7 +266,35 @@ $(document).ready(function() {
 	// 입력길이제한 및 특수문자 제한
 	function fn_validateInput(input, inputId) {
 	    // 특수문자를 허용하지 않는 정규 표현식
-	    const specialCharRegex = /[^0-9]/g;
+	    var specialCharRegex = /[^0-9]/g;
+	    var koreanChange = /^[a-zA-Z0-9!@#$%^&*()-_]*$/;
+	    
+	    if (inputId === 'studentName') {
+	        // 길이 제한
+	        if (input.value.length > 7) {
+	            input.value = input.value.slice(0, 7);
+	        }
+	        // 특수문자 제거
+	        input.value = input.value.replace(koreanChange, '');
+	    }
+	    
+	    if (inputId === 'studentSchool') {
+	        // 길이 제한
+	        if (input.value.length > 10) {
+	            input.value = input.value.slice(0, 10);
+	        }
+	        // 특수문자 제거
+	        input.value = input.value.replace(koreanChange, '');
+	    }
+	    
+	    if (inputId === 'studentWantedSchool') {
+	        // 길이 제한
+	        if (input.value.length > 10) {
+	            input.value = input.value.slice(0, 10);
+	        }
+	        // 특수문자 제거
+	        input.value = input.value.replace(koreanChange, '');
+	    }
 	   	    
 	    if (inputId === 'studentAge') {
 	        // 길이 제한
@@ -326,7 +355,6 @@ $(document).ready(function() {
 	}
 	
 </script>
-</head>
 <body>
 
     <div class="form-container">
@@ -340,7 +368,7 @@ $(document).ready(function() {
             <tbody>
                 <tr>
                     <td>이름<span class="required">*</span></td>
-                    <td><input id="studentName" type="text" oninput="fn_validateInput(this, this.id)" placeholder="이름 입력" maxlength="7"></td>
+                    <td><input id="studentName" type="text" oninput="fn_validateInput(this, this.id)" placeholder="이름 입력"></td>
                 </tr>
                 <tr>
                     <td>나이<span class="required">*</span></td>
@@ -356,11 +384,11 @@ $(document).ready(function() {
                 </tr>
                 <tr>
                     <td>소속학교<span class="required">*</span></td>
-                    <td><input id="studentSchool" type="text" placeholder="소속학교 입력" maxlength="10"></td>
+                    <td><input id="studentSchool" type="text" oninput="fn_validateInput(this, this.id)" placeholder="소속학교 입력"></td>
                 </tr>
                 <tr>
                     <td>지망학교</td>
-                    <td><input id="studentWantedSchool" type="text" placeholder="지망학교 입력" maxlength="10"></td>
+                    <td><input id="studentWantedSchool" type="text" oninput="fn_validateInput(this, this.id)" placeholder="지망학교 입력"></td>
                 </tr>
                 <tr>
                     <td>계열</td>

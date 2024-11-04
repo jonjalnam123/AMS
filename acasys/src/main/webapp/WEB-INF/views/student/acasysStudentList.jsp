@@ -901,7 +901,6 @@
         });
     }
 </script>
-</head>
 <body>
 <div class="wrapper">
     <div class="search-container">
@@ -957,6 +956,9 @@
 	            </c:choose>
 	        </tbody>
 	    </table>
+	    
+
+	    
 	</div> 
 	<div class="button-container">
 	    <button type="button" id="registBtn">학생등록</button>

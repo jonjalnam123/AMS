@@ -30,6 +30,7 @@ import com.aca.sys.vo.AcasysStudentInfoVO;
 import com.aca.sys.vo.AcasysStudentScoreVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -49,7 +50,17 @@ public class AcasysController {
 	 * @return
 	 */
 	@GetMapping("/login/acasysMain.do")
-	public String acasysMain() {
+	public String acasysMain( HttpServletRequest request ) {
+		
+        String username = "";
+
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("idSaveCheck")) {
+                username = cookie.getValue();
+            }
+        }
+        request.setAttribute("idSaveCheck", username);
 		
 		return "main/adminLogin";
 	}
@@ -64,8 +75,7 @@ public class AcasysController {
 	 */
 	@PostMapping("/login/acasysLogin.do")
 	@ResponseBody
-	public HashMap<String, String> acasysLogin( @ModelAttribute AcasysAdminLoginVO acasysAdminLoginVO, HttpServletRequest request) throws Exception {
-		
+	public HashMap<String, String> acasysLogin( @ModelAttribute AcasysAdminLoginVO acasysAdminLoginVO, @RequestParam String idSaveCheck, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HashMap<String, String> longResultMap = new HashMap<>();
 
 		//암호화된 Password 비교하기.
@@ -75,8 +85,7 @@ public class AcasysController {
 		acasysAdminLoginVO.setAdminPw(shaPassword);
 		 
 		List<?> loginResult = acasysService.acasysLogin(acasysAdminLoginVO);
-		
-		
+
 		if ( loginResult.size() > 0 ) { // 성공
 			
 			HttpSession session = request.getSession();
@@ -89,6 +98,19 @@ public class AcasysController {
 			session.setAttribute("LOGIN_USER", acasysAdminLoginVO);
 			
 			longResultMap.put("result", "S");
+			
+			
+		      if (idSaveCheck == null) {
+		    	  idSaveCheck = "";
+		        }
+			
+		        if (idSaveCheck.equals("on")) {
+		            Cookie cookie = new Cookie("idSaveCheck", acasysAdminLoginVO.getAdminId());
+		            response.addCookie(cookie);
+		        } else {
+		            Cookie cookie = new Cookie("idSaveCheck", "");
+		            response.addCookie(cookie);
+		        }
 			
 		} else if ( loginResult.size() <=  0 ) { //실패 
 			longResultMap.put("result", "F");
@@ -126,7 +148,7 @@ public class AcasysController {
 	 */
 	@GetMapping("/student/acasysStudetnList.do")
 	public String acasysStudetnList( Model model, HttpServletRequest request) throws Exception{
-		
+
 	    // 로그인 여부 체크
 	    AcasysAdminLoginVO loginUser = (AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER");
 	    if (loginUser == null) {

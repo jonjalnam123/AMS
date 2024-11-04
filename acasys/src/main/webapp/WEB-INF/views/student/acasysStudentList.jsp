@@ -163,7 +163,7 @@
         margin-top: 10px; 
     }
 
-    #registBtn, #delBtn, #logOutBtn,#registScoreBtn,#delScoreBtn {
+    #registBtn, #delBtn, #logOutBtn,#registScoreBtn,#delScoreBtn,#excelBtn {
         padding: 10px 15px;
         border: none;
         border-radius: 5px;
@@ -196,6 +196,10 @@
      	border-radius: 5px;
         background-color: #28a745; 
         color: white;
+    }
+    
+    #excelBtn:hover {
+        background-color: #218838;
     }
 
     #registBtn:hover, #registScoreBtn:hover {
@@ -262,6 +266,7 @@
 	var check = 0; // 행 추가시 체크사항
     var studentNo; // 전역 변수
     var avgKorean, avgMath, avgEnglish, avgSociety, avgHistory, avgScience;
+    var noDataCheck = 0;
 
     $(document).ready(function() {
 
@@ -422,25 +427,23 @@
         	
             var trCnt = $("#studentScoreTbody tr").length;
             var noDataClass = $("#studentScoreTbody tr td").attr('class');
+        	var checkedRows = $('#studentScoreTbody input.student-checkbox:checked');
 			
             if (trCnt <= 1 && noDataClass === 'no-data') {
             	alert('삭제할 성적이 없습니다.');
             	return;
+            }
+            
+            // 체크된 체크박스가 없으면 알림
+            if (checkedRows.length === 0) {
+                alert("삭제할 성적 을(를) 체크해주세요.");
+                return;
             }
         	
             
             var result = confirm("정말 삭제하시겠습니까?");
             
             if(result) {
-            
-	            // 체크된 체크박스 가져오기
-            	var checkedRows = $('#studentScoreTbody input.student-checkbox:checked');
-	            
-	            // 체크된 체크박스가 없으면 알림
-	            if (checkedRows.length === 0) {
-	                alert("삭제할 성적 을(를) 체크해주세요.");
-	                return;
-	            }
 	            
 	            // 삭제할 학생 정보 저장할 배열
 	            var studentsToDelete = [];
@@ -513,6 +516,12 @@
 		
         //엑셀다운로드
         $("#excelBtn").on("click", function() {
+        	
+        	if ( noDataCheck === 1 ) {
+        		alert("조회된 성적 데이터가 없습니다.");
+        		return;
+        	}
+        
         	
             var excelParam = {
                     studentNo: studentNo,
@@ -655,10 +664,12 @@
                 $('#studentScoreTfoot').empty(); // tfoot 초기화
                 
                 if (data === "E") {
+                	noDataCheck = 1;
                     var rows = '<tr><td colspan="11" class="no-data">조회된 데이터가 없습니다.</td></tr>';
                     $('#studentScoreTbody').append(rows);
 					return;
                 } else {
+                	noDataCheck = 0;
                     var rows = '';
                     var totalKorean = 0;
                     var totalMath = 0;

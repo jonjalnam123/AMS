@@ -54,23 +54,15 @@ public class AcasysController {
 	public String acasysMain( HttpServletRequest request ) {
 		
         String username = "";
-        
-        if ( request.getCookies() != null ) {
-        	
-            Cookie[] cookies = request.getCookies();
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("idSaveCheck")) {
-                    username = cookie.getValue();
-                }
-            }
-            request.setAttribute("idSaveCheck", username);
-        	
-        } else {
-        	
-        	request.setAttribute("idSaveCheck", username);
-        	
-        }
 
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("idSaveCheck")) {
+                username = cookie.getValue();
+            }
+        }
+        request.setAttribute("idSaveCheck", username);
+		
 		return "main/adminLogin";
 	}
 	
@@ -497,10 +489,6 @@ public class AcasysController {
       Row row = null;
       Cell cell = null;
       int rowNum = 0;
-      
-      String studentNo = acasysStudentScoreVO.getStudentNo();
-      String studentName = acasysService.acasysStudentNameForExcel(studentNo);
-      List<AcasysStudentScoreVO> excel = acasysService.acasysStudentScoreExcel(studentNo);
 
       // Header
       row = sheet.createRow(rowNum++);
@@ -525,7 +513,6 @@ public class AcasysController {
       cell = row.createCell(9);
       cell.setCellValue("분기 평균");
       
-      
       // Header 열 너비 설정 (단위: 1/256)
       sheet.setColumnWidth(0, 256 * 15); // 시작날짜  
       sheet.setColumnWidth(1, 256 * 15); // 종료날짜
@@ -537,7 +524,10 @@ public class AcasysController {
       sheet.setColumnWidth(7, 256 * 10); // 역사
       sheet.setColumnWidth(8, 256 * 10); // 과학
       sheet.setColumnWidth(9, 256 * 10); // 분기 평균
-     
+      
+      String studentNo = acasysStudentScoreVO.getStudentNo();
+      List<AcasysStudentScoreVO> excel = acasysService.acasysStudentScoreExcel(studentNo);
+      
       for (AcasysStudentScoreVO score : excel) {
     	  
           row = sheet.createRow(rowNum++);
@@ -562,7 +552,7 @@ public class AcasysController {
           cell = row.createCell(9);
           cell.setCellValue(score.getAverageScore()); 
       }
-
+      
       //마지막 값 확인
       int lastRowNum = rowNum;     
       row = sheet.createRow(lastRowNum);
@@ -584,16 +574,6 @@ public class AcasysController {
       cell.setCellValue(acasysStudentScoreVO.getAvgHistory());
       cell = row.createCell(8);
       cell.setCellValue(acasysStudentScoreVO.getAvgScience());
-      cell = row.createCell(9); 
-      cell.setCellValue("");
-      cell = row.createCell(10);
-      cell.setCellValue("학생 번호");
-      cell = row.createCell(11);
-      cell.setCellValue(" : " + studentNo);
-      cell = row.createCell(12);
-      cell.setCellValue("학생 이름");
-      cell = row.createCell(13);    
-      cell.setCellValue(" : " + studentName);  
 
       Date today = new Date();
       SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
@@ -601,7 +581,7 @@ public class AcasysController {
       
       // 컨텐츠 타입과 파일명 지정
       response.setContentType("ms-vnd/excel"); 
-      response.setHeader("Content-Disposition", "attachment;filename=" + formattedDate + "_StudentScore.xlsx"); 
+      response.setHeader("Content-Disposition", "attachment;filename=" + formattedDate + "_studentScore.xlsx");
 
       // Excel File Output
       wb.write(response.getOutputStream());    

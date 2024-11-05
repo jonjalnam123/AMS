@@ -276,6 +276,7 @@ public class AcasysServiceImpl implements AcasysService {
 		return acasysMapper.schoolVocatiMajorCd(schoolVocatiMajorVal);
 	}
 	
+<<<<<<< main
 	@Override
 	public String acasysStudentNameForExcel(String studentNo) {
 		// TODO Auto-generated method stub
@@ -283,4 +284,6 @@ public class AcasysServiceImpl implements AcasysService {
 	}
 	
 
+=======
+>>>>>>> 8dcc35f 20241105 [최정석] 엑셀 관련 수정
 }

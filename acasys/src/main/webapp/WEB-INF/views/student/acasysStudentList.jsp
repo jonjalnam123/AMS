@@ -269,13 +269,6 @@
     var noDataCheck = 0;
 
     $(document).ready(function() {
-    	
-        avgKorean = '';
-        avgMath = '';
-        avgEnglish = ''; 
-        avgSociety = '';
-        avgHistory = '';
-        avgScience = '';
 
         $('#searchBtn').on('click', function () {
             fn_searchNm();
@@ -529,10 +522,6 @@
         		return;
         	}
         
-        	if ( studentNo === undefined || studentNo === null || studentNo === '' ) {
-        		alert("조회된 성적 데이터가 없습니다.");
-        		return;
-        	}
         	
             var excelParam = {
                     studentNo: studentNo,

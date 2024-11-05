@@ -20,8 +20,15 @@
 		   FROM TB_STUDENT_INFO
 		 WHERE STUDENT_DEL_YN = 'N'
 	</select>
-
-	<select id="selectAcasysStudentList" resultType="AcasysStudentInfoVO">  
+	
+    <select id ="studentCountForPaging" resultType="int">
+    	SELECT /* acasysStudentList.studentCountForPaging */
+    			   COUNT(*) 
+		  FROM TB_STUDENT_INFO
+		 WHERE STUDENT_DEL_YN = 'N'  
+    </select>
+  
+	<select id="selectAcasysStudentList" resultType="AcasysStudentInfoVO" parameterType="com.aca.sys.Paging">    
 		SELECT /* acasysStudentList.selectAcasysStudentList */    
 				   CAST(a.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
 				 , a.STUDENT_NAME
@@ -49,7 +56,8 @@
   		    LEFT OUTER JOIN (SELECT CD, CD_NM FROM TB_COMN_CD) d
 	  	      ON a.STUDENT_TIER_STATUS_CD = d.CD
 	  	 WHERE a.STUDENT_DEL_YN = 'N'  
-	  	 ORDER BY STUDENT_NO DESC 
+  	     ORDER BY STUDENT_NO DESC 
+  		  LIMIT #{startNo}, #{endNo}      
 	</select>	
 	
 	<select id="studentSearchCount" parameterType="AcasysStudentInfoSearchVO" resultType="String">     

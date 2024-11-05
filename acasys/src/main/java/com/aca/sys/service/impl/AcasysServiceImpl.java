@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aca.sys.Paging;
 import com.aca.sys.service.AcasysService;
 import com.aca.sys.vo.AcasysAdminLoginVO;
 import com.aca.sys.vo.AcasysCommCdVo;
@@ -52,11 +53,25 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @Method 설명 : 메인
 	 * @return
 	 */
+	
 	@Override
-	public List<AcasysStudentInfoVO> selectAcasysStudentList() {
-		return acasysMapper.selectAcasysStudentList();
+	public List<AcasysStudentInfoVO> selectAcasysStudentList(Paging paging) {
+		// TODO Auto-generated method stub
+		return acasysMapper.selectAcasysStudentList(paging);
 	}
 	
+   @Override
+   public Paging getPaging(int curPage) {
+      
+      //총 게시글 수 조회
+      int totalCount = acasysMapper.studentCountForPaging();
+      
+      //페이징계산
+      Paging paging = new Paging(totalCount, curPage);
+      
+      return paging;
+   }
+
 	/**
 	 * @Method Name : studentCount
 	 * @작성일 : 2024. 10. 22
@@ -267,4 +282,5 @@ public class AcasysServiceImpl implements AcasysService {
 		return acasysMapper.acasysStudentNameForExcel(studentNo);
 	}
 	
+
 }

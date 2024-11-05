@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aca.sys.CommonUtils;
+import com.aca.sys.Paging;
 import com.aca.sys.service.AcasysService;
 import com.aca.sys.vo.AcasysAdminLoginVO;
 import com.aca.sys.vo.AcasysCommCdVo;
@@ -154,8 +155,8 @@ public class AcasysController {
 	 * @Method 설명 : 학원생 리스트
 	 * @return
 	 */
-	@GetMapping("/student/acasysStudetnList.do")
-	public String acasysStudetnList( Model model, HttpServletRequest request) throws Exception{
+	@GetMapping("/student/acasysStudetnList.do")  
+	public String acasysStudetnList(@RequestParam(defaultValue = "0") int curPage, Model model, HttpServletRequest request) throws Exception{
 
 	    // 로그인 여부 체크
 	    AcasysAdminLoginVO loginUser = (AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER");
@@ -165,8 +166,12 @@ public class AcasysController {
 		
 	    String adminId = loginUser.getAdminId();
 	    
+      System.out.println(curPage);
+      Paging paging = acasysService.getPaging(curPage);
+      model.addAttribute("paging", paging);
+    
 		// 학생 리스트
-		List<AcasysStudentInfoVO> studentList = acasysService.selectAcasysStudentList();
+		List<AcasysStudentInfoVO> studentList = acasysService.selectAcasysStudentList(paging);
 		
 		String termVal = "term";
 		List<AcasysCommCdVo> termCd = acasysService.termCd(termVal);

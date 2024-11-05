@@ -979,11 +979,9 @@
 	                </c:otherwise>
 	            </c:choose>
 	        </tbody>
-	    </table>
-	    
-
-	    
+	    </table>	    
 	</div> 
+	<c:import url="/WEB-INF/views/layout/paging.jsp" />
 	<div class="button-container">
 	    <button type="button" id="registBtn">학생등록</button>
 	    <button type="button" id="delBtn">학생삭제</button>

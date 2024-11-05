@@ -2,6 +2,7 @@ package com.aca.sys.service;
 
 import java.util.List;
 
+import com.aca.sys.Paging;
 import com.aca.sys.vo.AcasysAdminLoginVO;
 import com.aca.sys.vo.AcasysCommCdVo;
 import com.aca.sys.vo.AcasysStudentInfoSearchVO;
@@ -31,6 +32,7 @@ public interface AcasysService {
 	String studentCount();
 	
 	/**
+	 * @param paging 
 	 * @Method Name : acasysMain
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
@@ -38,7 +40,7 @@ public interface AcasysService {
 	 * @Method 설명 : 메인
 	 * @return
 	 */
-	List<AcasysStudentInfoVO> selectAcasysStudentList();
+	List<AcasysStudentInfoVO> selectAcasysStudentList(Paging paging);
 	
 	/**
 	 * @Method Name : studentCount
@@ -186,5 +188,7 @@ public interface AcasysService {
 	List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal);
 
 	String acasysStudentNameForExcel(String studentNo);
+
+	Paging getPaging(int curPage);
 
 }

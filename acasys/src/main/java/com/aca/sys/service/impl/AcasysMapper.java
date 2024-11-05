@@ -188,5 +188,7 @@ public interface AcasysMapper {
 
 	List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal);
 
+	String acasysStudentNameForExcel(String studentNo);
+
 
 }

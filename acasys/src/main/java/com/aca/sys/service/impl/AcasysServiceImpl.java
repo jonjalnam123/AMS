@@ -261,4 +261,10 @@ public class AcasysServiceImpl implements AcasysService {
 		return acasysMapper.schoolVocatiMajorCd(schoolVocatiMajorVal);
 	}
 	
+	@Override
+	public String acasysStudentNameForExcel(String studentNo) {
+		// TODO Auto-generated method stub
+		return acasysMapper.acasysStudentNameForExcel(studentNo);
+	}
+	
 }

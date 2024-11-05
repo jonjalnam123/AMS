@@ -432,4 +432,11 @@
 		  ORDER BY START_DATE   
 	</select>
 	
+	<select id="acasysStudentNameForExcel" parameterType="String" resultType="String">   
+		SELECT /* acasysStudentList.acasysStudentNameForExcel */  
+				   STUDENT_NAME
+		  FROM TB_STUDENT_INFO
+		WHERE STUDENT_NO = #{studentNostudentNo}
+	</select>  
+	
 </mapper>

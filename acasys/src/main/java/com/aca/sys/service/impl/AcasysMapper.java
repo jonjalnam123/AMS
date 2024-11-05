@@ -190,12 +190,9 @@ public interface AcasysMapper {
 
 	List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal);
 
-<<<<<<< main
 	String acasysStudentNameForExcel(String studentNo);
 
 	int studentCountForPaging();
 
-=======
->>>>>>> 8dcc35f 20241105 [최정석] 엑셀 관련 수정
 
 }

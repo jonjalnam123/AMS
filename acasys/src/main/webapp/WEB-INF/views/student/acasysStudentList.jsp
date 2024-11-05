@@ -269,13 +269,24 @@
     var noDataCheck = 0;
 
     $(document).ready(function() {
+    	
+        avgKorean = '';
+        avgMath = '';
+        avgEnglish = ''; 
+        avgSociety = '';
+        avgHistory = '';
+        avgScience = '';
 
         $('#searchBtn').on('click', function () {
+        	
+            $('#pagingContainer').css('visibility', 'hidden');  // 공간 유지하면서 숨기기
             fn_searchNm();
+            
         });
         
     	$("#studenNmSearch").on('keypress', function(event) { 
        		if(event.keyCode == 13) {
+                $('#pagingContainer').css('visibility', 'hidden');  // 공간 유지하면서 숨기기
        			fn_searchNm();
     		}
     	});
@@ -522,6 +533,10 @@
         		return;
         	}
         
+        	if ( studentNo === undefined || studentNo === null || studentNo === '' ) {
+        		alert("조회된 성적 데이터가 없습니다.");
+        		return;
+        	}
         	
             var excelParam = {
                     studentNo: studentNo,
@@ -968,9 +983,11 @@
 	                </c:otherwise>
 	            </c:choose>
 	        </tbody>
-	    </table>	    
+	    </table>
 	</div> 
-	<c:import url="/WEB-INF/views/layout/paging.jsp" />
+	<div id="pagingContainer">
+	    <c:import url="/WEB-INF/views/layout/paging.jsp" />
+	</div>
 	<div class="button-container">
 	    <button type="button" id="registBtn">학생등록</button>
 	    <button type="button" id="delBtn">학생삭제</button>

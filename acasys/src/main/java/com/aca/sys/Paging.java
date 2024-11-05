@@ -28,7 +28,7 @@ public class Paging {
 	}
 	
 	public Paging(int totalCount) {
-		setTotalCount(totalCount);
+		setTotalCount(totalCount); 
 		
 		makePaging();
 	}
@@ -58,16 +58,16 @@ public class Paging {
 		if(totalCount == 0)	return; //게시글이 없는 경우 중단
 		
 		//기본값 설정
-		if(curPage == 0)	this.curPage = 1; //첫 페이지를 기본 페이지로 설정한다 
-		if(listCount == 0)	this.listCount = 5; //화면에 보여질 게시글 수를 10개로 설정   
-		if(pageCount == 0)	this.pageCount = 10; //화면에 보여질 페이징 수를 10개로 설정
+		if(curPage == 0)	this.curPage = 1; //첫 페이지를 기본 페이지로 설정한다
+		if(listCount == 0)	this.listCount = 5; //화면에 보여질 게시글 수를 10개로 설정
+		if(pageCount == 0)	this.pageCount = 10; //화면에 보여질 페이징 수를 10개로 설정 
 		
 		//------------------------------------
 		
 		//총 페이지 수 계산
 		totalPage = totalCount / listCount; // 총 게시글 수 / 한 페이지 게시글 수
 		if( totalCount % listCount > 0 )	totalPage++;
-
+		
 		//총 페이지 수 보정
 		//	-> 존재하는 페이지보다 큰 값의 페이지를 요청할 때
 		//	-> 요청 페이지를 마지막 페이지로 변경한다
@@ -81,13 +81,13 @@ public class Paging {
 	
 		//총 페이지 수 보다 페이지네이션 끝번호가 클 때
 		//	-> 마지막 페이지까지만 보이도록 설정한다
-		if( endPage > totalPage )	endPage = totalPage;
+		if( endPage > totalPage )	endPage = totalPage; 
 		
 		//------------------------------------
 		
 		//화면에 보이는 게시글의 시작 번호, 끝 번호 계산
-		startNo = ( curPage-1 ) * listCount + 1;   
-		endNo = curPage * listCount;
+		startNo = ( curPage-1 ) * listCount ; 
+		endNo = listCount;
 		
 	}
 

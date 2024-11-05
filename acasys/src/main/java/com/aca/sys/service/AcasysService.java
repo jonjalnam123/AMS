@@ -187,11 +187,10 @@ public interface AcasysService {
 
 	List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal);
 
-<<<<<<< main
 	String acasysStudentNameForExcel(String studentNo);
-
+	
 	Paging getPaging(int curPage);
 
-=======
->>>>>>> 8dcc35f 20241105 [최정석] 엑셀 관련 수정
+
+
 }

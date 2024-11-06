@@ -137,18 +137,17 @@ public class AcasysController {
 	    // 로그인 페이지로 리디렉션
 	    return "redirect:/login/acasysMain.do";   
 	}
-	
-	
-	/**
+
+	/*
 	 * @Method Name : acasysMainList
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
 	 * @변경이력 :
 	 * @Method 설명 : 학원생 리스트
 	 * @return
-	 */
+	**/
 	@GetMapping("/student/acasysStudetnList.do")  
-	public String acasysStudetnList(@RequestParam(defaultValue = "0") int curPage, Model model, HttpServletRequest request) throws Exception{
+	public String acasysStudetnList(@RequestParam(defaultValue = "0") int curPage, Model model, HttpServletRequest request, AcasysStudentInfoVO acasysStudentInfoVO) throws Exception{
 
 	    // 로그인 여부 체크
 	    AcasysAdminLoginVO loginUser = (AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER");
@@ -158,22 +157,21 @@ public class AcasysController {
 		
 	    String adminId = loginUser.getAdminId();
 	    
-      System.out.println(curPage);
-      Paging paging = acasysService.getPaging(curPage);
-      model.addAttribute("paging", paging);
-    
+        Paging paging = acasysService.getPaging(curPage, acasysStudentInfoVO);
+        model.addAttribute("paging", paging);
+        acasysStudentInfoVO.setPaging(paging);
 		// 학생 리스트
-		List<AcasysStudentInfoVO> studentList = acasysService.selectAcasysStudentList(paging);
+		List<AcasysStudentInfoVO> studentList = acasysService.selectAcasysStudentList(acasysStudentInfoVO);
 		
 		String termVal = "term";
-		List<AcasysCommCdVo> termCd = acasysService.termCd(termVal);
+		List<AcasysCommCdVo> termCd = acasysService.termCd(termVal);  
 		
 		/** json 변환 **/
 		ObjectMapper ObjectMapper = new ObjectMapper();
 		String termCdVal = ObjectMapper.writeValueAsString(termCd);
 		
 		// 학생 전체 건 수
-		String count = acasysService.studentCount(); 
+		int count = paging.getTotalCount();  
 
 		model.addAttribute("termCd", termCdVal);
 		model.addAttribute("adminId", adminId);
@@ -182,36 +180,7 @@ public class AcasysController {
 		
 		return "student/acasysStudentList";
 	}
-	
-	/**
-	 * @Method Name : acasysStudetnListSearch
-	 * @작성일 : 2024. 10. 22
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 학생검색 조회
-	 * @return
-	 */
-	@PostMapping("/student/acasysStudetnListSearch.do")
-	@ResponseBody
-	public HashMap<String, Object> acasysStudetnListSearch( @ModelAttribute AcasysStudentInfoSearchVO acasysStudentInfoSearchVO ) throws Exception {
-		
 
-		List<AcasysStudentInfoVO> studentSerachList = acasysService.acasysStudetnListSearch(acasysStudentInfoSearchVO); 
-		String count = acasysService.studentSearchCount(acasysStudentInfoSearchVO);
-		
-		HashMap<String, Object> response = new HashMap<>();
-	    
-	    if (studentSerachList.isEmpty()) {
-		   response.put("studentSerachList", 'E');
-	    } else {    
-	    	response.put("studentSerachList", studentSerachList);
-	    }
-		   
-	    response.put("count", count); 
-		
-		return response;
-	}
-	
 	/**
 	 * @Method Name : acasysStudentScoreSearch
 	 * @작성일 : 2024. 10. 21

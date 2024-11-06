@@ -46,56 +46,37 @@ public class AcasysServiceImpl implements AcasysService {
 	}
 	
 	/**
-	 * @Method Name : acasysMain
+	 * @param acasysStudentInfoVO 
+	 * @Method Name : selectAcasysStudentList
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
 	 * @변경이력 :
-	 * @Method 설명 : 메인
-	 * @return
-	 */
-	
-	@Override
-	public List<AcasysStudentInfoVO> selectAcasysStudentList(Paging paging) {
-		// TODO Auto-generated method stub
-		return acasysMapper.selectAcasysStudentList(paging);
-	}
-	
-   @Override
-   public Paging getPaging(int curPage) {
-      
-      //총 게시글 수 조회
-      int totalCount = acasysMapper.studentCountForPaging();
-      
-      //페이징계산
-      Paging paging = new Paging(totalCount, curPage);
-      
-      return paging;
-   }
-
-	/**
-	 * @Method Name : studentCount
-	 * @작성일 : 2024. 10. 22
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 학생검색 목록 건 수
+	 * @Method 설명 : 메인 학생 조회
 	 * @return
 	 */
 	@Override
-	public String studentSearchCount(AcasysStudentInfoSearchVO acasysStudentInfoSearchVO) {
-		return acasysMapper.studentSearchCount(acasysStudentInfoSearchVO);
+	public List<AcasysStudentInfoVO> selectAcasysStudentList(AcasysStudentInfoVO acasysStudentInfoVO) {
+		return acasysMapper.selectAcasysStudentList(acasysStudentInfoVO);
 	}
 	
 	/**
-	 * @Method Name : acasysStudetnListSearch
-	 * @작성일 : 2024. 10. 22
+	 * @Method Name : getPaging
+	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
 	 * @변경이력 :
-	 * @Method 설명 : 학생검색 조회
+	 * @Method 설명 : 페이징 관련 조회
 	 * @return
 	 */
 	@Override
-	public List<AcasysStudentInfoVO> acasysStudetnListSearch(AcasysStudentInfoSearchVO acasysStudentInfoSearchVO) {
-		return acasysMapper.acasysStudetnListSearch(acasysStudentInfoSearchVO);
+	public Paging getPaging(int curPage, AcasysStudentInfoVO acasysStudentInfoVO) {
+		
+		//총 게시글 수 조회 
+		int totalCount = acasysMapper.studentCountForPaging(acasysStudentInfoVO);
+		
+		//페이징계산 
+		Paging paging = new Paging(totalCount, curPage);
+		
+		return paging;
 	}
 
 	/**
@@ -148,6 +129,19 @@ public class AcasysServiceImpl implements AcasysService {
 	@Override
 	public List<AcasysCommCdVo> termCd(String termVal) {
 		return acasysMapper.termCd(termVal);
+	}
+	
+	/**
+	 * @Method Name : schoolVocatiMajorCd
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 실업계 코드 조회
+	 * @return
+	 */
+	@Override
+	public List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal) {
+		return acasysMapper.schoolVocatiMajorCd(schoolVocatiMajorVal);
 	}
 	
 	/**
@@ -264,21 +258,31 @@ public class AcasysServiceImpl implements AcasysService {
 		return acasysMapper.acasysStudentScoreSearch(acasysStudentScoreVO);
 	}
 	
+	/**
+	 * @Method Name : acasysStudentScoreExcel
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 엑셀
+	 * @return
+	 */
 	@Override
 	public List<AcasysStudentScoreVO> acasysStudentScoreExcel(String studentNo) {
 		// TODO Auto-generated method stub
 		return acasysMapper.acasysStudentScoreExcel(studentNo);
 	}
 	
-	@Override
-	public List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal) {
-		// TODO Auto-generated method stub
-		return acasysMapper.schoolVocatiMajorCd(schoolVocatiMajorVal);
-	}
-	
+	/**
+	 * @Method Name : acasysStudentNameForExcel
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 엑셀 이름 조회
+	 * @return
+	 */
 	@Override
 	public String acasysStudentNameForExcel(String studentNo) {
 		return acasysMapper.acasysStudentNameForExcel(studentNo);
 	}
-
+	
 }

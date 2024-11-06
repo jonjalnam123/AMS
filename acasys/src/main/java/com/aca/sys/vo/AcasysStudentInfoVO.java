@@ -1,5 +1,7 @@
 package com.aca.sys.vo;
 
+import com.aca.sys.Paging;
+
 import lombok.Data;
 
 public @Data class AcasysStudentInfoVO {
@@ -26,5 +28,7 @@ public @Data class AcasysStudentInfoVO {
 	private String regDttm;
 	private String updUserId;
 	private String updDttm;
+	private String studenNmSearch;
+	private Paging paging;
 
 }

@@ -80,13 +80,25 @@
         line-height: 24px;
     }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$(".page-item").on('click', function(){
 
+	});
+	
+});
+
+
+
+</script>
 <!-- 페이징 UI 구현 -->
 <div class="paging-container">
     <ul class="pagination">
 
         <!-- 이전 페이지로 가기 (항상 노출, 비활성화 가능) -->
-        <li class="page-item <c:if test="${paging.curPage == 1}">disabled</c:if>">
+        <li class="page-item<c:if test="${paging.curPage == 1}">disabled</c:if>">
             <a class="page-link" href="/student/acasysStudetnList.do?curPage=${paging.curPage - 1 }">&lt;</a>
         </li>
 

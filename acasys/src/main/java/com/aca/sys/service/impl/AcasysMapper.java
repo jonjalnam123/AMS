@@ -36,35 +36,24 @@ public interface AcasysMapper {
 	
 	/**
 	 * @param paging 
-	 * @Method Name : acasysMain
+	 * @Method Name : selectAcasysStudentList
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
 	 * @변경이력 :
-	 * @Method 설명 : 메인
+	 * @Method 설명 : 메인 학생 조회
 	 * @return
 	 */
-	List<AcasysStudentInfoVO> selectAcasysStudentList(Paging paging);
+	List<AcasysStudentInfoVO> selectAcasysStudentList(AcasysStudentInfoVO acasysStudentInfoVO);
 	
-
 	/**
-	 * @Method Name : studentCount
-	 * @작성일 : 2024. 10. 22
+	 * @Method Name : studentCountForPaging
+	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
 	 * @변경이력 :
-	 * @Method 설명 : 학생검색 목록 건 수
+	 * @Method 설명 : 페이징 관련 조회
 	 * @return
 	 */
-	String studentSearchCount(AcasysStudentInfoSearchVO acasysStudentInfoSearchVO);
-
-	/**
-	 * @Method Name : acasysStudetnListSearch
-	 * @작성일 : 2024. 10. 22
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 학생검색 조회
-	 * @return
-	 */
-	List<AcasysStudentInfoVO> acasysStudetnListSearch(AcasysStudentInfoSearchVO acasysStudentInfoSearchVO);
+	int studentCountForPaging(AcasysStudentInfoVO acasysStudentInfoVO);
 
 	/**
 	 * @Method Name : schoolGubunCd
@@ -85,6 +74,16 @@ public interface AcasysMapper {
 	 * @return
 	 */
 	List<AcasysCommCdVo> schoolMajorCd(String schoolMajorVal);
+	
+	/**
+	 * @Method Name : schoolVocatiMajorCd
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 실업계 코드 조회
+	 * @return
+	 */
+	List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal);
 
 	/**
 	 * @Method Name : tierCd
@@ -186,13 +185,24 @@ public interface AcasysMapper {
 	 */
 	List<AcasysStudentScoreVO> acasysStudentScoreSearch(AcasysStudentScoreVO acasysStudentScoreVO);
 
+	/**
+	 * @Method Name : acasysStudentScoreExcel
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 엑셀
+	 * @return
+	 */
 	List<AcasysStudentScoreVO> acasysStudentScoreExcel(String studentNo);
 
-	List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal);
-
+	/**
+	 * @Method Name : acasysStudentNameForExcel
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 성적 엑셀 이름 조회
+	 * @return
+	 */
 	String acasysStudentNameForExcel(String studentNo);
-
-	int studentCountForPaging();
-
 
 }

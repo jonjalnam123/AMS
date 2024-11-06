@@ -278,10 +278,9 @@
         avgScience = '';
 
         $('#searchBtn').on('click', function () {
-        	
-            $('#pagingContainer').css('visibility', 'hidden');  // 공간 유지하면서 숨기기
-            fn_searchNm();
-            
+
+			$("#studenNmSearchForm").submit();  
+
         });
         
     	$("#studenNmSearch").on('keypress', function(event) { 
@@ -298,6 +297,16 @@
         
         $('#registBtn').on('click', function () {
         	 location.href = '/student/acasysStudentRegist.do';
+        });
+        
+        $('#studentInfoTbody tr').on('click', function (event) {
+            const clickedRow = $(this);
+            var studentNo = clickedRow.find('td:first').text();
+            
+            fn_searchScore(studentNo);
+
+            // 전체 선택 체크박스 해제
+            $('#selectAll').prop('checked', false);
         });
         
         $('#delBtn').on('click', function () {
@@ -341,16 +350,6 @@
             	alert('학생을 선택후 삭제해주세요.');  
             }
 
-        });
-        
-        $('#studentInfoTbody tr').on('click', function (event) {
-            const clickedRow = $(this);
-            var studentNo = clickedRow.find('td:first').text();
-            
-            fn_searchScore(studentNo);
-
-            // 전체 선택 체크박스 해제
-            $('#selectAll').prop('checked', false);
         });
         
         $('#registScoreBtn').on('click' , function()  {
@@ -496,7 +495,6 @@
 	    					success : function(response) {
 	    						if ( response.status === 'success') {
 	    							alert('성적 삭제 을(를) 성공하였습니다.');
-	    							location.reload();
 	    						} else {
 	    							alert('성적 삭제 을(를) 실패하였습니다.');
 	    						}
@@ -563,84 +561,6 @@
         });
 
     });
-
-    function fn_searchNm() {
-        var studenNmSearchVal = $('#studenNmSearch').val();
-        var param = {
-            studenNmSearch: studenNmSearchVal
-        };
-
-        $.ajax({
-            url: '/student/acasysStudetnListSearch.do', 
-            type: 'POST',
-            data: param,
-            dataType: "json",
-            success: function(response) {
-                var count = response.count;
-                var data = response.studentSerachList;
-
-                $('.count-info').text('총 ' + count + ' 건');
-                $('#studentInfoTbody').empty();   
-                $('#studentScoreTbody').empty();   
-                $('#studentScoreTfoot').empty();   
-                
-                var rows = '<tr><td colspan="11" class="no-data">조회된 데이터가 없습니다.</td></tr>';
-                $('#studentScoreTbody').append(rows);
-
-                if (data === "E") {
-                    $('#studenNmSearch').val('');
-                    $('#studenNmSearch').focus();
-                    var rows = '<tr><td colspan="9" class="no-data">조회된 데이터가 없습니다.</td></tr>';
-                    $('#studentInfoTbody').append(rows);
-                    return;
-                } else {
-                    var rows = '';
-                    var majorVal
-                    for (var i = 0; i < data.length; i++) {          	
-                    	
-                        var student = data[i];
-                    	if ( student.studentSchoolMajorNm === null ) {
-                    		schoolMajorVal = '';
-                    	} else if ( student.studentSchoolMajorNm !== null ) {
-                    		schoolMajorVal = student.studentSchoolMajorNm
-                    	}
-                        
-                        rows += '<tr>';
-                        rows += '<td hidden>' + student.studentNo + '</td>';
-                        rows += '<td class="tbBtn">';
-                        rows += '<form action="/student/acasysStudentDetail.do" method="post" style="display: inline;">';
-                        rows += '<input type="hidden" name="studentNo" value=' + student.studentNo + '>';
-                        rows += '<button type="submit" id="detailBtn">' + student.studentName + '</button>';  
-                        rows +=	'</form>';
-                        rows +=	'</td>';
-                        rows += '<td style="text-align: center;">' + student.studentAge + ".Lv" + '</td>';
-                        rows += '<td style="text-align: center;">' + student.studentPhone + '</td>';
-                        rows += '<td>' + student.studentSchool + '</td>';
-                        rows += '<td>' + student.studentWantedSchool + '</td>';
-                        rows += '<td style="text-align: center;">' + student.studentSchoolGubunNm + '</td>';
-                        rows += '<td style="text-align: center;">' + schoolMajorVal + '</td>';
-                        rows += '<td style="text-align: center;">' + student.studentTierStatusNm + '</td>';
-                        rows += '</tr>';
-                    }
-                    $('#studentInfoTbody').append(rows);
-                    
-                    $('#studentInfoTbody tr').on('click', function (event) {
-                        const clickedRow = $(this);
-                        var studentNo = clickedRow.find('td:first').text();
-                        
-                        fn_searchScore(studentNo);
-
-                        // 전체 선택 체크박스 해제
-                        $('#selectAll').prop('checked', false);
-                    });
-
-                }
-            },
-            error: function(xhr, status, error) {
-                alert('검색 중 오류가 발생했습니다.');
-            }
-        });
-    }
     
     function toggleCheckboxes(selectAllCheckbox) {
         // 전체 선택 체크박스의 상태를 가져옵니다.
@@ -932,8 +852,10 @@
 <%@ include file="../inc/header.jsp"%>
 <div class="wrapper">
     <div class="search-container">
-        <input type="text" id="studenNmSearch" placeholder="이름/ 나이/ 소속학교 / 지망학교">
-        <button type="button" id="searchBtn">검색</button>
+    	<form id="studenNmSearchForm" action="/student/acasysStudetnList.do" method="get">
+	        <input type="text" id="studenNmSearch" name="studenNmSearch" placeholder="이름/ 나이/ 소속학교 / 지망학교">
+	        <button type="button" id="searchBtn">검색</button>
+        </form>
         <div class="count-info">총 ${count} 건</div>
         <span class="admin-message">${adminId} 님 반갑습니다.</span>
         <button type="button" id="logOutBtn">로그아웃</button>

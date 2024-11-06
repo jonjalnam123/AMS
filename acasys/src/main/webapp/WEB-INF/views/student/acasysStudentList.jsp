@@ -71,7 +71,7 @@
 	}
 	
 	.table-container {
-	    height: 100%; /* 고정 높이 설정 */                 
+	    height: 273px; /* 고정 높이 설정 */                   
 	    overflow-y: auto; /* 세로 스크롤 추가 */
 	    margin-top: 5px; /* 상단 여백 추가 */  
 	}

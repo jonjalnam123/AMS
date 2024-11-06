@@ -97,28 +97,27 @@ $(document).ready(function() {
 <div class="paging-container">
     <ul class="pagination">
 
-        <!-- 이전 페이지로 가기 (항상 노출, 비활성화 가능) -->
-        <li class="page-item<c:if test="${paging.curPage == 1}">disabled</c:if>">
-            <a class="page-link" href="/student/acasysStudetnList.do?curPage=${paging.curPage - 1 }">&lt;</a>
-        </li>
+	<li class="page-item ${paging.curPage <= 1 ? 'disabled' : ''}" style="visibility: ${paging.curPage <= 1 ? 'hidden' : 'visible'};">
+	    <a class="page-link" href="/student/acasysStudetnList.do?curPage=${paging.curPage - 1 }&studenNmSearch=${paging.studenNmSearch}">&lt;</a>
+	</li>
 
         <!-- 페이징 리스트 -->
-        <c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="i">
-            <c:if test="${paging.curPage eq i }">
+        <c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="i">
+            <c:if test="${paging.curPage == i}">
                 <li class="page-item active">
                     <span class="page-link">${i}</span>
                 </li>
             </c:if>
-            <c:if test="${paging.curPage ne i }">
+            <c:if test="${paging.curPage != i}">
                 <li class="page-item">
-                    <a class="page-link" href="/student/acasysStudetnList.do?curPage=${i }">${i}</a>
+                    <a class="page-link" href="/student/acasysStudetnList.do?curPage=${i}&studenNmSearch=${paging.studenNmSearch}">${i}</a>
                 </li>
             </c:if>
         </c:forEach>
 
         <!-- 다음 페이지로 가기 (항상 노출, 비활성화 가능) -->
-        <li class="page-item <c:if test="${paging.curPage == paging.totalPage}">disabled</c:if>">
-            <a class="page-link" href="/student/acasysStudetnList.do?curPage=${paging.curPage + 1 }">&gt;</a>
+        <li class="page-item ${paging.curPage == paging.totalPage ? 'disabled' : ''}" style="visibility: ${paging.curPage == paging.totalPage ? 'hidden' : 'visible'};">
+            <a class="page-link" href="/student/acasysStudetnList.do?curPage=${paging.curPage + 1}&studenNmSearch=${paging.studenNmSearch}">&gt;</a>
         </li>
 
     </ul>

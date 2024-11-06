@@ -15,7 +15,7 @@
        max-width: 100%;
        background-position: center;
        background-size: cover;
-       text-align:right;
+       text-align:center;
        color: black;
        position: absolute; 
        bottom: 0px;

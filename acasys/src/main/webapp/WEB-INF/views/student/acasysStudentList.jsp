@@ -276,7 +276,7 @@
         avgSociety = '';
         avgHistory = '';
         avgScience = '';
-
+       
         $('#searchBtn').on('click', function () {
 
 			$("#studenNmSearchForm").submit();  
@@ -285,8 +285,7 @@
         
     	$("#studenNmSearch").on('keypress', function(event) { 
        		if(event.keyCode == 13) {
-                $('#pagingContainer').css('visibility', 'hidden');  // 공간 유지하면서 숨기기
-       			fn_searchNm();
+       			$("#studenNmSearchForm").submit();
     		}
     	});
         

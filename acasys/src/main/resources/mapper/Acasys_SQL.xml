@@ -186,7 +186,8 @@
 				  ,	UPD_USER_ID
 				  ,	UPD_DTTM
 		    FROM TB_COMN_CD  
-		  WHERE BASS_CD_VAL = #{tierVal}    
+		  WHERE BASS_CD_VAL = #{tierVal}
+		  ORDER BY SORT_ORDR
 	</select>
 	
 	<select id="termCd" parameterType="String" resultType="AcasysCommCdVo">

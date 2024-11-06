@@ -1,6 +1,8 @@
 package com.aca.sys;
 
-public class Paging {
+import lombok.Data;
+
+public @Data class Paging {
 
 	private int curPage; // 현재 페이지 번호
 	
@@ -14,6 +16,7 @@ public class Paging {
 	
 	private int startNo; //화면에 보이는 게시글의 시작 번호
 	private int endNo; //화면에 보이는 게시글의 끝 번호
+	private String studenNmSearch;
 	
 	
 	//디폴트 생성자 - 페이징 로직이 처리되지 않는다

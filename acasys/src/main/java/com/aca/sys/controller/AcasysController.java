@@ -147,8 +147,8 @@ public class AcasysController {
 	 * @return
 	**/
 	@GetMapping("/student/acasysStudetnList.do")  
-	public String acasysStudetnList(@RequestParam(defaultValue = "0") int curPage, Model model, HttpServletRequest request, AcasysStudentInfoVO acasysStudentInfoVO) throws Exception{
-
+	public String acasysStudetnList(@RequestParam(defaultValue = "0") int curPage, @RequestParam(defaultValue = "") String studenNmSearch, Model model, HttpServletRequest request, AcasysStudentInfoVO acasysStudentInfoVO) throws Exception{
+		
 	    // 로그인 여부 체크
 	    AcasysAdminLoginVO loginUser = (AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER");
 	    if (loginUser == null) {
@@ -157,9 +157,14 @@ public class AcasysController {
 		
 	    String adminId = loginUser.getAdminId();
 	    
+	    //페이징 처리
         Paging paging = acasysService.getPaging(curPage, acasysStudentInfoVO);
         model.addAttribute("paging", paging);
-        acasysStudentInfoVO.setPaging(paging);
+        
+        //페이징 검색조건
+        paging.setStudenNmSearch(acasysStudentInfoVO.getStudenNmSearch());
+        acasysStudentInfoVO.setPaging(paging);  
+
 		// 학생 리스트
 		List<AcasysStudentInfoVO> studentList = acasysService.selectAcasysStudentList(acasysStudentInfoVO);
 		

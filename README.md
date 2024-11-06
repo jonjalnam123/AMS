@@ -5,7 +5,7 @@ Academy Management System
 STS4, Dbeaver
 
 # Language
-Back - JAVA ( Spring boot ) / MyBatis
+Back - JAVA ( Spring boot ) / MyBatis 
 Front - JSP ( jQuery, HTML, CSS ) 
 DB - MySQL
 

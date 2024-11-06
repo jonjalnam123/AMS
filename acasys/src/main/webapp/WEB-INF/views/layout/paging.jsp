@@ -84,10 +84,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$(".page-item").on('click', function(){
-
-	});
-	
 });
 
 

@@ -4,10 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.aca.sys.Paging;
 import com.aca.sys.vo.AcasysAdminLoginVO;
 import com.aca.sys.vo.AcasysCommCdVo;
-import com.aca.sys.vo.AcasysStudentInfoSearchVO;
 import com.aca.sys.vo.AcasysStudentInfoVO;
 import com.aca.sys.vo.AcasysStudentScoreVO;
 

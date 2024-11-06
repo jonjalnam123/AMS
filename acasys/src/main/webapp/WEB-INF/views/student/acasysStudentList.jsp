@@ -71,7 +71,7 @@
 	}
 	
 	.table-container {
-	    height: 255px; /* 고정 높이 설정 */         
+	    height: 100%; /* 고정 높이 설정 */                 
 	    overflow-y: auto; /* 세로 스크롤 추가 */
 	    margin-top: 5px; /* 상단 여백 추가 */  
 	}
@@ -147,7 +147,7 @@
 
     .admin-message {
         margin-left: auto; 
-        margin-right: 5px;
+        margin-right: 5px;  
     }
 
     .button-container{
@@ -163,7 +163,7 @@
         margin-top: 10px; 
     }
 
-    #registBtn, #delBtn, #logOutBtn,#registScoreBtn,#delScoreBtn,#excelBtn {
+    #registBtn, #delBtn,#registScoreBtn,#delScoreBtn,#excelBtn {
         padding: 10px 15px;
         border: none;
         border-radius: 5px;
@@ -173,14 +173,7 @@
         margin-right: 5px;
     }
     
-    #logOutBtn {
-        background-color: #adb5bd;
-        color: white;
-    }
 
-    #logOutBtn:hover {
-        background-color: #868e96; 
-    }
 
     #registBtn, #registScoreBtn {
         background-color: #007bff; 
@@ -231,7 +224,7 @@
 	
     #detailBtn:hover {
         color: blue;
-        border-bottom: 1px solid blue;
+        text-decoration: none; /* 마우스를 올려도 밑줄이 생기지 않도록 설정 */
     }
 	
     .details-table {
@@ -259,6 +252,24 @@
         color: #888;
     }
     
+    #logOutBtn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 40px; 
+    margin-right: 5px;
+	}
+
+	#logOutBtn {
+	    background-color: #adb5bd;  
+	    color: white;
+	}
+	
+	#logOutBtn:hover {
+	    background-color: #868e96;  
+	}
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -289,9 +300,7 @@
     		}
     	});
         
-        $('#logOutBtn').on('click', function () {
-            location.href = '/login/acasyslogout.do';
-        });
+
         
         
         $('#registBtn').on('click', function () {
@@ -494,6 +503,7 @@
 	    					success : function(response) {
 	    						if ( response.status === 'success') {
 	    							alert('성적 삭제 을(를) 성공하였습니다.');
+	    							location.reload();
 	    						} else {
 	    							alert('성적 삭제 을(를) 실패하였습니다.');
 	    						}
@@ -601,8 +611,18 @@
                 	noDataCheck = 1;
                     var rows = '<tr><td colspan="11" class="no-data">조회된 데이터가 없습니다.</td></tr>';
                     $('#studentScoreTbody').append(rows);
+                    $('#registScoreBtn').prop('disabled', true);  // 버튼 비활성화
+                    $('#registScoreBtn').css('visibility', 'hidden');  // 버튼 숨김
+                    $('#delScoreBtn').prop('disabled', true);  // 버튼 비활성화
+                    $('#delScoreBtn').css('visibility', 'hidden');  // 버튼 숨김
 					return;
                 } else {
+                	
+                    $('#registScoreBtn').prop('disabled', false);  // 버튼 비활성화
+                    $('#registScoreBtn').css('visibility', '');  // 버튼 숨김
+                    $('#delScoreBtn').prop('disabled', false);  // 버튼 비활성화
+                    $('#delScoreBtn').css('visibility', '');  // 버튼 숨김
+                	
                 	noDataCheck = 0;
                     var rows = '';
                     var totalKorean = 0;
@@ -853,8 +873,8 @@
     <div class="search-container">
     	<form id="studenNmSearchForm" action="/student/acasysStudetnList.do" method="get">
 	        <input type="text" id="studenNmSearch" name="studenNmSearch" placeholder="이름/ 나이/ 소속학교 / 지망학교">
-	        <button type="button" id="searchBtn">검색</button>
         </form>
+   	    <button type="button" id="searchBtn">검색</button>
         <div class="count-info">총 ${count} 건</div>
         <span class="admin-message">${adminId} 님 반갑습니다.</span>
         <button type="button" id="logOutBtn">로그아웃</button>
@@ -955,8 +975,8 @@
 	    </table>
 	</div>
     <div class="button-container">
-    	<button type="button" id="registScoreBtn">성적등록</button>
-    	<button type="button" id="delScoreBtn">성적삭제</button>
+    	<button type="button" id="registScoreBtn" style="visibility: hidden;" disabled>성적등록</button>
+    	<button type="button" id="delScoreBtn" style="visibility: hidden;" disabled>성적삭제</button>
     </div>
 </div>
 <%@ include file="../inc/footer.jsp"%>

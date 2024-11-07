@@ -53,15 +53,17 @@ public class AcasysController {
 	public String acasysMain( HttpServletRequest request ) {
 		
         String username = "";
-
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("idSaveCheck")) {
-                username = cookie.getValue();
-            }
+        if ( request.getCookies() != null ) {
+	        Cookie[] cookies = request.getCookies();
+	        for (Cookie cookie : cookies) {
+	            if (cookie.getName().equals("idSaveCheck")) {
+	                username = cookie.getValue();
+	            }
+	        }
+	        request.setAttribute("idSaveCheck", username);
+        }else {
+        	request.setAttribute("idSaveCheck", username);
         }
-        request.setAttribute("idSaveCheck", username);
-		
 		return "main/adminLogin";
 	}
 	

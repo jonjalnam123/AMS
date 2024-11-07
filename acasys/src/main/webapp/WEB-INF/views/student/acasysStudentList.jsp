@@ -523,6 +523,11 @@
 				return;
 			} 
 			
+            $('#registScoreBtn').prop('disabled', false);  // 버튼 비활성화
+            $('#registScoreBtn').css('visibility', '');  // 버튼 숨김
+            $('#delScoreBtn').prop('disabled', false);  // 버튼 비활성화
+            $('#delScoreBtn').css('visibility', '');  // 버튼 숨김
+			
         	fn_addRow();
         	
         });

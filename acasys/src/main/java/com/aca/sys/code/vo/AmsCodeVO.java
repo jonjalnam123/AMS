@@ -2,7 +2,7 @@ package com.aca.sys.code.vo;
 
 import lombok.Data;
 
-public @Data class AmsCodeVo {
+public @Data class AmsCodeVO {
 
 	private String cd;
 	private String upperCd;

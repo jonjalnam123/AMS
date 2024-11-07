@@ -18,10 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.aca.sys.code.controller.AmsCodeController;
+import com.aca.sys.code.vo.AmsCodeVO;
 import com.aca.sys.login.vo.AmsLoginVO;
 import com.aca.sys.score.service.AmsScoreService;
 import com.aca.sys.score.vo.AmsScoreVO;
-import com.aca.sys.student.vo.AmsStudentCommCdVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,6 +32,9 @@ public class AmsScoreController {
 
 	@Autowired
 	AmsScoreService amsScoreService;
+	
+	@Autowired
+	AmsCodeController amsCodeController;
 
 	/**
 	 * @Method Name : acasysStudentScoreSearch
@@ -47,7 +51,7 @@ public class AmsScoreController {
 		List<AmsScoreVO> studentScore = amsScoreService.acasysStudentScoreSearch(amsScoreVO);
 		
 		String termVal = "term";
-		List<AmsStudentCommCdVO> termCd = amsScoreService.termCd(termVal);
+		List<AmsCodeVO> termCd = amsCodeController.getTermCd(termVal);  
 		
 	    // 결과 객체 생성
 		HashMap<String, Object> response = new HashMap<>();

@@ -2,8 +2,8 @@ package com.aca.sys.score.service;
 
 import java.util.List;
 
+import com.aca.sys.code.vo.AmsCodeVO;
 import com.aca.sys.score.vo.AmsScoreVO;
-import com.aca.sys.student.vo.AmsStudentCommCdVO;
 
 public interface AmsScoreService {
 	
@@ -16,16 +16,6 @@ public interface AmsScoreService {
 	 * @return
 	 */
 	List<AmsScoreVO> acasysStudentScoreSearch(AmsScoreVO amsScoreVO);
-
-	/**
-	 * @Method Name : tierCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 학기 코드
-	 * @return
-	 */
-	List<AmsStudentCommCdVO> termCd(String termVal);
 	
 	/**
 	 * @Method Name : acasysStudentScoreRegistProc

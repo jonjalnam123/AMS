@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.aca.sys.student.vo.AmsStudentCommCdVO;
 import com.aca.sys.student.vo.AmsStudentInfoVO;
 
 @Mapper
@@ -41,56 +40,6 @@ public interface AmsStudentMapper {
 	 */
 	int studentCountForPaging(AmsStudentInfoVO amsStudentInfoVO);
 
-	/**
-	 * @Method Name : schoolGubunCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 계열 코드
-	 * @return
-	 */
-	List<AmsStudentCommCdVO> schoolGubunCd(String schoolGubunVal);
-
-	/**
-	 * @Method Name : schoolMajorCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 전공 코드
-	 * @return
-	 */
-	List<AmsStudentCommCdVO> schoolMajorCd(String schoolMajorVal);
-	
-	/**
-	 * @Method Name : schoolVocatiMajorCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 실업계 코드 조회
-	 * @return
-	 */
-	List<AmsStudentCommCdVO> schoolVocatiMajorCd(String schoolVocatiMajorVal);
-
-	/**
-	 * @Method Name : tierCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 성적 코드
-	 * @return
-	 */
-	List<AmsStudentCommCdVO> tierCd(String tierVal);
-
-	/**
-	 * @Method Name : tierCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 학기 코드
-	 * @return
-	 */
-	List<AmsStudentCommCdVO> termCd(String termVal); 
-	
 	/**
 	 * @Method Name : acasysStudentRegistProc
 	 * @작성일 : 2024. 10. 21

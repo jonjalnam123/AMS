@@ -4,21 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.aca.sys.code.vo.AmsCodeVO;
 import com.aca.sys.score.vo.AmsScoreVO;
-import com.aca.sys.student.vo.AmsStudentCommCdVO;
 
 @Mapper
 public interface AmsScoreMapper {
-
-	/**
-	 * @Method Name : tierCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 학기 코드
-	 * @return
-	 */
-	List<AmsStudentCommCdVO> termCd(String termVal); 
 	
 	/**
 	 * @Method Name : acasysStudentScoreRegistProc

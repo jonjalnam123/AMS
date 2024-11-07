@@ -1,6 +1,6 @@
 package com.aca.sys.student.controller;
 
-import java.util.HashMap; 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aca.sys.Paging;
+import com.aca.sys.code.controller.AmsCodeController;
+import com.aca.sys.code.vo.AmsCodeVO;
 import com.aca.sys.login.vo.AmsLoginVO;
 import com.aca.sys.student.service.AmsStudentService;
-import com.aca.sys.student.vo.AmsStudentCommCdVO;
 import com.aca.sys.student.vo.AmsStudentInfoVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,6 +28,8 @@ public class AmsStudentController {
 	@Autowired
 	AmsStudentService amsStudentService;
 
+	@Autowired
+	AmsCodeController amsCodeController;
 	/*
 	 * @Method Name : acasysMainList
 	 * @작성일 : 2024. 10. 21
@@ -57,8 +60,9 @@ public class AmsStudentController {
 		// 학생 리스트
 		List<AmsStudentInfoVO> studentList = amsStudentService.selectAcasysStudentList(amsStudentInfoVO);
 		
+		// 학기코드 조회
 		String termVal = "term";
-		List<AmsStudentCommCdVO> termCd = amsStudentService.termCd(termVal);  
+		List<AmsCodeVO> termCd = amsCodeController.getTermCd(termVal);  
 		
 		/** json 변환 **/
 		ObjectMapper ObjectMapper = new ObjectMapper();
@@ -86,17 +90,18 @@ public class AmsStudentController {
 	@GetMapping("/student/acasysStudentRegist.do")
 	public String acasysStudentRegist(Model model) {
 		
+		//학교전공 계열
 		String schoolGubunVal = "schoolgubun";
-		List<AmsStudentCommCdVO> schoolGubunCd = amsStudentService.schoolGubunCd(schoolGubunVal);
+		List<AmsCodeVO> schoolGubunCd = amsCodeController.getSchoolGubunCd(schoolGubunVal);
 		
 		String schoolMajorVal = "schoolmajor";
-		List<AmsStudentCommCdVO> schoolMajorCd = amsStudentService.schoolMajorCd(schoolMajorVal);
+		List<AmsCodeVO> schoolMajorCd = amsCodeController.getSchoolMajorCd(schoolMajorVal);
 		
 		String tierVal = "tier";
-		List<AmsStudentCommCdVO> tierCd = amsStudentService.tierCd(tierVal);
+		List<AmsCodeVO> tierCd = amsCodeController.getTierCd(tierVal);
 		
 		String schoolVocatiMajorVal = "schoolvocatimajor";
-		List<AmsStudentCommCdVO> schoolVocatiMajorCd = amsStudentService.schoolVocatiMajorCd(schoolVocatiMajorVal);
+		List<AmsCodeVO> schoolVocatiMajorCd = amsCodeController.getSchoolVocatiMajorCd(schoolVocatiMajorVal);
 
 		model.addAttribute("schoolGubunCd", schoolGubunCd);
 		model.addAttribute("schoolMajorCd", schoolMajorCd);
@@ -183,17 +188,17 @@ public class AmsStudentController {
 		AmsStudentInfoVO studentDetailList = amsStudentService.acasysStudentDetail(studentNo);
 		
 		String schoolGubunVal = "schoolgubun";
-		List<AmsStudentCommCdVO> schoolGubunCd = amsStudentService.schoolGubunCd(schoolGubunVal);
+		List<AmsCodeVO> schoolGubunCd = amsCodeController.getSchoolGubunCd(schoolGubunVal);
 		
 		String schoolMajorVal = "schoolmajor";
-		List<AmsStudentCommCdVO> schoolMajorCd = amsStudentService.schoolMajorCd(schoolMajorVal);
+		List<AmsCodeVO> schoolMajorCd = amsCodeController.getSchoolMajorCd(schoolMajorVal);
 		
 		String tierVal = "tier";
-		List<AmsStudentCommCdVO> tierCd = amsStudentService.tierCd(tierVal);
+		List<AmsCodeVO> tierCd = amsCodeController.getTierCd(tierVal);
 		
 		
 		String schoolVocatiMajorVal = "schoolvocatimajor";
-		List<AmsStudentCommCdVO> schoolVocatiMajorCd = amsStudentService.schoolVocatiMajorCd(schoolVocatiMajorVal);
+		List<AmsCodeVO> schoolVocatiMajorCd = amsCodeController.getSchoolVocatiMajorCd(schoolVocatiMajorVal);
 		
 		model.addAttribute("schoolGubunCd", schoolGubunCd);
 		model.addAttribute("schoolMajorCd", schoolMajorCd);

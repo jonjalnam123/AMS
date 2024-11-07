@@ -3,6 +3,104 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.aca.sys.code.service.impl.AmsCodeMapper">
+
+	<select id="termCd" parameterType="String" resultType="AmsCodeVO">
+		SELECT /* AmsCodeController.termCd */         
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD
+		  WHERE BASS_CD_VAL = #{termVal}       
+	</select>
 	
+	<select id="schoolGubunCd" parameterType="String" resultType="AmsCodeVO">
+		SELECT /* AmsCodeController.schoolGubunCd */       
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD
+		  WHERE BASS_CD_VAL = #{schoolGubunVal}  
+		  ORDER BY SORT_ORDR
+	</select>
+	
+	<select id="schoolMajorCd" parameterType="String" resultType="AmsCodeVO">  
+		SELECT /* AmsCodeController.schoolMajorCd */       
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD
+		  WHERE BASS_CD_VAL = #{schoolMajorVal}  
+		  ORDER BY SORT_ORDR
+	</select>
+	
+	<select id="schoolVocatiMajorCd" parameterType="String" resultType="AmsCodeVO">
+		SELECT /* AmsCodeController.schoolGubunCd */       
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD
+		  WHERE BASS_CD_VAL = #{schoolVocatiMajorVal}  
+		  ORDER BY SORT_ORDR
+	</select>
+	
+	<select id="tierCd" parameterType="String" resultType="AmsCodeVO">  
+		SELECT /* AmsCodeController.schoolMajorCd */       
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD  
+		  WHERE BASS_CD_VAL = #{tierVal}
+		  ORDER BY SORT_ORDR
+	</select>
 
 </mapper>

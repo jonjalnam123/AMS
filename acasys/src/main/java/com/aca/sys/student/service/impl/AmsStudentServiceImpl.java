@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.aca.sys.Paging;
 import com.aca.sys.student.service.AmsStudentService;
-import com.aca.sys.student.vo.AmsStudentCommCdVO;
 import com.aca.sys.student.vo.AmsStudentInfoVO;
 
 @Service("amsStudentService")
@@ -61,71 +60,6 @@ public class AmsStudentServiceImpl implements AmsStudentService {
 		Paging paging = new Paging(totalCount, curPage);
 		
 		return paging;
-	}
-
-	/**
-	 * @Method Name : schoolGubunCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 계열 코드
-	 * @return
-	 */
-	@Override
-	public List<AmsStudentCommCdVO> schoolGubunCd(String schoolGubunVal) {
-		return amsStudentMapper.schoolGubunCd(schoolGubunVal);
-	}
-	
-	/**
-	 * @Method Name : schoolMajorCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 전공 코드
-	 * @return
-	 */
-	@Override
-	public List<AmsStudentCommCdVO> schoolMajorCd(String schoolMajorVal) {
-		return amsStudentMapper.schoolMajorCd(schoolMajorVal);
-	}
-	
-	/**
-	 * @Method Name : tierCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 성적 코드
-	 * @return
-	 */
-	@Override
-	public List<AmsStudentCommCdVO> tierCd(String tierVal) {
-		return amsStudentMapper.tierCd(tierVal);
-	}
-	
-	/**
-	 * @Method Name : tierCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 학기 코드
-	 * @return
-	 */
-	@Override
-	public List<AmsStudentCommCdVO> termCd(String termVal) {
-		return amsStudentMapper.termCd(termVal);
-	}
-	
-	/**
-	 * @Method Name : schoolVocatiMajorCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 실업계 코드 조회
-	 * @return
-	 */
-	@Override
-	public List<AmsStudentCommCdVO> schoolVocatiMajorCd(String schoolVocatiMajorVal) {
-		return amsStudentMapper.schoolVocatiMajorCd(schoolVocatiMajorVal);
 	}
 	
 	/**

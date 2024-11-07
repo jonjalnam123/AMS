@@ -5,28 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aca.sys.code.vo.AmsCodeVO;
 import com.aca.sys.score.service.AmsScoreService;
 import com.aca.sys.score.vo.AmsScoreVO;
-import com.aca.sys.student.vo.AmsStudentCommCdVO;
 
 @Service("amsScoreService")
 public class AmsScoreServiceImpl implements AmsScoreService {
 	
 	@Autowired
 	AmsScoreMapper amsScoreMapper;
-	
-	/**
-	 * @Method Name : tierCd
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 학기 코드
-	 * @return
-	 */
-	@Override
-	public List<AmsStudentCommCdVO> termCd(String termVal) {
-		return amsScoreMapper.termCd(termVal);
-	}
 	
 	/**
 	 * @Method Name : acasysStudentScoreRegistProc

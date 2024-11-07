@@ -118,7 +118,7 @@
 				              };
 
          $.ajax({
-             url: '/login/acasysLogin.do',
+             url: '/login/amsLogin.do',
              type: 'POST',
              data: param,
              dataType: "json",

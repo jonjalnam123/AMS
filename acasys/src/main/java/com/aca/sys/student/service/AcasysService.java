@@ -3,23 +3,12 @@ package com.aca.sys.student.service;
 import java.util.List;
 
 import com.aca.sys.Paging;
-import com.aca.sys.student.vo.AcasysAdminLoginVO;
 import com.aca.sys.student.vo.AcasysCommCdVo;
 import com.aca.sys.student.vo.AcasysStudentInfoVO;
 import com.aca.sys.student.vo.AcasysStudentScoreVO;
 
 public interface AcasysService {
 
-	/**
-	 * @Method Name : acasysLogin
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 로그인
-	 * @return
-	 */
-	List<?> acasysLogin(AcasysAdminLoginVO acasysAdminLoginVO) throws Exception;
-	
 	/**
 	 * @Method Name : studentCount
 	 * @작성일 : 2024. 10. 22

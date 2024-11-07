@@ -21,123 +21,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.aca.sys.CommonUtils;
 import com.aca.sys.Paging;
+import com.aca.sys.login.vo.AmsLoginVO;
 import com.aca.sys.student.service.AcasysService;
-import com.aca.sys.student.vo.AcasysAdminLoginVO;
 import com.aca.sys.student.vo.AcasysCommCdVo;
 import com.aca.sys.student.vo.AcasysStudentInfoVO;
 import com.aca.sys.student.vo.AcasysStudentScoreVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AcasysController {
 
 	@Autowired
 	AcasysService acasysService;
-	
-	/**
-	 * @Method Name : acasysMain
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 메인
-	 * @return
-	 */
-	@GetMapping("/login/acasysMain.do")
-	public String acasysMain( HttpServletRequest request ) {
-		
-        String username = "";
-        if ( request.getCookies() != null ) {
-	        Cookie[] cookies = request.getCookies();
-	        for (Cookie cookie : cookies) {
-	            if (cookie.getName().equals("idSaveCheck")) {
-	                username = cookie.getValue();
-	            }
-	        }
-	        request.setAttribute("idSaveCheck", username);
-        }else {
-        	request.setAttribute("idSaveCheck", username);
-        }
-		return "main/adminLogin";
-	}
-	
-	/**
-	 * @Method Name : acasysLogin
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 로그인
-	 * @return
-	 */
-	@PostMapping("/login/acasysLogin.do")
-	@ResponseBody
-	public HashMap<String, String> acasysLogin( @ModelAttribute AcasysAdminLoginVO acasysAdminLoginVO, @RequestParam String idSaveCheck, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HashMap<String, String> longResultMap = new HashMap<>();
-
-		//암호화된 Password 비교하기.
-		CommonUtils util = new CommonUtils();
-		String userPassword = acasysAdminLoginVO.getAdminPw();
-		String shaPassword = util.encrypt(userPassword);
-		acasysAdminLoginVO.setAdminPw(shaPassword);
-		 
-		List<?> loginResult = acasysService.acasysLogin(acasysAdminLoginVO);
-
-		if ( loginResult.size() > 0 ) { // 성공
-			
-			HttpSession session = request.getSession();
-			
-			if ( session.getAttribute("LOGIN_USER") != null ){
-				// 기존에 login이란 세션 값이 존재한다면
-				session.removeAttribute("LOGIN_USER"); // 기존값을 제거해 준다.
-			}
-
-			session.setAttribute("LOGIN_USER", acasysAdminLoginVO);
-			
-			longResultMap.put("result", "S");
-			
-			
-		      if (idSaveCheck == null) {
-		    	  idSaveCheck = "";
-		        }
-			
-		        if (idSaveCheck.equals("on")) {
-		            Cookie cookie = new Cookie("idSaveCheck", acasysAdminLoginVO.getAdminId());
-		            response.addCookie(cookie);
-		        } else {
-		            Cookie cookie = new Cookie("idSaveCheck", "");
-		            response.addCookie(cookie);
-		        }
-			
-		} else if ( loginResult.size() <=  0 ) { //실패 
-			longResultMap.put("result", "F");
-		}
-		
-		return longResultMap;
-	}
-	
-	
-	/**
-	 * @Method Name : acasysMainList
-	 * @작성일 : 2024. 10. 21
-	 * @작성자 : 최정석
-	 * @변경이력 :
-	 * @Method 설명 : 학원생 리스트
-	 * @return
-	 */
-	@GetMapping("/login/acasyslogout.do")   
-	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    HttpSession session = request.getSession();  
-	    session.invalidate();
-	    
-	    // 로그인 페이지로 리디렉션
-	    return "redirect:/login/acasysMain.do";   
-	}
 
 	/*
 	 * @Method Name : acasysMainList
@@ -151,9 +50,9 @@ public class AcasysController {
 	public String acasysStudetnList(@RequestParam(defaultValue = "0") int curPage, @RequestParam(defaultValue = "") String studenNmSearch, Model model, HttpServletRequest request, AcasysStudentInfoVO acasysStudentInfoVO) throws Exception{
 		
 	    // 로그인 여부 체크
-	    AcasysAdminLoginVO loginUser = (AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER");
+		AmsLoginVO loginUser = (AmsLoginVO) request.getSession().getAttribute("LOGIN_USER");
 	    if (loginUser == null) {
-	        return "redirect:/login/acasysMain.do"; // 로그인 페이지로 리디렉션
+	        return "redirect:/login/amsMain.do"; // 로그인 페이지로 리디렉션
 	    }
 		
 	    String adminId = loginUser.getAdminId();
@@ -232,7 +131,7 @@ public class AcasysController {
 
 	    List<AcasysStudentScoreVO> scoresList = acasysStudentScoreVO.get("scoresList");
 
-	    String adminId = ((AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
+	    String adminId = ((AmsLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
 
 	    HashMap<String, String> response = new HashMap<>();
 	    String overallResult = "SUCCESS";
@@ -332,7 +231,7 @@ public class AcasysController {
 	public HashMap<String, String>  acasysStudentRegistProc (@ModelAttribute AcasysStudentInfoVO acasysStudentInfoVO, HttpServletRequest request) {
 
 		 //로그인 아이디
-		String adminId = ((AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
+		String adminId = ((AmsLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
 		
 		acasysStudentInfoVO.setRegUserId(adminId);
 		acasysStudentInfoVO.setUpdUserId(adminId);  
@@ -364,7 +263,7 @@ public class AcasysController {
 	public HashMap<String, String>  acasysStudentDelProc (@ModelAttribute AcasysStudentInfoVO acasysStudentInfoVO, HttpServletRequest request) {
 
 		 //로그인 아이디
-		String adminId = ((AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
+		String adminId = ((AmsLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
 		
 		acasysStudentInfoVO.setUpdUserId(adminId);  
 		
@@ -430,7 +329,7 @@ public class AcasysController {
 	public HashMap<String, String> acasysStudentDetailUpdateProc(@ModelAttribute AcasysStudentInfoVO acasysStudentInfoVO, HttpServletRequest request) {
 
 		 //로그인 아이디
-		String adminId = ((AcasysAdminLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
+		String adminId = ((AmsLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
 
 		acasysStudentInfoVO.setUpdUserId(adminId);  
 		

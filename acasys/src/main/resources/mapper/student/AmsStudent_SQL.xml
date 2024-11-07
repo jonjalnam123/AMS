@@ -4,16 +4,6 @@
 
 <mapper namespace="com.aca.sys.student.service.impl.AcasysMapper">
 	
-	<select id="acasysLogin" parameterType="AcasysStudentInfoVO" resultType="java.util.HashMap">      
-		SELECT /* adminLogin.acasysLogin */     
-				   ADMIN_NO 
-				 , ADMIN_ID    
-				 , ADMIN_PW     
-		  FROM TB_LOGIN_ADMIN    
-		WHERE ADMIN_ID = #{adminId}    
-		    AND ADMIN_PW = #{adminPw}
-	</select>	
-	
 	<select id="studentCount" resultType="String">     
 		SELECT /* acasysStudentList.studentCount */
 				   COUNT(*) 

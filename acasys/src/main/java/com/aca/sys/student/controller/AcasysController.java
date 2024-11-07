@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.aca.sys.Paging;
 import com.aca.sys.login.vo.AmsLoginVO;
 import com.aca.sys.student.service.AcasysService;
-import com.aca.sys.student.vo.AcasysCommCdVo;
+import com.aca.sys.student.vo.AcasysCommCdVO;
 import com.aca.sys.student.vo.AcasysStudentInfoVO;
 import com.aca.sys.student.vo.AcasysStudentScoreVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -69,7 +69,7 @@ public class AcasysController {
 		List<AcasysStudentInfoVO> studentList = acasysService.selectAcasysStudentList(acasysStudentInfoVO);
 		
 		String termVal = "term";
-		List<AcasysCommCdVo> termCd = acasysService.termCd(termVal);  
+		List<AcasysCommCdVO> termCd = acasysService.termCd(termVal);  
 		
 		/** json 변환 **/
 		ObjectMapper ObjectMapper = new ObjectMapper();
@@ -101,7 +101,7 @@ public class AcasysController {
 		List<AcasysStudentScoreVO> studentScore = acasysService.acasysStudentScoreSearch(acasysStudentScoreVO);
 		
 		String termVal = "term";
-		List<AcasysCommCdVo> termCd = acasysService.termCd(termVal);
+		List<AcasysCommCdVO> termCd = acasysService.termCd(termVal);
 		
 	    // 결과 객체 생성
 		HashMap<String, Object> response = new HashMap<>();
@@ -199,16 +199,16 @@ public class AcasysController {
 	public String acasysStudentRegist(Model model) {
 		
 		String schoolGubunVal = "schoolgubun";
-		List<AcasysCommCdVo> schoolGubunCd = acasysService.schoolGubunCd(schoolGubunVal);
+		List<AcasysCommCdVO> schoolGubunCd = acasysService.schoolGubunCd(schoolGubunVal);
 		
 		String schoolMajorVal = "schoolmajor";
-		List<AcasysCommCdVo> schoolMajorCd = acasysService.schoolMajorCd(schoolMajorVal);
+		List<AcasysCommCdVO> schoolMajorCd = acasysService.schoolMajorCd(schoolMajorVal);
 		
 		String tierVal = "tier";
-		List<AcasysCommCdVo> tierCd = acasysService.tierCd(tierVal);
+		List<AcasysCommCdVO> tierCd = acasysService.tierCd(tierVal);
 		
 		String schoolVocatiMajorVal = "schoolvocatimajor";
-		List<AcasysCommCdVo> schoolVocatiMajorCd = acasysService.schoolVocatiMajorCd(schoolVocatiMajorVal);
+		List<AcasysCommCdVO> schoolVocatiMajorCd = acasysService.schoolVocatiMajorCd(schoolVocatiMajorVal);
 
 		model.addAttribute("schoolGubunCd", schoolGubunCd);
 		model.addAttribute("schoolMajorCd", schoolMajorCd);
@@ -295,17 +295,17 @@ public class AcasysController {
 		AcasysStudentInfoVO studentDetailList = acasysService.acasysStudentDetail(studentNo);
 		
 		String schoolGubunVal = "schoolgubun";
-		List<AcasysCommCdVo> schoolGubunCd = acasysService.schoolGubunCd(schoolGubunVal);
+		List<AcasysCommCdVO> schoolGubunCd = acasysService.schoolGubunCd(schoolGubunVal);
 		
 		String schoolMajorVal = "schoolmajor";
-		List<AcasysCommCdVo> schoolMajorCd = acasysService.schoolMajorCd(schoolMajorVal);
+		List<AcasysCommCdVO> schoolMajorCd = acasysService.schoolMajorCd(schoolMajorVal);
 		
 		String tierVal = "tier";
-		List<AcasysCommCdVo> tierCd = acasysService.tierCd(tierVal);
+		List<AcasysCommCdVO> tierCd = acasysService.tierCd(tierVal);
 		
 		
 		String schoolVocatiMajorVal = "schoolvocatimajor";
-		List<AcasysCommCdVo> schoolVocatiMajorCd = acasysService.schoolVocatiMajorCd(schoolVocatiMajorVal);
+		List<AcasysCommCdVO> schoolVocatiMajorCd = acasysService.schoolVocatiMajorCd(schoolVocatiMajorVal);
 		
 		model.addAttribute("schoolGubunCd", schoolGubunCd);
 		model.addAttribute("schoolMajorCd", schoolMajorCd);

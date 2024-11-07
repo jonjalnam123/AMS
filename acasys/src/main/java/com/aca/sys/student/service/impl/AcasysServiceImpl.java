@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.aca.sys.Paging;
 import com.aca.sys.student.service.AcasysService;
-import com.aca.sys.student.vo.AcasysCommCdVo;
+import com.aca.sys.student.vo.AcasysCommCdVO;
 import com.aca.sys.student.vo.AcasysStudentInfoVO;
 import com.aca.sys.student.vo.AcasysStudentScoreVO;
 
@@ -73,7 +73,7 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVo> schoolGubunCd(String schoolGubunVal) {
+	public List<AcasysCommCdVO> schoolGubunCd(String schoolGubunVal) {
 		return acasysMapper.schoolGubunCd(schoolGubunVal);
 	}
 	
@@ -86,7 +86,7 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVo> schoolMajorCd(String schoolMajorVal) {
+	public List<AcasysCommCdVO> schoolMajorCd(String schoolMajorVal) {
 		return acasysMapper.schoolMajorCd(schoolMajorVal);
 	}
 	
@@ -99,7 +99,7 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVo> tierCd(String tierVal) {
+	public List<AcasysCommCdVO> tierCd(String tierVal) {
 		return acasysMapper.tierCd(tierVal);
 	}
 	
@@ -112,7 +112,7 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVo> termCd(String termVal) {
+	public List<AcasysCommCdVO> termCd(String termVal) {
 		return acasysMapper.termCd(termVal);
 	}
 	
@@ -125,7 +125,7 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal) {
+	public List<AcasysCommCdVO> schoolVocatiMajorCd(String schoolVocatiMajorVal) {
 		return acasysMapper.schoolVocatiMajorCd(schoolVocatiMajorVal);
 	}
 	

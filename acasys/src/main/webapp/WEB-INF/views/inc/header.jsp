@@ -59,6 +59,7 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+
 $(document).ready(function() {
 	
 	$('#logOutBtn').on('click', function () {
@@ -67,7 +68,6 @@ $(document).ready(function() {
 	
 });
 
-
 </script>
 <body>
 <div class="menu" >
@@ -75,7 +75,7 @@ $(document).ready(function() {
 		<h2><a href="/student/acasysStudetnList.do">AMS</a></h2><p>Academy Mangement System</p>
 	</div>
 	<div class="logInfo">
-		<a href="/amsCode/codeManageMain.do">코드관리</a>
+		<a href="/amsCode/amsCodeManageMain.do">코드관리</a>
 	</div>
 </div>
 </body>

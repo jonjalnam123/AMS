@@ -1,16 +1,14 @@
-package com.aca.sys.service.impl;
+package com.aca.sys.student.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
+import com.aca.sys.Paging;
+import com.aca.sys.student.vo.AcasysAdminLoginVO;
+import com.aca.sys.student.vo.AcasysCommCdVo;
+import com.aca.sys.student.vo.AcasysStudentInfoVO;
+import com.aca.sys.student.vo.AcasysStudentScoreVO;
 
-import com.aca.sys.vo.AcasysAdminLoginVO;
-import com.aca.sys.vo.AcasysCommCdVo;
-import com.aca.sys.vo.AcasysStudentInfoVO;
-import com.aca.sys.vo.AcasysStudentScoreVO;
-
-@Mapper
-public interface AcasysMapper {
+public interface AcasysService {
 
 	/**
 	 * @Method Name : acasysLogin
@@ -33,7 +31,7 @@ public interface AcasysMapper {
 	String studentCount();
 	
 	/**
-	 * @param paging 
+	 * @param acasysStudentInfoVO 
 	 * @Method Name : selectAcasysStudentList
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
@@ -44,14 +42,14 @@ public interface AcasysMapper {
 	List<AcasysStudentInfoVO> selectAcasysStudentList(AcasysStudentInfoVO acasysStudentInfoVO);
 	
 	/**
-	 * @Method Name : studentCountForPaging
+	 * @Method Name : getPaging
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
 	 * @변경이력 :
 	 * @Method 설명 : 페이징 관련 조회
 	 * @return
 	 */
-	int studentCountForPaging(AcasysStudentInfoVO acasysStudentInfoVO);
+	Paging getPaging(int curPage, AcasysStudentInfoVO acasysStudentInfoVO);
 
 	/**
 	 * @Method Name : schoolGubunCd
@@ -72,7 +70,7 @@ public interface AcasysMapper {
 	 * @return
 	 */
 	List<AcasysCommCdVo> schoolMajorCd(String schoolMajorVal);
-	
+
 	/**
 	 * @Method Name : schoolVocatiMajorCd
 	 * @작성일 : 2024. 10. 21
@@ -82,7 +80,7 @@ public interface AcasysMapper {
 	 * @return
 	 */
 	List<AcasysCommCdVo> schoolVocatiMajorCd(String schoolVocatiMajorVal);
-
+	
 	/**
 	 * @Method Name : tierCd
 	 * @작성일 : 2024. 10. 21
@@ -92,7 +90,7 @@ public interface AcasysMapper {
 	 * @return
 	 */
 	List<AcasysCommCdVo> tierCd(String tierVal);
-
+	
 	/**
 	 * @Method Name : tierCd
 	 * @작성일 : 2024. 10. 21
@@ -101,8 +99,8 @@ public interface AcasysMapper {
 	 * @Method 설명 : 학기 코드
 	 * @return
 	 */
-	List<AcasysCommCdVo> termCd(String termVal); 
-	
+	List<AcasysCommCdVo> termCd(String termVal);
+
 	/**
 	 * @Method Name : acasysStudentRegistProc
 	 * @작성일 : 2024. 10. 21
@@ -111,7 +109,7 @@ public interface AcasysMapper {
 	 * @Method 설명 : 학생 등록 진행
 	 * @return
 	 */
-	int acasysStudentRegistProc(AcasysStudentInfoVO acasysStudentInfoVO);
+	String acasysStudentRegistProc(AcasysStudentInfoVO acasysStudentInfoVO);
 	
 	/**
 	 * @Method Name : acasysStudentScoreRegistProc
@@ -121,8 +119,8 @@ public interface AcasysMapper {
 	 * @Method 설명 : 학생 성적 등록 진행
 	 * @return
 	 */
-	int acasysStudentScoreRegistProc(AcasysStudentScoreVO score);
-
+	String acasysStudentScoreRegistProc(AcasysStudentScoreVO score);
+	
 	/**
 	 * @Method Name : acasysStudentScoreUpdateProc
 	 * @작성일 : 2024. 10. 21
@@ -131,7 +129,7 @@ public interface AcasysMapper {
 	 * @Method 설명 : 학생 성적 수정 진행
 	 * @return
 	 */
-	int acasysStudentScoreUpdateProc(AcasysStudentScoreVO score);
+	String acasysStudentScoreUpdateProc(AcasysStudentScoreVO score);
 	
 	/**
 	 * @Method Name : acasysStudentScoreDelProc
@@ -141,7 +139,7 @@ public interface AcasysMapper {
 	 * @Method 설명 : 학생 성적 삭제 진행
 	 * @return
 	 */
-	int acasysStudentScoreDelProc(AcasysStudentScoreVO delScore);
+	String acasysStudentScoreDelProc(AcasysStudentScoreVO delScore);
 	
 	/**
 	 * @Method Name : acasysStudentDelProc
@@ -150,9 +148,10 @@ public interface AcasysMapper {
 	 * @변경이력 :
 	 * @Method 설명 : 학생 등록 삭제
 	 * @return
-	 */
-	int acasysStudentDelProc(AcasysStudentInfoVO acasysStudentInfoVO);
+	 */  
+	String acasysStudentDelProc(AcasysStudentInfoVO acasysStudentInfoVO);
 
+	
 	/**
 	 * @Method Name : acasysStudentDetail
 	 * @작성일 : 2024. 10. 21
@@ -171,7 +170,7 @@ public interface AcasysMapper {
 	 * @Method 설명 : 학생 상세 수정
 	 * @return
 	 */
-	int acasysStudentDetailUpdateProc(AcasysStudentInfoVO acasysStudentInfoVO);
+	String acasysStudentDetailUpdateProc(AcasysStudentInfoVO acasysStudentInfoVO);
 
 	/**
 	 * @Method Name : acasysStudentScoreSearch
@@ -202,5 +201,6 @@ public interface AcasysMapper {
 	 * @return
 	 */
 	String acasysStudentNameForExcel(String studentNo);
+	
 
 }

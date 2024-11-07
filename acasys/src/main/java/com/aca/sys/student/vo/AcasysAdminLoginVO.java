@@ -1,4 +1,4 @@
-package com.aca.sys.vo;
+package com.aca.sys.student.vo;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.aca.sys.controller;
+package com.aca.sys.student.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aca.sys.CommonUtils;
 import com.aca.sys.Paging;
-import com.aca.sys.service.AcasysService;
-import com.aca.sys.vo.AcasysAdminLoginVO;
-import com.aca.sys.vo.AcasysCommCdVo;
-import com.aca.sys.vo.AcasysStudentInfoVO;
-import com.aca.sys.vo.AcasysStudentScoreVO;
+import com.aca.sys.student.service.AcasysService;
+import com.aca.sys.student.vo.AcasysAdminLoginVO;
+import com.aca.sys.student.vo.AcasysCommCdVo;
+import com.aca.sys.student.vo.AcasysStudentInfoVO;
+import com.aca.sys.student.vo.AcasysStudentScoreVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.Cookie;

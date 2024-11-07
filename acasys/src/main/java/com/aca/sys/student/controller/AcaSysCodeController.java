@@ -1,4 +1,4 @@
-package com.aca.sys.controller;
+package com.aca.sys.student.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -5,9 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.aca.sys.score.vo.AmsScoreVO;
-import com.aca.sys.student.vo.AcasysCommCdVO;
-import com.aca.sys.student.vo.AcasysStudentInfoVO;
-import com.aca.sys.student.vo.AcasysStudentScoreVO;
+import com.aca.sys.student.vo.AmsStudentCommCdVO;
 
 @Mapper
 public interface AmsScoreMapper {
@@ -20,7 +18,7 @@ public interface AmsScoreMapper {
 	 * @Method 설명 : 학기 코드
 	 * @return
 	 */
-	List<AcasysCommCdVO> termCd(String termVal); 
+	List<AmsStudentCommCdVO> termCd(String termVal); 
 	
 	/**
 	 * @Method Name : acasysStudentScoreRegistProc

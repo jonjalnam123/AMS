@@ -153,6 +153,7 @@ public @Data class Paging {
 	public int getEndNo() {
 		return endNo;
 	}
+
 	public void setEndNo(int endNo) {
 		this.endNo = endNo;
 	}

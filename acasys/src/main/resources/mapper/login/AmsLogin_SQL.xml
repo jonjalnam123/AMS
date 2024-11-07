@@ -5,7 +5,7 @@
 <mapper namespace="com.aca.sys.login.service.impl.AmsLoginMapper">
 	
 	<select id="acasysLogin" parameterType="AmsLoginVO" resultType="java.util.HashMap">      
-		SELECT /* adminLogin.acasysLogin */     
+		SELECT /* amsLogin.acasysLogin */     
 				   ADMIN_NO 
 				 , ADMIN_ID    
 				 , ADMIN_PW     

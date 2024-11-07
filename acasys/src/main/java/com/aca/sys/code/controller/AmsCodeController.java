@@ -11,7 +11,7 @@ public class AmsCodeController {
 		
 		System.out.println("코드 진입");
 		
-		return "code/acasysCodeList";
+		return "code/amsCodeList";
 	}
 
 }

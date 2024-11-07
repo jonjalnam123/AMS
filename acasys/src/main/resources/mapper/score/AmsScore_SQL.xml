@@ -37,8 +37,8 @@
 		  ORDER BY START_DATE   
 	</select>
 
-	<select id="termCd" parameterType="String" resultType="AcasysCommCdVo">
-		SELECT /* acasysStudentRegist.schoolGubunCd */       
+	<select id="termCd" parameterType="String" resultType="AmsStudentCommCdVO">
+		SELECT /* acasysStudentList.termCd */       
 					CD
 				  , UPPER_CD
 				  , CD_NM
@@ -97,7 +97,7 @@
 	</insert>
 	
 	<update id="acasysStudentScoreUpdateProc" parameterType="AmsScoreVO">
-		UPDATE /* acasysStudentDetail.acasysStudentDetailUpdateProc */
+		UPDATE /* acasysStudentList.acasysStudentScoreUpdateProc */
 		     	   TB_STUDENT_SCORE
 		     SET START_DATE = #{startDate}
 			     , END_DATE = #{endDate}
@@ -116,7 +116,7 @@
 	</update>
 	
 	<delete id="acasysStudentScoreDelProc" parameterType="AmsScoreVO">
-		DELETE 
+		DELETE /* acasysStudentList.acasysStudentScoreDelProc */
 		  FROM TB_STUDENT_SCORE
 		WHERE STUDENT_NO = #{studentNo} 
 			AND SCORE_NO = #{scoreNo}

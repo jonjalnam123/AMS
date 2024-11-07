@@ -3,8 +3,7 @@ package com.aca.sys.score.service;
 import java.util.List;
 
 import com.aca.sys.score.vo.AmsScoreVO;
-import com.aca.sys.student.vo.AcasysCommCdVO;
-import com.aca.sys.student.vo.AcasysStudentScoreVO;
+import com.aca.sys.student.vo.AmsStudentCommCdVO;
 
 public interface AmsScoreService {
 	
@@ -26,7 +25,7 @@ public interface AmsScoreService {
 	 * @Method 설명 : 학기 코드
 	 * @return
 	 */
-	List<AcasysCommCdVO> termCd(String termVal);
+	List<AmsStudentCommCdVO> termCd(String termVal);
 	
 	/**
 	 * @Method Name : acasysStudentScoreRegistProc

@@ -1,13 +1,14 @@
-package com.aca.sys.student.service;
+package com.aca.sys.student.service.impl;
 
 import java.util.List;
 
-import com.aca.sys.Paging;
-import com.aca.sys.student.vo.AcasysCommCdVO;
-import com.aca.sys.student.vo.AcasysStudentInfoVO;
-import com.aca.sys.student.vo.AcasysStudentScoreVO;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface AcasysService {
+import com.aca.sys.student.vo.AmsStudentCommCdVO;
+import com.aca.sys.student.vo.AmsStudentInfoVO;
+
+@Mapper
+public interface AmsStudentMapper {
 
 	/**
 	 * @Method Name : studentCount
@@ -20,7 +21,7 @@ public interface AcasysService {
 	String studentCount();
 	
 	/**
-	 * @param acasysStudentInfoVO 
+	 * @param paging 
 	 * @Method Name : selectAcasysStudentList
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
@@ -28,17 +29,17 @@ public interface AcasysService {
 	 * @Method 설명 : 메인 학생 조회
 	 * @return
 	 */
-	List<AcasysStudentInfoVO> selectAcasysStudentList(AcasysStudentInfoVO acasysStudentInfoVO);
+	List<AmsStudentInfoVO> selectAcasysStudentList(AmsStudentInfoVO amsStudentInfoVO);
 	
 	/**
-	 * @Method Name : getPaging
+	 * @Method Name : studentCountForPaging
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
 	 * @변경이력 :
 	 * @Method 설명 : 페이징 관련 조회
 	 * @return
 	 */
-	Paging getPaging(int curPage, AcasysStudentInfoVO acasysStudentInfoVO);
+	int studentCountForPaging(AmsStudentInfoVO amsStudentInfoVO);
 
 	/**
 	 * @Method Name : schoolGubunCd
@@ -48,7 +49,7 @@ public interface AcasysService {
 	 * @Method 설명 : 계열 코드
 	 * @return
 	 */
-	List<AcasysCommCdVO> schoolGubunCd(String schoolGubunVal);
+	List<AmsStudentCommCdVO> schoolGubunCd(String schoolGubunVal);
 
 	/**
 	 * @Method Name : schoolMajorCd
@@ -58,8 +59,8 @@ public interface AcasysService {
 	 * @Method 설명 : 전공 코드
 	 * @return
 	 */
-	List<AcasysCommCdVO> schoolMajorCd(String schoolMajorVal);
-
+	List<AmsStudentCommCdVO> schoolMajorCd(String schoolMajorVal);
+	
 	/**
 	 * @Method Name : schoolVocatiMajorCd
 	 * @작성일 : 2024. 10. 21
@@ -68,8 +69,8 @@ public interface AcasysService {
 	 * @Method 설명 : 실업계 코드 조회
 	 * @return
 	 */
-	List<AcasysCommCdVO> schoolVocatiMajorCd(String schoolVocatiMajorVal);
-	
+	List<AmsStudentCommCdVO> schoolVocatiMajorCd(String schoolVocatiMajorVal);
+
 	/**
 	 * @Method Name : tierCd
 	 * @작성일 : 2024. 10. 21
@@ -78,8 +79,8 @@ public interface AcasysService {
 	 * @Method 설명 : 성적 코드
 	 * @return
 	 */
-	List<AcasysCommCdVO> tierCd(String tierVal);
-	
+	List<AmsStudentCommCdVO> tierCd(String tierVal);
+
 	/**
 	 * @Method Name : tierCd
 	 * @작성일 : 2024. 10. 21
@@ -88,8 +89,8 @@ public interface AcasysService {
 	 * @Method 설명 : 학기 코드
 	 * @return
 	 */
-	List<AcasysCommCdVO> termCd(String termVal);
-
+	List<AmsStudentCommCdVO> termCd(String termVal); 
+	
 	/**
 	 * @Method Name : acasysStudentRegistProc
 	 * @작성일 : 2024. 10. 21
@@ -98,8 +99,8 @@ public interface AcasysService {
 	 * @Method 설명 : 학생 등록 진행
 	 * @return
 	 */
-	String acasysStudentRegistProc(AcasysStudentInfoVO acasysStudentInfoVO);
-
+	int acasysStudentRegistProc(AmsStudentInfoVO amsStudentInfoVO);
+	
 	/**
 	 * @Method Name : acasysStudentDelProc
 	 * @작성일 : 2024. 10. 21
@@ -107,10 +108,19 @@ public interface AcasysService {
 	 * @변경이력 :
 	 * @Method 설명 : 학생 등록 삭제
 	 * @return
-	 */  
-	String acasysStudentDelProc(AcasysStudentInfoVO acasysStudentInfoVO);
-
+	 */
+	int acasysStudentDelProc(AmsStudentInfoVO amsStudentInfoVO);
 	
+	/**
+	 * @Method Name : acasysStudentDelScore
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 학생 삭제시 성적 같이 삭제
+	 * @return
+	 */
+	void acasysStudentDelScore(AmsStudentInfoVO amsStudentInfoVO);
+
 	/**
 	 * @Method Name : acasysStudentDetail
 	 * @작성일 : 2024. 10. 21
@@ -119,7 +129,7 @@ public interface AcasysService {
 	 * @Method 설명 : 학생 상세
 	 * @return
 	 */
-	AcasysStudentInfoVO acasysStudentDetail(String studentNo);
+	AmsStudentInfoVO acasysStudentDetail(String studentNo);
 
 	/**
 	 * @Method Name : acasysStudentDetailUpdateProc
@@ -129,6 +139,6 @@ public interface AcasysService {
 	 * @Method 설명 : 학생 상세 수정
 	 * @return
 	 */
-	String acasysStudentDetailUpdateProc(AcasysStudentInfoVO acasysStudentInfoVO);
-	
+	int acasysStudentDetailUpdateProc(AmsStudentInfoVO amsStudentInfoVO);
+
 }

@@ -6,16 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aca.sys.Paging;
-import com.aca.sys.student.service.AcasysService;
-import com.aca.sys.student.vo.AcasysCommCdVO;
-import com.aca.sys.student.vo.AcasysStudentInfoVO;
-import com.aca.sys.student.vo.AcasysStudentScoreVO;
+import com.aca.sys.student.service.AmsStudentService;
+import com.aca.sys.student.vo.AmsStudentCommCdVO;
+import com.aca.sys.student.vo.AmsStudentInfoVO;
 
-@Service("acasysService")
-public class AcasysServiceImpl implements AcasysService {
+@Service("amsStudentService")
+public class AmsStudentServiceImpl implements AmsStudentService {
 	
 	@Autowired
-	AcasysMapper acasysMapper;
+	AmsStudentMapper amsStudentMapper;
 	
 	/**
 	 * @Method Name : studentCount
@@ -27,7 +26,7 @@ public class AcasysServiceImpl implements AcasysService {
 	 */
 	@Override
 	public String studentCount() {
-		return acasysMapper.studentCount();
+		return amsStudentMapper.studentCount();
 	}
 	
 	/**
@@ -40,8 +39,8 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysStudentInfoVO> selectAcasysStudentList(AcasysStudentInfoVO acasysStudentInfoVO) {
-		return acasysMapper.selectAcasysStudentList(acasysStudentInfoVO);
+	public List<AmsStudentInfoVO> selectAcasysStudentList(AmsStudentInfoVO amsStudentInfoVO) {
+		return amsStudentMapper.selectAcasysStudentList(amsStudentInfoVO);
 	}
 	
 	/**
@@ -53,10 +52,10 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public Paging getPaging(int curPage, AcasysStudentInfoVO acasysStudentInfoVO) {
+	public Paging getPaging(int curPage, AmsStudentInfoVO amsStudentInfoVO) {
 		
 		//총 게시글 수 조회 
-		int totalCount = acasysMapper.studentCountForPaging(acasysStudentInfoVO);
+		int totalCount = amsStudentMapper.studentCountForPaging(amsStudentInfoVO);
 		
 		//페이징계산 
 		Paging paging = new Paging(totalCount, curPage);
@@ -73,8 +72,8 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVO> schoolGubunCd(String schoolGubunVal) {
-		return acasysMapper.schoolGubunCd(schoolGubunVal);
+	public List<AmsStudentCommCdVO> schoolGubunCd(String schoolGubunVal) {
+		return amsStudentMapper.schoolGubunCd(schoolGubunVal);
 	}
 	
 	/**
@@ -86,8 +85,8 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVO> schoolMajorCd(String schoolMajorVal) {
-		return acasysMapper.schoolMajorCd(schoolMajorVal);
+	public List<AmsStudentCommCdVO> schoolMajorCd(String schoolMajorVal) {
+		return amsStudentMapper.schoolMajorCd(schoolMajorVal);
 	}
 	
 	/**
@@ -99,8 +98,8 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVO> tierCd(String tierVal) {
-		return acasysMapper.tierCd(tierVal);
+	public List<AmsStudentCommCdVO> tierCd(String tierVal) {
+		return amsStudentMapper.tierCd(tierVal);
 	}
 	
 	/**
@@ -112,8 +111,8 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVO> termCd(String termVal) {
-		return acasysMapper.termCd(termVal);
+	public List<AmsStudentCommCdVO> termCd(String termVal) {
+		return amsStudentMapper.termCd(termVal);
 	}
 	
 	/**
@@ -125,8 +124,8 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVO> schoolVocatiMajorCd(String schoolVocatiMajorVal) {
-		return acasysMapper.schoolVocatiMajorCd(schoolVocatiMajorVal);
+	public List<AmsStudentCommCdVO> schoolVocatiMajorCd(String schoolVocatiMajorVal) {
+		return amsStudentMapper.schoolVocatiMajorCd(schoolVocatiMajorVal);
 	}
 	
 	/**
@@ -138,9 +137,9 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public String acasysStudentRegistProc(AcasysStudentInfoVO score) {
+	public String acasysStudentRegistProc(AmsStudentInfoVO score) {
 		
-		int result = acasysMapper.acasysStudentRegistProc(score);
+		int result = amsStudentMapper.acasysStudentRegistProc(score);
 		
 		return result > 0 ? "SUCCESS" : "FAIL";
 	}
@@ -154,9 +153,10 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public String acasysStudentDelProc(AcasysStudentInfoVO acasysStudentInfoVO) {
+	public String acasysStudentDelProc(AmsStudentInfoVO amsStudentInfoVO) {
 		
-		int result = acasysMapper.acasysStudentDelProc(acasysStudentInfoVO);
+		int result = amsStudentMapper.acasysStudentDelProc(amsStudentInfoVO);
+		amsStudentMapper.acasysStudentDelScore(amsStudentInfoVO);
 		
 		return result > 0 ? "SUCCESS" : "FAIL";
 	}
@@ -170,8 +170,8 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public AcasysStudentInfoVO acasysStudentDetail(String studentNo) {
-		return acasysMapper.acasysStudentDetail(studentNo);
+	public AmsStudentInfoVO acasysStudentDetail(String studentNo) {
+		return amsStudentMapper.acasysStudentDetail(studentNo);
 	}
 	
 	/**
@@ -183,8 +183,8 @@ public class AcasysServiceImpl implements AcasysService {
 	 * @return
 	 */
 	@Override
-	public String acasysStudentDetailUpdateProc(AcasysStudentInfoVO acasysStudentInfoVO) {
-		int result = acasysMapper.acasysStudentDetailUpdateProc(acasysStudentInfoVO);
+	public String acasysStudentDetailUpdateProc(AmsStudentInfoVO amsStudentInfoVO) {
+		int result = amsStudentMapper.acasysStudentDetailUpdateProc(amsStudentInfoVO);
 		return result > 0 ? "SUCCESS" : "FAIL";
 	}
 	

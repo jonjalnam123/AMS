@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.aca.sys.student.service.impl.AcasysMapper">
+<mapper namespace="com.aca.sys.student.service.impl.AmsStudentMapper">
 	
 	<select id="studentCount" resultType="String">     
 		SELECT /* acasysStudentList.studentCount */
@@ -24,7 +24,7 @@
 	  	 </if>  
     </select>  
 	
-	<select id="selectAcasysStudentList" resultType="AcasysStudentInfoVO" parameterType="AcasysStudentInfoVO">    
+	<select id="selectAcasysStudentList" resultType="AmsStudentInfoVO" parameterType="AmsStudentInfoVO">    
 		SELECT /* acasysStudentList.selectAcasysStudentList */    
 				   CAST(a.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
 				 , a.STUDENT_NAME
@@ -63,14 +63,20 @@
   		   LIMIT #{paging.startNo}, #{paging.endNo}        
 	</select>
 	
-	<update id="acasysStudentDelProc" parameterType="AcasysStudentInfoVO">
+	<update id="acasysStudentDelProc" parameterType="AmsStudentInfoVO">
 		UPDATE /* acasysStudentList.acasysStudentDelProc */
 		     	   TB_STUDENT_INFO
 		     SET STUDENT_DEL_YN = 'Y'  
 		 WHERE STUDENT_NO = #{studentNo}
 	</update>
 	
-	<select id="schoolGubunCd" parameterType="String" resultType="AcasysCommCdVo">
+	<delete id="acasysStudentDelScore" parameterType="AmsStudentInfoVO">  
+		DELETE /* acasysStudentList.acasysStudentScoreDelProc */
+		  FROM TB_STUDENT_SCORE  
+		WHERE STUDENT_NO = #{studentNo} 
+	</delete>
+	
+	<select id="schoolGubunCd" parameterType="String" resultType="AmsStudentCommCdVO">
 		SELECT /* acasysStudentRegist.schoolGubunCd */       
 					CD
 				  , UPPER_CD
@@ -89,7 +95,7 @@
 		  WHERE BASS_CD_VAL = #{schoolGubunVal}  
 	</select>
 	
-	<select id="schoolMajorCd" parameterType="String" resultType="AcasysCommCdVo">  
+	<select id="schoolMajorCd" parameterType="String" resultType="AmsStudentCommCdVO">  
 		SELECT /* acasysStudentRegist.schoolMajorCd */       
 					CD
 				  , UPPER_CD
@@ -108,7 +114,7 @@
 		  WHERE BASS_CD_VAL = #{schoolMajorVal}  
 	</select>
 	
-	<select id="schoolVocatiMajorCd" parameterType="String" resultType="AcasysCommCdVo">
+	<select id="schoolVocatiMajorCd" parameterType="String" resultType="AmsStudentCommCdVO">
 		SELECT /* acasysStudentRegist.schoolGubunCd */       
 					CD
 				  , UPPER_CD
@@ -127,7 +133,7 @@
 		  WHERE BASS_CD_VAL = #{schoolVocatiMajorVal}  
 	</select>
 	
-	<select id="tierCd" parameterType="String" resultType="AcasysCommCdVo">  
+	<select id="tierCd" parameterType="String" resultType="AmsStudentCommCdVO">  
 		SELECT /* acasysStudentRegist.schoolMajorCd */       
 					CD
 				  , UPPER_CD
@@ -147,7 +153,7 @@
 		  ORDER BY SORT_ORDR
 	</select>
 	
-	<select id="termCd" parameterType="String" resultType="AcasysCommCdVo">
+	<select id="termCd" parameterType="String" resultType="AmsStudentCommCdVO">
 		SELECT /* acasysStudentRegist.schoolGubunCd */       
 					CD
 				  , UPPER_CD
@@ -166,7 +172,7 @@
 		  WHERE BASS_CD_VAL = #{termCd}    
 	</select>
 	
-	<insert id="acasysStudentRegistProc" parameterType="AcasysStudentInfoVO">
+	<insert id="acasysStudentRegistProc" parameterType="AmsStudentInfoVO">
 		INSERT /* acasysStudentRegist.acasysStudentRegistProc */ 
 		   INTO TB_STUDENT_INFO 
 		   (
@@ -212,7 +218,7 @@
 		);
 	</insert>
 	
-	<select id="acasysStudentDetail" parameterType="String" resultType="AcasysStudentInfoVO">   
+	<select id="acasysStudentDetail" parameterType="String" resultType="AmsStudentInfoVO">   
 		SELECT /* acasysStudentDetail.acasysStudentDetail */      
 				   CAST(a.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
 				 , a.STUDENT_NAME
@@ -244,7 +250,7 @@
 	  	 ORDER BY STUDENT_NO DESC 
 	</select>
 	
-	<update id="acasysStudentDetailUpdateProc" parameterType="AcasysStudentInfoVO">
+	<update id="acasysStudentDetailUpdateProc" parameterType="AmsStudentInfoVO">
 		UPDATE /* acasysStudentDetail.acasysStudentDetailUpdateProc */
 		     	   TB_STUDENT_INFO
 		     SET STUDENT_NAME = #{studentName}

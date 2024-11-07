@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.aca.sys.score.service.AmsScoreService;
 import com.aca.sys.score.vo.AmsScoreVO;
-import com.aca.sys.student.vo.AcasysCommCdVO;
+import com.aca.sys.student.vo.AmsStudentCommCdVO;
 
 @Service("amsScoreService")
 public class AmsScoreServiceImpl implements AmsScoreService {
@@ -24,7 +24,7 @@ public class AmsScoreServiceImpl implements AmsScoreService {
 	 * @return
 	 */
 	@Override
-	public List<AcasysCommCdVO> termCd(String termVal) {
+	public List<AmsStudentCommCdVO> termCd(String termVal) {
 		return amsScoreMapper.termCd(termVal);
 	}
 	

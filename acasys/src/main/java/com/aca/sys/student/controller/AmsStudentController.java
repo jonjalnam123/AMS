@@ -1,6 +1,6 @@
 package com.aca.sys.student.controller;
 
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aca.sys.Paging;
 import com.aca.sys.login.vo.AmsLoginVO;
-import com.aca.sys.student.service.AcasysService;
-import com.aca.sys.student.vo.AcasysCommCdVO;
-import com.aca.sys.student.vo.AcasysStudentInfoVO;
+import com.aca.sys.student.service.AmsStudentService;
+import com.aca.sys.student.vo.AmsStudentCommCdVO;
+import com.aca.sys.student.vo.AmsStudentInfoVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-public class AcasysController {
+public class AmsStudentController {
 
 	@Autowired
-	AcasysService acasysService;
+	AmsStudentService amsStudentService;
 
 	/*
 	 * @Method Name : acasysMainList
@@ -36,7 +36,7 @@ public class AcasysController {
 	 * @return
 	**/
 	@GetMapping("/student/acasysStudetnList.do")  
-	public String acasysStudetnList(@RequestParam(defaultValue = "0") int curPage, @RequestParam(defaultValue = "") String studenNmSearch, Model model, HttpServletRequest request, AcasysStudentInfoVO acasysStudentInfoVO) throws Exception{
+	public String acasysStudetnList(@RequestParam(defaultValue = "0") int curPage, @RequestParam(defaultValue = "") String studenNmSearch, Model model, HttpServletRequest request, AmsStudentInfoVO amsStudentInfoVO) throws Exception{
 		
 	    // 로그인 여부 체크
 		AmsLoginVO loginUser = (AmsLoginVO) request.getSession().getAttribute("LOGIN_USER");
@@ -47,18 +47,18 @@ public class AcasysController {
 	    String adminId = loginUser.getAdminId();
 	    
 	    //페이징 처리
-        Paging paging = acasysService.getPaging(curPage, acasysStudentInfoVO);
+        Paging paging = amsStudentService.getPaging(curPage, amsStudentInfoVO);
         model.addAttribute("paging", paging);
         
         //페이징 검색조건
-        paging.setStudenNmSearch(acasysStudentInfoVO.getStudenNmSearch());
-        acasysStudentInfoVO.setPaging(paging);  
+        paging.setStudenNmSearch(amsStudentInfoVO.getStudenNmSearch());
+        amsStudentInfoVO.setPaging(paging);  
 
 		// 학생 리스트
-		List<AcasysStudentInfoVO> studentList = acasysService.selectAcasysStudentList(acasysStudentInfoVO);
+		List<AmsStudentInfoVO> studentList = amsStudentService.selectAcasysStudentList(amsStudentInfoVO);
 		
 		String termVal = "term";
-		List<AcasysCommCdVO> termCd = acasysService.termCd(termVal);  
+		List<AmsStudentCommCdVO> termCd = amsStudentService.termCd(termVal);  
 		
 		/** json 변환 **/
 		ObjectMapper ObjectMapper = new ObjectMapper();
@@ -87,16 +87,16 @@ public class AcasysController {
 	public String acasysStudentRegist(Model model) {
 		
 		String schoolGubunVal = "schoolgubun";
-		List<AcasysCommCdVO> schoolGubunCd = acasysService.schoolGubunCd(schoolGubunVal);
+		List<AmsStudentCommCdVO> schoolGubunCd = amsStudentService.schoolGubunCd(schoolGubunVal);
 		
 		String schoolMajorVal = "schoolmajor";
-		List<AcasysCommCdVO> schoolMajorCd = acasysService.schoolMajorCd(schoolMajorVal);
+		List<AmsStudentCommCdVO> schoolMajorCd = amsStudentService.schoolMajorCd(schoolMajorVal);
 		
 		String tierVal = "tier";
-		List<AcasysCommCdVO> tierCd = acasysService.tierCd(tierVal);
+		List<AmsStudentCommCdVO> tierCd = amsStudentService.tierCd(tierVal);
 		
 		String schoolVocatiMajorVal = "schoolvocatimajor";
-		List<AcasysCommCdVO> schoolVocatiMajorCd = acasysService.schoolVocatiMajorCd(schoolVocatiMajorVal);
+		List<AmsStudentCommCdVO> schoolVocatiMajorCd = amsStudentService.schoolVocatiMajorCd(schoolVocatiMajorVal);
 
 		model.addAttribute("schoolGubunCd", schoolGubunCd);
 		model.addAttribute("schoolMajorCd", schoolMajorCd);
@@ -116,15 +116,15 @@ public class AcasysController {
 	 */
 	@PostMapping("/student/acasysStudentRegistProc.do")
 	@ResponseBody
-	public HashMap<String, String>  acasysStudentRegistProc (@ModelAttribute AcasysStudentInfoVO acasysStudentInfoVO, HttpServletRequest request) {
+	public HashMap<String, String>  acasysStudentRegistProc (@ModelAttribute AmsStudentInfoVO amsStudentInfoVO, HttpServletRequest request) {
 
 		 //로그인 아이디
 		String adminId = ((AmsLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
 		
-		acasysStudentInfoVO.setRegUserId(adminId);
-		acasysStudentInfoVO.setUpdUserId(adminId);  
+		amsStudentInfoVO.setRegUserId(adminId);
+		amsStudentInfoVO.setUpdUserId(adminId);  
 		
-		String result = acasysService.acasysStudentRegistProc(acasysStudentInfoVO);
+		String result = amsStudentService.acasysStudentRegistProc(amsStudentInfoVO);
 		
 	    // 결과 객체 생성
 		HashMap<String, String> response = new HashMap<>();
@@ -148,14 +148,14 @@ public class AcasysController {
 	 */
 	@PostMapping("/student/acasysStudentDelProc.do")
 	@ResponseBody
-	public HashMap<String, String>  acasysStudentDelProc (@ModelAttribute AcasysStudentInfoVO acasysStudentInfoVO, HttpServletRequest request) {
+	public HashMap<String, String>  acasysStudentDelProc (@ModelAttribute AmsStudentInfoVO acasysStudentInfoVO, HttpServletRequest request) {
 
 		 //로그인 아이디
 		String adminId = ((AmsLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
 		
 		acasysStudentInfoVO.setUpdUserId(adminId);  
 		
-		String result = acasysService.acasysStudentDelProc(acasysStudentInfoVO);
+		String result = amsStudentService.acasysStudentDelProc(acasysStudentInfoVO);
 		
 	    // 결과 객체 생성
 		HashMap<String, String> response = new HashMap<>();
@@ -180,20 +180,20 @@ public class AcasysController {
 	@PostMapping("/student/acasysStudentDetail.do")
 	public String acasysStudentDetail(@RequestParam String studentNo, Model model) {
 		
-		AcasysStudentInfoVO studentDetailList = acasysService.acasysStudentDetail(studentNo);
+		AmsStudentInfoVO studentDetailList = amsStudentService.acasysStudentDetail(studentNo);
 		
 		String schoolGubunVal = "schoolgubun";
-		List<AcasysCommCdVO> schoolGubunCd = acasysService.schoolGubunCd(schoolGubunVal);
+		List<AmsStudentCommCdVO> schoolGubunCd = amsStudentService.schoolGubunCd(schoolGubunVal);
 		
 		String schoolMajorVal = "schoolmajor";
-		List<AcasysCommCdVO> schoolMajorCd = acasysService.schoolMajorCd(schoolMajorVal);
+		List<AmsStudentCommCdVO> schoolMajorCd = amsStudentService.schoolMajorCd(schoolMajorVal);
 		
 		String tierVal = "tier";
-		List<AcasysCommCdVO> tierCd = acasysService.tierCd(tierVal);
+		List<AmsStudentCommCdVO> tierCd = amsStudentService.tierCd(tierVal);
 		
 		
 		String schoolVocatiMajorVal = "schoolvocatimajor";
-		List<AcasysCommCdVO> schoolVocatiMajorCd = acasysService.schoolVocatiMajorCd(schoolVocatiMajorVal);
+		List<AmsStudentCommCdVO> schoolVocatiMajorCd = amsStudentService.schoolVocatiMajorCd(schoolVocatiMajorVal);
 		
 		model.addAttribute("schoolGubunCd", schoolGubunCd);
 		model.addAttribute("schoolMajorCd", schoolMajorCd);
@@ -214,14 +214,14 @@ public class AcasysController {
 	 */
 	@PostMapping("/student/acasysStudentDetailUpdateProc.do")
 	@ResponseBody
-	public HashMap<String, String> acasysStudentDetailUpdateProc(@ModelAttribute AcasysStudentInfoVO acasysStudentInfoVO, HttpServletRequest request) {
+	public HashMap<String, String> acasysStudentDetailUpdateProc(@ModelAttribute AmsStudentInfoVO amsStudentInfoVO, HttpServletRequest request) {
 
 		 //로그인 아이디
 		String adminId = ((AmsLoginVO) request.getSession().getAttribute("LOGIN_USER")).getAdminId();
 
-		acasysStudentInfoVO.setUpdUserId(adminId);  
+		amsStudentInfoVO.setUpdUserId(adminId);  
 		
-		String result = acasysService.acasysStudentDetailUpdateProc(acasysStudentInfoVO);
+		String result = amsStudentService.acasysStudentDetailUpdateProc(amsStudentInfoVO);
 		
 	    // 결과 객체 생성
 		HashMap<String, String> response = new HashMap<>();

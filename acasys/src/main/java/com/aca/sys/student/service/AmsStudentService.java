@@ -1,15 +1,12 @@
-package com.aca.sys.student.service.impl;
+package com.aca.sys.student.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
+import com.aca.sys.Paging;
+import com.aca.sys.student.vo.AmsStudentCommCdVO;
+import com.aca.sys.student.vo.AmsStudentInfoVO;
 
-import com.aca.sys.student.vo.AcasysCommCdVO;
-import com.aca.sys.student.vo.AcasysStudentInfoVO;
-import com.aca.sys.student.vo.AcasysStudentScoreVO;
-
-@Mapper
-public interface AcasysMapper {
+public interface AmsStudentService {
 
 	/**
 	 * @Method Name : studentCount
@@ -22,7 +19,7 @@ public interface AcasysMapper {
 	String studentCount();
 	
 	/**
-	 * @param paging 
+	 * @param acasysStudentInfoVO 
 	 * @Method Name : selectAcasysStudentList
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
@@ -30,17 +27,17 @@ public interface AcasysMapper {
 	 * @Method 설명 : 메인 학생 조회
 	 * @return
 	 */
-	List<AcasysStudentInfoVO> selectAcasysStudentList(AcasysStudentInfoVO acasysStudentInfoVO);
+	List<AmsStudentInfoVO> selectAcasysStudentList(AmsStudentInfoVO amsStudentInfoVO);
 	
 	/**
-	 * @Method Name : studentCountForPaging
+	 * @Method Name : getPaging
 	 * @작성일 : 2024. 10. 21
 	 * @작성자 : 최정석
 	 * @변경이력 :
 	 * @Method 설명 : 페이징 관련 조회
 	 * @return
 	 */
-	int studentCountForPaging(AcasysStudentInfoVO acasysStudentInfoVO);
+	Paging getPaging(int curPage, AmsStudentInfoVO amsStudentInfoVO);
 
 	/**
 	 * @Method Name : schoolGubunCd
@@ -50,7 +47,7 @@ public interface AcasysMapper {
 	 * @Method 설명 : 계열 코드
 	 * @return
 	 */
-	List<AcasysCommCdVO> schoolGubunCd(String schoolGubunVal);
+	List<AmsStudentCommCdVO> schoolGubunCd(String schoolGubunVal);
 
 	/**
 	 * @Method Name : schoolMajorCd
@@ -60,8 +57,8 @@ public interface AcasysMapper {
 	 * @Method 설명 : 전공 코드
 	 * @return
 	 */
-	List<AcasysCommCdVO> schoolMajorCd(String schoolMajorVal);
-	
+	List<AmsStudentCommCdVO> schoolMajorCd(String schoolMajorVal);
+
 	/**
 	 * @Method Name : schoolVocatiMajorCd
 	 * @작성일 : 2024. 10. 21
@@ -70,8 +67,8 @@ public interface AcasysMapper {
 	 * @Method 설명 : 실업계 코드 조회
 	 * @return
 	 */
-	List<AcasysCommCdVO> schoolVocatiMajorCd(String schoolVocatiMajorVal);
-
+	List<AmsStudentCommCdVO> schoolVocatiMajorCd(String schoolVocatiMajorVal);
+	
 	/**
 	 * @Method Name : tierCd
 	 * @작성일 : 2024. 10. 21
@@ -80,8 +77,8 @@ public interface AcasysMapper {
 	 * @Method 설명 : 성적 코드
 	 * @return
 	 */
-	List<AcasysCommCdVO> tierCd(String tierVal);
-
+	List<AmsStudentCommCdVO> tierCd(String tierVal);
+	
 	/**
 	 * @Method Name : tierCd
 	 * @작성일 : 2024. 10. 21
@@ -90,8 +87,8 @@ public interface AcasysMapper {
 	 * @Method 설명 : 학기 코드
 	 * @return
 	 */
-	List<AcasysCommCdVO> termCd(String termVal); 
-	
+	List<AmsStudentCommCdVO> termCd(String termVal);
+
 	/**
 	 * @Method Name : acasysStudentRegistProc
 	 * @작성일 : 2024. 10. 21
@@ -100,8 +97,8 @@ public interface AcasysMapper {
 	 * @Method 설명 : 학생 등록 진행
 	 * @return
 	 */
-	int acasysStudentRegistProc(AcasysStudentInfoVO acasysStudentInfoVO);
-	
+	String acasysStudentRegistProc(AmsStudentInfoVO amsStudentInfoVO);
+
 	/**
 	 * @Method Name : acasysStudentDelProc
 	 * @작성일 : 2024. 10. 21
@@ -109,9 +106,10 @@ public interface AcasysMapper {
 	 * @변경이력 :
 	 * @Method 설명 : 학생 등록 삭제
 	 * @return
-	 */
-	int acasysStudentDelProc(AcasysStudentInfoVO acasysStudentInfoVO);
+	 */  
+	String acasysStudentDelProc(AmsStudentInfoVO amsStudentInfoVO);
 
+	
 	/**
 	 * @Method Name : acasysStudentDetail
 	 * @작성일 : 2024. 10. 21
@@ -120,7 +118,7 @@ public interface AcasysMapper {
 	 * @Method 설명 : 학생 상세
 	 * @return
 	 */
-	AcasysStudentInfoVO acasysStudentDetail(String studentNo);
+	AmsStudentInfoVO acasysStudentDetail(String studentNo);
 
 	/**
 	 * @Method Name : acasysStudentDetailUpdateProc
@@ -130,6 +128,6 @@ public interface AcasysMapper {
 	 * @Method 설명 : 학생 상세 수정
 	 * @return
 	 */
-	int acasysStudentDetailUpdateProc(AcasysStudentInfoVO acasysStudentInfoVO);
-
+	String acasysStudentDetailUpdateProc(AmsStudentInfoVO amsStudentInfoVO);
+	
 }

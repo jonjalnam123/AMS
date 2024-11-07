@@ -4,7 +4,7 @@ import com.aca.sys.Paging;
 
 import lombok.Data;
 
-public @Data class AcasysStudentInfoVO {
+public @Data class AmsStudentInfoVO {
 
 	private String studentNo;
 	private String studentName;

@@ -115,7 +115,7 @@ public class AmsLoginController {
 	 * @Method 설명 : 로그아웃
 	 * @return
 	 */
-	@GetMapping("/login/acasyslogout.do")   
+	@GetMapping("/login/amsLogout.do")   
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    HttpSession session = request.getSession();  
 	    session.invalidate();

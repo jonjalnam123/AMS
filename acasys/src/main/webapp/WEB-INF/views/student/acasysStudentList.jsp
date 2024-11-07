@@ -496,7 +496,7 @@
 	    	        }; 
 	
 	    		$.ajax({
-	    					url : '/student/acasysStudentScoreDelProc.do',
+	    					url : '/score/amsStudentScoreDelProc.do',
 	    					type : 'POST',
 	    				    contentType: 'application/json', // JSON 형식으로 전송
 	    				    data: JSON.stringify(param), // 데이터를 JSON 문자열로 변환 
@@ -573,6 +573,11 @@
                 $("#excelForm").submit();  
             
         });
+        
+    	$('#logOutBtn').on('click', function () {
+    	    location.href = '/login/amsLogout.do';
+    	});
+    	
 
     });
     
@@ -593,7 +598,7 @@
         };
 
         $.ajax({
-            url: '/student/acasysStudentScoreSearch.do',
+            url: '/score/amsStudentScoreSearch.do',
             type: 'POST',
             data: param,
             dataType: "json",
@@ -794,7 +799,7 @@
 	        }; 
 
 		$.ajax({
-					url : '/student/acasysStudentScoreRegistProc.do',
+					url : '/score/amsStudentScoreRegistProc.do',
 					type : 'POST',
 				    contentType: 'application/json', // JSON 형식으로 전송
 				    data: JSON.stringify(param), // 데이터를 JSON 문자열로 변환 
@@ -941,7 +946,7 @@
     
 	<div class="button-container-l">
 	 	<button type="button" id="addRowBtn" style="background-color: pink;">+</button>
-	 	<form id="excelForm" action="/student/acasysStudentScoreExcel.do" method="post">
+	 	<form id="excelForm" action="/score/amsStudentScoreExcel.do" method="post">
 		    <input type="hidden" name="studentNo" id="studentNo">
 		    <input type="hidden" name="avgKorean" id="avgKorean">
 		    <input type="hidden" name="avgMath" id="avgMath">

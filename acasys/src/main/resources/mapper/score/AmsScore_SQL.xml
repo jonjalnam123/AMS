@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aca.sys.score.service.impl.AmsScoreMapper">
+
+	<select id="acasysStudentScoreSearch" parameterType="AmsScoreVO" resultType="AmsScoreVO">
+		SELECT /* acasysStudentList.acasysStudentScoreSearch */       
+				   CAST(A.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
+				 , (SELECT b.STUDENT_NAME FROM TB_STUDENT_INFO b WHERE b.STUDENT_NO = #{studentNo}) AS STUDENT_NAME
+				 , A.SCORE_NO
+				 , A.START_DATE
+				 , A.END_DATE
+				 , A.TERM_CD
+				 , A.KOREAN
+				 , A.MATH
+				 , A.ENGLISH
+				 , A.SOCIETY
+				 , A.SCIENCE 
+				 , A.HISTORY    
+		         , FORMAT(
+			           (COALESCE(A.KOREAN, 0) +  
+			            COALESCE(A.MATH, 0) +
+			            COALESCE(A.ENGLISH, 0) +
+			            COALESCE(A.SOCIETY, 0) +
+			            COALESCE(A.SCIENCE, 0) +
+			            COALESCE(A.HISTORY, 0)) / 
+            	   NULLIF(
+	              	   (CASE WHEN A.KOREAN IS NOT NULL AND A.KOREAN > 0 THEN 1 ELSE 0 END +
+		                CASE WHEN A.MATH IS NOT NULL AND A.MATH > 0 THEN 1 ELSE 0 END +
+		                CASE WHEN A.ENGLISH IS NOT NULL AND A.ENGLISH > 0 THEN 1 ELSE 0 END +
+		                CASE WHEN A.SOCIETY IS NOT NULL AND A.SOCIETY > 0 THEN 1 ELSE 0 END +
+		                CASE WHEN A.SCIENCE IS NOT NULL AND A.SCIENCE > 0 THEN 1 ELSE 0 END +
+		                CASE WHEN A.HISTORY IS NOT NULL AND A.HISTORY > 0 THEN 1 ELSE 0 END), 0), 2) AS AVERAGE_SCORE 
+		    FROM TB_STUDENT_SCORE A
+		  WHERE A.STUDENT_NO = #{studentNo}
+		  ORDER BY START_DATE   
+	</select>
+
+	<select id="termCd" parameterType="String" resultType="AcasysCommCdVo">
+		SELECT /* acasysStudentRegist.schoolGubunCd */       
+					CD
+				  , UPPER_CD
+				  , CD_NM
+				  ,	BASS_CD_VAL
+				  ,	RM
+				  ,	SORT_ORDR
+				  , CODE_LVL
+				  ,	USE_YN
+				  ,	DISP_YN
+				  ,	REG_USER_ID
+				  ,	REG_DTTM
+				  ,	UPD_USER_ID
+				  ,	UPD_DTTM
+		    FROM TB_COMN_CD
+		  WHERE BASS_CD_VAL = #{termCd}    
+	</select>
+
+	<insert id="acasysStudentScoreRegistProc" parameterType="AmsScoreVO"> 
+		INSERT /* acasysStudentList.acasysStudentScoreRegistProc */ 
+		   INTO TB_STUDENT_SCORE 
+		   (
+			 STUDENT_NO
+		   , STUDENT_NAME
+		   , SCORE_NO
+		   , START_DATE
+		   , END_DATE
+		   , TERM_CD
+		   , KOREAN
+		   , MATH
+		   , ENGLISH
+		   , SOCIETY
+		   , SCIENCE
+		   , HISTORY
+		   , REG_USER_ID
+		   , REG_DTTM
+		   , UPD_USER_ID
+		   , UPD_DTTM
+		) VALUES (
+	         #{studentNo}
+		   , #{studentName}	  
+		   , (SELECT IFNULL(MAX(CAST(SCORE_NO AS UNSIGNED)), 0) + 1 AS SCORE_NO FROM (SELECT SCORE_NO FROM TB_STUDENT_SCORE) AS TEMP)
+		   , #{startDate}	
+		   , #{endDate}	
+		   , #{termCd}	  
+		   , #{korean}	
+		   , #{math}	
+		   , #{english}	
+		   , #{society}	
+		   , #{science}	
+		   , #{history}	
+		   , #{regUserId}	
+		   , NOW()  
+		   , #{updUserId}
+		   , NOW()
+		);
+	</insert>
+	
+	<update id="acasysStudentScoreUpdateProc" parameterType="AmsScoreVO">
+		UPDATE /* acasysStudentDetail.acasysStudentDetailUpdateProc */
+		     	   TB_STUDENT_SCORE
+		     SET START_DATE = #{startDate}
+			     , END_DATE = #{endDate}
+			     , TERM_CD = #{termCd}
+			     , KOREAN = #{korean}
+			     , MATH = #{math}
+			     , ENGLISH = #{english}
+			     , SOCIETY = #{society}
+			     , SCIENCE = #{science}
+			     , HISTORY = #{history}
+			     , UPD_USER_ID = #{updUserId}
+			     , UPD_DTTM = NOW()
+		 WHERE STUDENT_NO = #{studentNo}
+		 	 AND STUDENT_NAME = #{studentName} 
+		 	 AND SCORE_NO = #{scoreNo}
+	</update>
+	
+	<delete id="acasysStudentScoreDelProc" parameterType="AmsScoreVO">
+		DELETE 
+		  FROM TB_STUDENT_SCORE
+		WHERE STUDENT_NO = #{studentNo} 
+			AND SCORE_NO = #{scoreNo}
+			AND STUDENT_NAME = #{studentName}
+	</delete>
+	
+	<select id="acasysStudentScoreExcel" parameterType="String" resultType="AmsScoreVO">    
+		SELECT /* acasysStudentList.acasysStudentScoreExcel */        
+				   CAST(A.STUDENT_NO AS UNSIGNED) AS STUDENT_NO
+				 , (SELECT b.STUDENT_NAME FROM TB_STUDENT_INFO b WHERE b.STUDENT_NO = #{studentNo}) AS STUDENT_NAME
+				 , A.SCORE_NO
+				 , A.START_DATE
+				 , A.END_DATE
+				 , B.CD_NM AS TERM_NM
+				 , A.KOREAN
+				 , A.MATH
+				 , A.ENGLISH
+				 , A.SOCIETY
+				 , A.SCIENCE 
+				 , A.HISTORY    
+		         , FORMAT(
+			           (COALESCE(A.KOREAN, 0) +  
+			            COALESCE(A.MATH, 0) +
+			            COALESCE(A.ENGLISH, 0) +
+			            COALESCE(A.SOCIETY, 0) +
+			            COALESCE(A.SCIENCE, 0) +
+			            COALESCE(A.HISTORY, 0)) / 
+            	   NULLIF(
+	              	   (CASE WHEN A.KOREAN IS NOT NULL AND A.KOREAN > 0 THEN 1 ELSE 0 END +
+		                CASE WHEN A.MATH IS NOT NULL AND A.MATH > 0 THEN 1 ELSE 0 END +
+		                CASE WHEN A.ENGLISH IS NOT NULL AND A.ENGLISH > 0 THEN 1 ELSE 0 END +
+		                CASE WHEN A.SOCIETY IS NOT NULL AND A.SOCIETY > 0 THEN 1 ELSE 0 END +
+		                CASE WHEN A.SCIENCE IS NOT NULL AND A.SCIENCE > 0 THEN 1 ELSE 0 END +
+		                CASE WHEN A.HISTORY IS NOT NULL AND A.HISTORY > 0 THEN 1 ELSE 0 END), 0), 2) AS AVERAGE_SCORE 
+		    FROM TB_STUDENT_SCORE A
+   LEFT OUTER JOIN TB_COMN_CD B  
+		       ON A.TERM_CD = B.CD  
+		  WHERE A.STUDENT_NO = #{studentNo}
+		  ORDER BY START_DATE   
+	</select>
+	
+	<select id="acasysStudentNameForExcel" parameterType="String" resultType="String"> 
+		SELECT /* acasysStudentList.acasysStudentNameForExcel */
+				   STUDENT_NAME 
+	      FROM TB_STUDENT_INFO 
+	    WHERE STUDENT_NO = #{studentNo}  
+	</select>
+	
+</mapper>

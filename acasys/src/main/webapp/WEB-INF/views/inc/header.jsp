@@ -62,10 +62,6 @@
 
 $(document).ready(function() {
 	
-	$('#logOutBtn').on('click', function () {
-	    location.href = '/login/acasyslogout.do';
-	});
-	
 });
 
 </script>

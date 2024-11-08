@@ -25,15 +25,18 @@
         height: 100%;
     }    
     
-    .wrapper {
-        width: 100%;
-        max-width: 1200px;
-        display: flex;
-        flex-direction: column;
-    }
+	.wrapper {
+	    width: 100%;
+	    max-width: 1200px; /* 최대 너비 */
+	    display: flex;
+	    flex-direction: column;
+	    margin-left: 250px; /* left-menu 너비 만큼 공간을 둡니다 */
+	}
+	
 </style>
 <body>
 <%@ include file="../inc/header.jsp"%>
+<%@ include file="../inc/left.jsp"%> 
 <div class="wrapper">
 	<h2>코드리스트</h2>
 </div>

@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.aca.sys.code.service.AmsCodeService;
 import com.aca.sys.code.vo.AmsCodeVO;
+import com.aca.sys.login.vo.AmsLoginVO;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller 
 public class AmsCodeController {
@@ -91,7 +95,17 @@ public class AmsCodeController {
 	}
 	
 	@GetMapping("/amsCode/amsCodeManageMain.do") 
-	public String codeManageMain() { 
+	public String codeManageMain( HttpServletRequest request, Model model) { 
+		
+	    // 로그인 여부 체크
+		AmsLoginVO loginUser = (AmsLoginVO) request.getSession().getAttribute("LOGIN_USER");
+	    if (loginUser == null) {
+	        return "redirect:/login/amsMain.do"; // 로그인 페이지로 리디렉션
+	    }
+		
+	    String adminId = loginUser.getAdminId();
+	    
+	    model.addAttribute("adminId", adminId);  
 		
 		System.out.println("코드 진입");
 		

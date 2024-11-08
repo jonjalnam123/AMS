@@ -19,6 +19,7 @@
        color: black;
        position: absolute; 
        bottom: 0px;
+       margin-left: 250px; /* left-menu 너비 만큼 공간을 둡니다 */
      }
      
      .footLogo {

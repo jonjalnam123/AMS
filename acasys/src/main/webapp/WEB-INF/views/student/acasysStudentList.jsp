@@ -15,9 +15,9 @@
 	    display: flex; 
 	    justify-content: center; 
 	    align-items: center; 
-	    height: 100vh; 
+	    height: 100vh;  
 	    overflow: hidden; 
-	}
+	}   
 
 	.search-container {
 	    margin-bottom: 10px; 
@@ -27,9 +27,10 @@
 	
 	.wrapper {
 	    width: 100%;
-	    max-width: 1200px;
+	    max-width: 1200px; /* 최대 너비 */
 	    display: flex;
 	    flex-direction: column;
+	    margin-left: 250px; /* left-menu 너비 만큼 공간을 둡니다 */
 	}
 
     #studenNmSearch {
@@ -251,25 +252,7 @@
         font-weight: bold;
         color: #888;
     }
-    
-    #logOutBtn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    height: 40px; 
-    margin-right: 5px;
-	}
-
-	#logOutBtn {
-	    background-color: #adb5bd;  
-	    color: white;
-	}
-	
-	#logOutBtn:hover {
-	    background-color: #868e96;  
-	}
+  
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -324,6 +307,10 @@
             if (selectedRow.length > 0) {
 
                 var studentNo = selectedRow.find('td:first').text();
+                
+                if ( studentNo === '조회된 데이터가 없습니다.') {
+                	return; 
+                }
 				
                 var result = confirm("정말 삭제하시겠습니까?");
                 
@@ -574,11 +561,6 @@
             
         });
         
-    	$('#logOutBtn').on('click', function () {
-    	    location.href = '/login/amsLogout.do';
-    	});
-    	
-
     });
     
     function toggleCheckboxes(selectAllCheckbox) {
@@ -591,8 +573,12 @@
     
     function fn_searchScore(studentNoParam) {
 
-    	studentNo = studentNoParam;
+    	if ( studentNoParam === "조회된 데이터가 없습니다.") {
+			return;
+    	}
     	
+    	studentNo = studentNoParam;
+
         var param = {
             studentNo: studentNo
         };
@@ -879,6 +865,7 @@
 </script>
 <body>
 <%@ include file="../inc/header.jsp"%>
+<%@ include file="../inc/left.jsp"%>
 <div class="wrapper">
     <div class="search-container">
     	<form id="studenNmSearchForm" action="/student/acasysStudetnList.do" method="get">
@@ -886,8 +873,6 @@
         </form>
    	    <button type="button" id="searchBtn">검색</button>
         <div class="count-info">총 ${count} 건</div>
-        <span class="admin-message">${adminId} 님 반갑습니다.</span>
-        <button type="button" id="logOutBtn">로그아웃</button>
     </div>
  	<div class="table-container">
 	    <table>

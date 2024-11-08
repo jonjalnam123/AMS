@@ -20,6 +20,7 @@
 	    display: flex; /* Flexbox 활성화 */
 	    align-items: center; /* 세로 가운데 정렬 */
 	    padding: 0 10px; /* 좌우 패딩 추가 */
+	    justify-content: space-between; /* 좌측과 우측을 간격을 두고 배치 */
 	}
 
 	.topLogo {
@@ -40,8 +41,7 @@
 	    margin-left: 5px;
 	}
 
-	.logInfo {
-	    margin-left: auto; /* logInfo div를 오른쪽 끝으로 배치 */
+	.logOutDiv {
 	    display: flex;
 	    align-items: center; /* 세로 가운데 정렬 */
 	}
@@ -55,12 +55,39 @@
     color: white; /* 마우스 올렸을 때 글 색이 변하지 않도록 설정 */
     text-decoration: none; /* 마우스 올렸을 때 밑줄이 생기지 않도록 설정 */  
   }
+  
+    #logOutBtn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 40px; 
+    margin-right: 5px;
+	}
+
+	#logOutBtn {
+	    background-color: #adb5bd;  
+	    color: white;
+	}
+	
+	#logOutBtn:hover {
+	    background-color: #868e96;  
+	}
+
+  	.admin-message {
+       margin-right: 10px; /* 여백을 추가하여 로그아웃 버튼과 구분 */
+   }
 
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
+	
+	$('#logOutBtn').on('click', function () {
+	    location.href = '/login/amsLogout.do';
+	});
 	
 });
 
@@ -70,8 +97,9 @@ $(document).ready(function() {
 	<div class="topLogo">
 		<h2><a href="/student/acasysStudetnList.do">AMS</a></h2><p>Academy Mangement System</p>
 	</div>
-	<div class="logInfo">
-		<a href="/amsCode/amsCodeManageMain.do">코드관리</a>
+	<div class="logOutDiv">
+        <span class="admin-message">${adminId} 님 반갑습니다.</span>
+        <button type="button" id="logOutBtn">로그아웃</button>
 	</div>
 </div>
 </body>

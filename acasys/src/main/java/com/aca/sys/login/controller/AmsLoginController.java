@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,19 @@ public class AmsLoginController {
 	 * @Method 설명 : 메인
 	 * @return
 	 */
+	@GetMapping("/")
+	public String main () {
+		return "redirect:/login/amsMain.do";   
+	}
+	
+	/**
+	 * @Method Name : acasysMain
+	 * @작성일 : 2024. 10. 21
+	 * @작성자 : 최정석
+	 * @변경이력 :
+	 * @Method 설명 : 메인
+	 * @return
+	 */
 	@GetMapping("/login/amsMain.do")
 	public String acasysMain( HttpServletRequest request ) {
 		
@@ -49,6 +63,7 @@ public class AmsLoginController {
         }else {
         	request.setAttribute("idSaveCheck", username);
         }
+        
 		return "login/amsLogin";
 	}
 	
@@ -102,11 +117,11 @@ public class AmsLoginController {
 		} else if ( loginResult.size() <=  0 ) { //실패 
 			longResultMap.put("result", "F");
 		}
-		
+
 		return longResultMap;
 	}
 	
-	
+
 	/**
 	 * @Method Name : acasyslogout
 	 * @작성일 : 2024. 10. 21
@@ -123,5 +138,5 @@ public class AmsLoginController {
 	    // 로그인 페이지로 리디렉션
 	    return "redirect:/login/amsMain.do";   
 	}
-
+	
 }

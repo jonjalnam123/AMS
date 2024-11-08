@@ -925,7 +925,6 @@
 	    <c:import url="/WEB-INF/views/layout/paging.jsp" />
 	</div>
 	<div class="button-container">
-	    <button type="button" id="registBtn">학생등록</button>
 	    <button type="button" id="delBtn">학생삭제</button>
 	</div>
     

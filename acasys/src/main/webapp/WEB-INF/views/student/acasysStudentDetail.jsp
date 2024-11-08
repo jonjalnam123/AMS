@@ -20,14 +20,15 @@
 	}
 
 	.form-container {
-	    width: 80%;
-	    max-width: 600px;
+	    width: 100%;
+	    max-width: 1200px;
 	    background-color: white;
 	    padding: 20px;
 	    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	    border-radius: 8px;
 	    overflow: auto; /* Allow scrolling within the container if needed */
 	    max-height: 100vh; /* Set a maximum height */ 
+	    margin-left: 250px;
 	}
 
     table {
@@ -45,10 +46,6 @@
     th {
         background-color: #f2f2f2;
         color: #333;
-    }
-
-    tr:hover {
-        background-color: #f1f1f1;
     }
 
 	textarea {
@@ -344,10 +341,14 @@ $(document).ready(function() {
 	
 </script>
 <body>
+<%@ include file="../inc/header.jsp"%>
+<%@ include file="../inc/left.jsp"%>
     <div class="form-container">
         <table>
             <thead>
                 <tr>
+                    <th>항목</th>
+                    <th>입력</th>
                     <th>항목</th>
                     <th>입력</th>
                 </tr>
@@ -357,24 +358,18 @@ $(document).ready(function() {
                     <td>이름<span class="required">*</span></td>
                     <td hidden><input id="studentNo" type="text" value="${studentDetailList.studentNo}"></td>
                     <td><input id="studentName" type="text" placeholder="이름 입력" maxlength="7" value="${studentDetailList.studentName}"></td> 
-                </tr>
-                <tr>
                     <td>나이<span class="required">*</span></td>
                     <td><input id="studentAge" type="number" oninput="fn_validateInput(this, this.id)" placeholder="나이 입력" value="${studentDetailList.studentAge}"></td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td><input id="studentPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력" value="${studentDetailList.studentPhone}"></td>
-                </tr>
-                <tr>
                     <td>부모연락처</td>
                     <td><input id="studentParentsPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력" value="${studentDetailList.studentParentsPhone}"></td>
                 </tr>
                 <tr>
                     <td>소속학교<span class="required">*</span></td>
                     <td><input id="studentSchool" type="text" placeholder="중학교 입력" maxlength="10" value="${studentDetailList.studentSchool}"></td>
-                </tr>
-                <tr>
                     <td>지망학교</td>
                     <td><input id="studentWantedSchool" type="text" placeholder="고등학교 입력" maxlength="10" value="${studentDetailList.studentWantedSchool}"></td>
                 </tr>
@@ -389,8 +384,6 @@ $(document).ready(function() {
 						    </c:forEach>
 						</select>
                     </td>
-                </tr>
-                <tr>
                     <td>전공</td>
                     <td style="height: 44px;"> 
 	                    <c:if test="${studentDetailList.studentSchoolGubunCd == 'schoolgubun.academic'}">
@@ -434,9 +427,7 @@ $(document).ready(function() {
 						    </c:forEach>
 						</select> 
                     </td>
-                </tr>
-                <tr>
-                    <td>우편번호</td>
+                   	<td>우편번호</td>
                     <td>
                         <input id="studentPostCd" type="text" placeholder="우편번호 입력" value="${studentDetailList.studentPostCd}" readonly>
                         <input id="postBtn" type="button" onclick="fn_execDaumPostcode()" value="우편번호 찾기">
@@ -445,14 +436,14 @@ $(document).ready(function() {
                 <tr>
                     <td>주소</td>
                     <td><input id="studentAdd" type="text" placeholder="주소 입력" value="${studentDetailList.studentAdd}" readonly></td>
-                </tr>
-                <tr>
                     <td>상세주소</td>
                     <td><input id="studentAddDetail" type="text" placeholder="상세주소 입력" maxlength="30" value="${studentDetailList.studentAddDetail}"></td>
                 </tr>
                 <tr>
                     <td>비고</td>
                     <td><textarea id="studentNote" maxlength="333" placeholder="비고 입력">${studentDetailList.studentNote}</textarea></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
@@ -461,5 +452,6 @@ $(document).ready(function() {
             <button type="button" id="toListBtn">목록</button>
         </div>
     </div>
+<%@ include file="../inc/footer.jsp"%>
 </body>
 </html>

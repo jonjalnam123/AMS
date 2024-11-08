@@ -91,8 +91,8 @@ $(document).ready(function() {
             </a>
         </li>
         <li class="menu-item">
-            <a href="/amsCode/amsCodeManageMain.do">
-                <button type="button" class="menu-btn">코드 관리</button>
+            <a href="/student/acasysStudentRegist.do">
+                <button type="button" class="menu-btn">학생등록</button>
             </a>
         </li>
     </ul>

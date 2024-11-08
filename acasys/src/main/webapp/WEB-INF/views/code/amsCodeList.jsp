@@ -38,7 +38,7 @@
 <%@ include file="../inc/header.jsp"%>
 <%@ include file="../inc/left.jsp"%> 
 <div class="wrapper">
-	<h2>코드리스트</h2>
+	<h2>코드리스트 진행예정~</h2>
 </div>
 <%@ include file="../inc/footer.jsp"%>
 </body>

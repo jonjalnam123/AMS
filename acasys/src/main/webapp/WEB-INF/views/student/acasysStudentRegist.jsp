@@ -20,14 +20,15 @@
 	}
 
 	.form-container {
-	    width: 80%;
-	    max-width: 600px;
+	    width: 100%;
+	    max-width: 1200px;
 	    background-color: white;
 	    padding: 20px;
 	    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	    border-radius: 8px;
 	    overflow: auto; /* Allow scrolling within the container if needed */
 	    max-height: 100vh; /* Set a maximum height */ 
+	    margin-left: 250px;
 	}
 
     table {
@@ -47,9 +48,7 @@
         color: #333;
     }
 
-    tr:hover {
-        background-color: #f1f1f1;
-    }
+
 
 	textarea {
 	    width: 100%;    
@@ -356,11 +355,15 @@ $(document).ready(function() {
 	
 </script>
 <body>
+<%@ include file="../inc/header.jsp"%>
+<%@ include file="../inc/left.jsp"%>
 
     <div class="form-container">
         <table>
             <thead>
                 <tr>
+                    <th>항목</th>
+                    <th>입력</th>
                     <th>항목</th>
                     <th>입력</th>
                 </tr>
@@ -369,24 +372,18 @@ $(document).ready(function() {
                 <tr>
                     <td>이름<span class="required">*</span></td>
                     <td><input id="studentName" type="text" oninput="fn_validateInput(this, this.id)" placeholder="이름 입력"></td>
-                </tr>
-                <tr>
                     <td>나이<span class="required">*</span></td>
                     <td><input id="studentAge" type="number" oninput="fn_validateInput(this, this.id)" placeholder="나이 입력"></td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td><input id="studentPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력"></td>
-                </tr>
-                <tr>
-                    <td>부모연락처</td>
-                    <td><input id="studentParentsPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력"></td>
+                   <td>부모연락처</td>
+                    <td><input id="studentParentsPhone" type="number" oninput="fn_validateInput(this, this.id)" placeholder="'-' 없이 숫자만 입력"></td> 
                 </tr>
                 <tr>
                     <td>소속학교<span class="required">*</span></td>
                     <td><input id="studentSchool" type="text" oninput="fn_validateInput(this, this.id)" placeholder="소속학교 입력"></td>
-                </tr>
-                <tr>
                     <td>지망학교</td>
                     <td><input id="studentWantedSchool" type="text" oninput="fn_validateInput(this, this.id)" placeholder="지망학교 입력"></td>
                 </tr>
@@ -399,8 +396,6 @@ $(document).ready(function() {
                             </c:forEach>
                         </select>
                     </td>
-                </tr>
-                <tr>
                     <td>전공</td>
                     <td style="height: 44px;">   
                         <select id="studentSchoolMajorCd" hidden>
@@ -424,8 +419,6 @@ $(document).ready(function() {
                             </c:forEach>
                         </select>         
                     </td>
-                </tr>
-                <tr>
                     <td>우편번호</td>
                     <td>
                         <input id="studentPostCd" type="text" placeholder="우편번호 입력" readonly>
@@ -435,21 +428,21 @@ $(document).ready(function() {
                 <tr>
                     <td>주소</td>
                     <td><input id="studentAdd" type="text" placeholder="주소 입력" readonly></td>
-                </tr>
-                <tr>
                     <td>상세주소</td>
                     <td><input id="studentAddDetail" type="text" placeholder="상세주소 입력" maxlength="30"></td>
                 </tr>
                 <tr>
                     <td>비고</td>
                     <td><textarea id="studentNote" maxlength="333" placeholder="비고 입력"></textarea></td>
+                     <td></td>
+                     <td></td>
                 </tr>
             </tbody>
         </table>
         <div class="button-container">
             <button type="button" id="registBtn">등록</button>
-            <button type="button" id="toListBtn">목록</button>
         </div>
     </div>
+    <%@ include file="../inc/footer.jsp"%>
 </body>
 </html>

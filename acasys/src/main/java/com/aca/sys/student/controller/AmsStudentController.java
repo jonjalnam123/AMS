@@ -88,7 +88,15 @@ public class AmsStudentController {
 	 * @return
 	 */
 	@GetMapping("/student/acasysStudentRegist.do")
-	public String acasysStudentRegist(Model model) {
+	public String acasysStudentRegist( HttpServletRequest request, Model model ) {
+		
+	    // 로그인 여부 체크
+		AmsLoginVO loginUser = (AmsLoginVO) request.getSession().getAttribute("LOGIN_USER");
+	    if (loginUser == null) {
+	        return "redirect:/login/amsMain.do"; // 로그인 페이지로 리디렉션
+	    }
+		
+	    String adminId = loginUser.getAdminId();
 		
 		//학교전공 계열
 		String schoolGubunVal = "schoolgubun";
@@ -107,6 +115,7 @@ public class AmsStudentController {
 		model.addAttribute("schoolMajorCd", schoolMajorCd);
 		model.addAttribute("schoolVocatiMajorCd", schoolVocatiMajorCd);
 		model.addAttribute("tierCd", tierCd);
+		model.addAttribute("adminId", adminId);
 		
 		return "student/acasysStudentRegist";  
 	}
@@ -183,7 +192,15 @@ public class AmsStudentController {
 	 * @return
 	 */
 	@PostMapping("/student/acasysStudentDetail.do")
-	public String acasysStudentDetail(@RequestParam String studentNo, Model model) {
+	public String acasysStudentDetail(@RequestParam String studentNo, Model model, HttpServletRequest request) {
+		
+	    // 로그인 여부 체크
+		AmsLoginVO loginUser = (AmsLoginVO) request.getSession().getAttribute("LOGIN_USER");
+	    if (loginUser == null) {
+	        return "redirect:/login/amsMain.do"; // 로그인 페이지로 리디렉션
+	    }
+		
+	    String adminId = loginUser.getAdminId();
 		
 		AmsStudentInfoVO studentDetailList = amsStudentService.acasysStudentDetail(studentNo);
 		
@@ -205,6 +222,7 @@ public class AmsStudentController {
 		model.addAttribute("tierCd", tierCd);
 		model.addAttribute("studentDetailList", studentDetailList);  
 		model.addAttribute("schoolVocatiMajorCd", schoolVocatiMajorCd);
+		model.addAttribute("adminId", adminId);
 		
 		return "student/acasysStudentDetail";  
 	}

@@ -443,6 +443,6 @@ $(document).ready(function() {
             <button type="button" id="registBtn">등록</button>
         </div>
     </div>
-    <%@ include file="../inc/footer.jsp"%>
+<%@ include file="../inc/footer.jsp"%>
 </body>
 </html>

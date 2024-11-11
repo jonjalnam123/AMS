@@ -24,29 +24,34 @@
         flex-grow: 1;
     }
 
-    /* 각 메뉴 항목 스타일 */
-    .menu-item {
-        margin: 12px 0;
-        padding: 0;
-        background-color: transparent; /* 배경색을 없앰 */
-        transition: transform 0.3s ease; /* 크기 변화 효과 */
-    }
+	/* 각 메뉴 항목 스타일 */
+	.menu-item {
+	    margin: 12px 0;
+	    padding: 0;
+	    background-color: transparent; /* 배경색을 없앰 */
+	    transition: transform 0.3s ease; /* 크기 변화 효과 */
+	    height: 50px; /* 고정된 높이 지정 */
+	    display: flex; /* 내용을 세로로 정렬할 수 있도록 설정 */
+	    align-items: center; /* 세로 가운데 정렬 */
+	}
 
-    /* 메뉴 버튼 기본 스타일 */
-    .menu-btn {
-        width: 100%;
-        padding: 14px 20px;
-        border: none;
-        border-radius: 5px;
-        color: white;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        text-align: left;
-        background-color: transparent; /* 배경색 없앰 */
-        transition: color 0.3s, transform 0.2s ease; /* 텍스트 색상만 변화 */
-        box-sizing: border-box; /* 패딩과 테두리를 포함한 크기 계산 */
-    }
+	/* 메뉴 버튼 기본 스타일 */
+	.menu-btn {
+	    width: 100%; /* 너비는 100%로 설정 */
+	    height: 50px; /* 고정된 높이 지정 */
+	    padding: 0 20px; /* 좌우 패딩만 설정하여 높이에 영향을 미치지 않도록 */
+	    border: none;
+	    border-radius: 5px; 
+	    margin-left : 0px; 
+	    color: white;
+	    font-size: 16px;
+	    font-weight: 500;
+	    cursor: pointer;
+	    text-align: left;
+	    background-color: transparent; /* 배경색 없앰 */
+	    transition: color 0.3s, transform 0.2s ease; /* 텍스트 색상만 변화 */
+	    box-sizing: border-box; /* 패딩과 테두리를 포함한 크기 계산 */
+	}  
 
     /* 메뉴 버튼 hover 시 스타일 */
     .menu-btn:hover {

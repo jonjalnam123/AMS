@@ -56,14 +56,14 @@
     text-decoration: none; /* 마우스 올렸을 때 밑줄이 생기지 않도록 설정 */  
   }
   
-    #logOutBtn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    height: 40px; 
-    margin-right: 5px;
+	#logOutBtn {
+	    padding: 10px 15px;
+	    border: none;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    transition: background-color 0.3s;
+	    height: 40px; 
+	    margin-right: 5px;
 	}
 
 	#logOutBtn {
@@ -74,10 +74,14 @@
 	#logOutBtn:hover {
 	    background-color: #868e96;  
 	}
-
-  	.admin-message {
-       margin-right: 10px; /* 여백을 추가하여 로그아웃 버튼과 구분 */
-   }
+	.admin-message {
+	    position: absolute;  /* 고정 위치 */
+	    right: 100px;         /* 화면 오른쪽에 고정 */   
+	    top: 50%;            /* 수직 가운데 정렬 */
+	    transform: translateY(-50%);  /* 정확히 가운데 정렬 */
+	    margin-right: 5px;   /* 여백을 추가하여 로그아웃 버튼과 구분 */
+	    color: white;        /* 글자 색을 흰색으로 설정 */
+	}
 
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
